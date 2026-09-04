@@ -28,7 +28,7 @@ if (!URL || !SERVICE || SERVICE.startsWith('dan-')) {
   process.exit(1)
 }
 const sb = createClient(URL, SERVICE, { auth: { persistSession: false } })
-const BUCKET = 'vpp-images'
+const BUCKET = 'vhjscvpp-images'
 
 function hashPassword(pw) {
   const salt = crypto.randomBytes(16).toString('hex')
