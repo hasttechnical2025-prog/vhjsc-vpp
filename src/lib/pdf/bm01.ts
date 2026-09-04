@@ -32,11 +32,11 @@ type Phieu = {
   ke_hoach_su_dung: string | null
 }
 type Dong = {
+  ten_hang: string | null
   ten_tay: string | null
   dvt: string | null
   so_luong: number
   ghi_chu: string | null
-  san_pham: { ten: string } | null
 }
 
 export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
@@ -47,7 +47,7 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
   )
   const body = rows.map((d, i) => [
     { text: String(i + 1), alignment: 'center' as const, fontSize: 9 },
-    { text: d.san_pham?.ten || d.ten_tay || '', fontSize: 9 },
+    { text: d.ten_hang || d.ten_tay || '', fontSize: 9 },
     { text: d.dvt || '', alignment: 'center' as const, fontSize: 9 },
     { text: d.so_luong != null ? String(d.so_luong) : '', alignment: 'center' as const, fontSize: 9 },
     { text: d.ghi_chu || '', fontSize: 9 },

@@ -5,12 +5,13 @@ import { buildBM01 } from '@/lib/pdf/bm01'
 export const runtime = 'nodejs'
 
 type DongRow = {
+  san_pham_id: number | null
+  ten_hang: string | null
   ten_tay: string | null
   dvt: string | null
   so_luong: number
   ghi_chu: string | null
   thu_tu: number
-  san_pham: { ten: string } | null
 }
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -23,7 +24,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('ten_tay, dvt, so_luong, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
+    .select('san_pham_id, ten_hang, ten_tay, dvt, so_luong, ghi_chu, thu_tu')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 

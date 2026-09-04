@@ -163,6 +163,7 @@ export default function LapPhieu({
           ke_hoach_su_dung: keHoachSuDung,
           dong: hople.map((d, i) => ({
             san_pham_id: d.san_pham_id,
+            ten_hang: d.san_pham_id ? d.ten : (d.ten_tay || '').trim(),
             ten_tay: d.san_pham_id ? null : (d.ten_tay || '').trim(),
             dvt: d.dvt,
             don_gia: d.don_gia,
@@ -229,7 +230,7 @@ export default function LapPhieu({
                 </div>
                 <div className="text-xs font-medium leading-snug line-clamp-2 min-h-[2.2em]">{sp.ten}</div>
                 <div className="text-[11px] text-muted mt-0.5">
-                  {sp.quy_cach} · {sp.dvt}
+                  <span className="text-accent-600/70">MH {sp.id}</span> · {sp.quy_cach} · {sp.dvt}
                 </div>
                 <div className="text-sm font-semibold text-accent-600 mt-0.5 mb-2">{formatTien(sp.don_gia)}</div>
                 {cur ? (
@@ -345,6 +346,8 @@ export default function LapPhieu({
                     <div className="text-[12px] text-muted mt-0.5 flex items-center gap-1.5">
                       {d.san_pham_id ? (
                         <>
+                          <span className="text-accent-600/70">MH {d.san_pham_id}</span>
+                          <span>·</span>
                           <span>{d.dvt}</span>
                           <span>·</span>
                           <span className="text-accent-600">{formatTien(d.don_gia)}</span>

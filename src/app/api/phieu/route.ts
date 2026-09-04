@@ -50,6 +50,7 @@ export async function POST(req: Request) {
   const rows = body.dong.map((d: Record<string, unknown>, i: number) => ({
     phieu_id: phieu.id,
     san_pham_id: d.san_pham_id ?? null,
+    ten_hang: d.ten_hang ?? d.ten_tay ?? null,
     ten_tay: d.ten_tay ?? null,
     dvt: d.dvt ?? null,
     don_gia: d.don_gia ?? null,

@@ -7,13 +7,13 @@ import { formatThang, formatTien } from '@/lib/format'
 
 type DongRow = {
   san_pham_id: number | null
+  ten_hang: string | null
   ten_tay: string | null
   dvt: string | null
   don_gia: number | null
   so_luong: number
   ghi_chu: string | null
   thu_tu: number
-  san_pham: { ten: string } | null
 }
 
 export default async function PhieuDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -30,7 +30,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('san_pham_id, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
+    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 
@@ -68,6 +68,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
             <thead className="bg-accent-50">
               <tr>
                 <th className="border border-border px-2 py-1 w-10">TT</th>
+                <th className="border border-border px-2 py-1 w-16">Mã hàng</th>
                 <th className="border border-border px-2 py-1 text-left">Tên TTB/VPP</th>
                 <th className="border border-border px-2 py-1">ĐVT</th>
                 <th className="border border-border px-2 py-1">Số lượng</th>
@@ -78,7 +79,8 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
               {rows.map((d, i) => (
                 <tr key={i}>
                   <td className="border border-border px-2 py-1 text-center">{i + 1}</td>
-                  <td className="border border-border px-2 py-1">{d.san_pham?.ten || d.ten_tay || ''}</td>
+                  <td className="border border-border px-2 py-1 text-center text-muted">{d.san_pham_id ?? '—'}</td>
+                  <td className="border border-border px-2 py-1">{d.ten_hang || d.ten_tay || ''}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.dvt || ''}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.so_luong}</td>
                   <td className="border border-border px-2 py-1">{d.ghi_chu || ''}</td>
