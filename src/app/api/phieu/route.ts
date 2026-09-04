@@ -36,6 +36,8 @@ export async function POST(req: Request) {
       nguoi_de_nghi_ten: session.ho_ten,
       thang: String(body.thang || '').slice(0, 7),
       tieu_de: body.tieu_de || null,
+      thoi_gian_can: body.thoi_gian_can || null,
+      ke_hoach_su_dung: body.ke_hoach_su_dung || null,
       ghi_chu: body.ghi_chu || null,
       trang_thai: 'nhap',
       tong_tien: tongTien,
@@ -52,8 +54,6 @@ export async function POST(req: Request) {
     dvt: d.dvt ?? null,
     don_gia: d.don_gia ?? null,
     so_luong: Number(d.so_luong) || 0,
-    thoi_gian_can: d.thoi_gian_can ?? null,
-    ke_hoach_su_dung: d.ke_hoach_su_dung ?? null,
     ghi_chu: d.ghi_chu ?? null,
     thu_tu: typeof d.thu_tu === 'number' ? d.thu_tu : i,
   }))

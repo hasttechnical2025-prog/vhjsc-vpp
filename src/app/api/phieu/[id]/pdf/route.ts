@@ -8,8 +8,6 @@ type DongRow = {
   ten_tay: string | null
   dvt: string | null
   so_luong: number
-  thoi_gian_can: string | null
-  ke_hoach_su_dung: string | null
   ghi_chu: string | null
   thu_tu: number
   san_pham: { ten: string } | null
@@ -25,7 +23,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('ten_tay, dvt, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
+    .select('ten_tay, dvt, so_luong, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 

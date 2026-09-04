@@ -28,13 +28,13 @@ type Phieu = {
   phong_ban_ten: string
   thang: string
   tieu_de: string | null
+  thoi_gian_can: string | null
+  ke_hoach_su_dung: string | null
 }
 type Dong = {
   ten_tay: string | null
   dvt: string | null
   so_luong: number
-  thoi_gian_can: string | null
-  ke_hoach_su_dung: string | null
   ghi_chu: string | null
   san_pham: { ten: string } | null
 }
@@ -42,7 +42,7 @@ type Dong = {
 export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
   const pr = await getPrinter()
 
-  const header = ['TT', 'Tên TTB/VPP', 'ĐVT', 'Số lượng', 'Thời gian cần', 'Kế hoạch sử dụng', 'Ghi chú'].map(
+  const header = ['TT', 'Tên TTB/VPP', 'ĐVT', 'Số lượng', 'Ghi chú'].map(
     (t) => ({ text: t, bold: true, fillColor: '#eef2f7', alignment: 'center' as const, fontSize: 9 }),
   )
   const body = rows.map((d, i) => [
@@ -50,8 +50,6 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
     { text: d.san_pham?.ten || d.ten_tay || '', fontSize: 9 },
     { text: d.dvt || '', alignment: 'center' as const, fontSize: 9 },
     { text: d.so_luong != null ? String(d.so_luong) : '', alignment: 'center' as const, fontSize: 9 },
-    { text: d.thoi_gian_can || '', alignment: 'center' as const, fontSize: 9 },
-    { text: d.ke_hoach_su_dung || '', fontSize: 9 },
     { text: d.ghi_chu || '', fontSize: 9 },
   ])
 
@@ -82,13 +80,15 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
       { text: `Bộ phận: ${phieu.phong_ban_ten || ''}`, fontSize: 10 },
       {
         text: `Đề nghị: ${phieu.tieu_de || `Mua sắm văn phòng phẩm tháng ${formatThang(phieu.thang)}`}`,
-        margin: [0, 0, 0, 10],
+        margin: [0, 0, 0, 2],
         fontSize: 10,
       },
+      { text: `Thời gian cần: ${phieu.thoi_gian_can || ''}`, fontSize: 10 },
+      { text: `Kế hoạch sử dụng: ${phieu.ke_hoach_su_dung || ''}`, margin: [0, 0, 0, 10], fontSize: 10 },
       {
         table: {
           headerRows: 1,
-          widths: [22, '*', 40, 44, 60, 90, 70],
+          widths: [24, '*', 50, 55, 110],
           body: [header, ...body],
         },
         layout: {

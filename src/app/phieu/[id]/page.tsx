@@ -11,8 +11,6 @@ type DongRow = {
   dvt: string | null
   don_gia: number | null
   so_luong: number
-  thoi_gian_can: string | null
-  ke_hoach_su_dung: string | null
   ghi_chu: string | null
   thu_tu: number
   san_pham: { ten: string } | null
@@ -32,7 +30,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('san_pham_id, ten_tay, dvt, don_gia, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
+    .select('san_pham_id, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 
@@ -59,7 +57,11 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
         </div>
         <div className="text-sm mb-1"><b>Người đề nghị:</b> {phieu.nguoi_de_nghi_ten}</div>
         <div className="text-sm mb-1"><b>Bộ phận:</b> {phieu.phong_ban_ten || '—'}</div>
-        <div className="text-sm mb-4"><b>Đề nghị:</b> {phieu.tieu_de || `Mua sắm VPP tháng ${formatThang(phieu.thang)}`}</div>
+        <div className="text-sm mb-1"><b>Đề nghị:</b> {phieu.tieu_de || `Mua sắm VPP tháng ${formatThang(phieu.thang)}`}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm mb-4">
+          <div><b>Thời gian cần:</b> {phieu.thoi_gian_can || '—'}</div>
+          <div><b>Kế hoạch sử dụng:</b> {phieu.ke_hoach_su_dung || '—'}</div>
+        </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm border border-border">
@@ -69,8 +71,6 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
                 <th className="border border-border px-2 py-1 text-left">Tên TTB/VPP</th>
                 <th className="border border-border px-2 py-1">ĐVT</th>
                 <th className="border border-border px-2 py-1">Số lượng</th>
-                <th className="border border-border px-2 py-1">Thời gian cần</th>
-                <th className="border border-border px-2 py-1">Kế hoạch sử dụng</th>
                 <th className="border border-border px-2 py-1">Ghi chú</th>
               </tr>
             </thead>
@@ -81,8 +81,6 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
                   <td className="border border-border px-2 py-1">{d.san_pham?.ten || d.ten_tay || ''}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.dvt || ''}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.so_luong}</td>
-                  <td className="border border-border px-2 py-1 text-center">{d.thoi_gian_can || ''}</td>
-                  <td className="border border-border px-2 py-1">{d.ke_hoach_su_dung || ''}</td>
                   <td className="border border-border px-2 py-1">{d.ghi_chu || ''}</td>
                 </tr>
               ))}

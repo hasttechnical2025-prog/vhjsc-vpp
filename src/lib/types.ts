@@ -19,8 +19,6 @@ export type PhieuDong = {
   dvt: string | null
   don_gia: number | null
   so_luong: number
-  thoi_gian_can: string | null
-  ke_hoach_su_dung: string | null
   ghi_chu: string | null
   thu_tu: number
 }
@@ -33,6 +31,9 @@ export type Phieu = {
   nguoi_de_nghi_ten: string
   thang: string
   tieu_de: string | null
+  // Dùng chung cho cả phiếu (không theo từng dòng)
+  thoi_gian_can: string | null
+  ke_hoach_su_dung: string | null
   trang_thai: TrangThaiPhieu
   ghi_chu: string | null
   tong_tien: number
