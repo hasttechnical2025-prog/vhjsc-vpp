@@ -24,15 +24,15 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
   const { id } = await params
 
   const { data: phieu } = await supabaseAdmin
-    .from('vpp_phieu')
+    .from('vhjscvpp_phieu')
     .select('*')
     .eq('id', id)
     .maybeSingle()
   if (!phieu) notFound()
 
   const { data: dong } = await supabaseAdmin
-    .from('vpp_phieu_dong')
-    .select('san_pham_id, ten_tay, dvt, don_gia, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vpp_san_pham(ten)')
+    .from('vhjscvpp_phieu_dong')
+    .select('san_pham_id, ten_tay, dvt, don_gia, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 

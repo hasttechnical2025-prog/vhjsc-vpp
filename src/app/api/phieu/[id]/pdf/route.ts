@@ -20,12 +20,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!session) return new Response('Chưa đăng nhập', { status: 401 })
   const { id } = await params
 
-  const { data: phieu } = await supabaseAdmin.from('vpp_phieu').select('*').eq('id', id).maybeSingle()
+  const { data: phieu } = await supabaseAdmin.from('vhjscvpp_phieu').select('*').eq('id', id).maybeSingle()
   if (!phieu) return new Response('Không tìm thấy phiếu', { status: 404 })
 
   const { data: dong } = await supabaseAdmin
-    .from('vpp_phieu_dong')
-    .select('ten_tay, dvt, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vpp_san_pham(ten)')
+    .from('vhjscvpp_phieu_dong')
+    .select('ten_tay, dvt, so_luong, thoi_gian_can, ke_hoach_su_dung, ghi_chu, thu_tu, san_pham:vhjscvpp_san_pham(ten)')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 

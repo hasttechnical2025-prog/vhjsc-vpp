@@ -9,9 +9,9 @@ export default async function AdminPage() {
   if (session.role !== 'admin' && session.role !== 'hcns') redirect('/')
 
   const [{ data: users }, { data: phongBan }, { count: soSanPham }] = await Promise.all([
-    supabaseAdmin.from('vpp_nguoi_dung').select('ho_ten, username, role, is_active').order('created_at'),
-    supabaseAdmin.from('vpp_phong_ban').select('ten, ma').order('ten'),
-    supabaseAdmin.from('vpp_san_pham').select('*', { count: 'exact', head: true }),
+    supabaseAdmin.from('vhjscvpp_nguoi_dung').select('ho_ten, username, role, is_active').order('created_at'),
+    supabaseAdmin.from('vhjscvpp_phong_ban').select('ten, ma').order('ten'),
+    supabaseAdmin.from('vhjscvpp_san_pham').select('*', { count: 'exact', head: true }),
   ])
 
   const roleLabel: Record<string, string> = {

@@ -18,9 +18,9 @@ export default async function DashboardPage() {
 
   const thang = thangHienTai()
   const [soSanPham, soPhieu, soPhieuThang] = await Promise.all([
-    dem('vpp_san_pham', (q) => q.eq('dang_ban', true)),
-    dem('vpp_phieu'),
-    dem('vpp_phieu', (q) => q.eq('thang', thang)),
+    dem('vhjscvpp_san_pham', (q) => q.eq('dang_ban', true)),
+    dem('vhjscvpp_phieu'),
+    dem('vhjscvpp_phieu', (q) => q.eq('thang', thang)),
   ])
 
   const cards = [

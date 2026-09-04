@@ -11,7 +11,7 @@ export default async function DangKyPage() {
 
   const sanPham = await selectAll<SanPham>((from, to) =>
     supabaseAdmin
-      .from('vpp_san_pham')
+      .from('vhjscvpp_san_pham')
       .select('id, nhom_hang, ten, xuat_xu, quy_cach, dvt, don_gia, anh_url, dang_ban')
       .eq('dang_ban', true)
       .order('id', { ascending: true })
@@ -22,7 +22,7 @@ export default async function DangKyPage() {
   let phongBanTen = ''
   if (session.phong_ban_id) {
     const { data } = await supabaseAdmin
-      .from('vpp_phong_ban')
+      .from('vhjscvpp_phong_ban')
       .select('ten')
       .eq('id', session.phong_ban_id)
       .maybeSingle()

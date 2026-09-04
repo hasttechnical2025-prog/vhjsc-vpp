@@ -80,7 +80,7 @@ export async function requireRole(...roles: Role[]): Promise<SessionPayload | nu
   if (!session) return null
   if (roles.length > 0 && !roles.includes(session.role)) return null
   const { data } = await supabaseAdmin
-    .from('vpp_nguoi_dung')
+    .from('vhjscvpp_nguoi_dung')
     .select('role, is_active')
     .eq('id', session.id)
     .single()

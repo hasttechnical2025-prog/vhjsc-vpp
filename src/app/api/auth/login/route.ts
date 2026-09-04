@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   }
 
   const { data: user } = await supabaseAdmin
-    .from('vpp_nguoi_dung')
+    .from('vhjscvpp_nguoi_dung')
     .select('id, ho_ten, role, phong_ban_id, password_hash, is_active')
     .eq('username', String(username).trim().toLowerCase())
     .maybeSingle()

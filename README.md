@@ -27,7 +27,7 @@ npm run seed
 
 Seed tạo sẵn:
 - Bucket `vpp-images` (public) + 451 ảnh từ `seed-data/images/`
-- 634 sản phẩm (`seed-data/vpp_san_pham.csv`)
+- 634 sản phẩm (`seed-data/vhjscvpp_san_pham.csv`)
 - Phòng ban **Phòng kinh doanh** (mã PKD)
 - Tài khoản **admin / admin123** và **pkd / pkd123** — *đổi mật khẩu ngay*
 

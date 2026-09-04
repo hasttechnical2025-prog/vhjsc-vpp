@@ -10,7 +10,7 @@ Chưa chạy được luồng có dữ liệu vì `.env.local` chưa có key th�
 ## Đã có
 - Next.js 16 App Router + Tailwind 4 (chỉ light, accent xanh).
 - Auth cookie httpOnly + scrypt (`src/lib/session.ts`, `src/lib/password.ts`). Role: `admin | hcns | nguoi_de_nghi`.
-- Migration `supabase/migrations/0001_init.sql`: 5 bảng (vpp_phong_ban, vpp_nguoi_dung, vpp_san_pham, vpp_phieu, vpp_phieu_dong) + RLS.
+- Migration `supabase/migrations/0001_init.sql`: 5 bảng (vhjscvpp_phong_ban, vhjscvpp_nguoi_dung, vhjscvpp_san_pham, vhjscvpp_phieu, vhjscvpp_phieu_dong) + RLS.
 - Seed `scripts/seed.mjs`: bucket ảnh + upload 451 ảnh + import 634 SP + phòng ban PKD + tài khoản admin/pkd.
 - UI: `/login`, `/` (KPI), `/dang-ky` (catalog có ảnh + mục khác), `/phieu`, `/phieu/[id]`, `/admin`.
 - Xuất PDF BM01: `src/lib/pdf/bm01.ts` (pdfmake, font Roboto in-memory) qua `/api/phieu/[id]/pdf`.

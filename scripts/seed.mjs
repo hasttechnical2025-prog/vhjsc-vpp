@@ -87,7 +87,7 @@ async function uploadImages() {
 }
 
 async function importProducts(imgMap) {
-  const csv = fs.readFileSync(path.join(ROOT, 'seed-data', 'vpp_san_pham.csv'), 'utf8')
+  const csv = fs.readFileSync(path.join(ROOT, 'seed-data', 'vhjscvpp_san_pham.csv'), 'utf8')
   const rows = parseCSV(csv)
   const header = rows[0]
   const col = Object.fromEntries(header.map((h, i) => [h.trim(), i]))
@@ -110,7 +110,7 @@ async function importProducts(imgMap) {
   // upsert theo lô 500
   for (let i = 0; i < recs.length; i += 500) {
     const chunk = recs.slice(i, i + 500)
-    const { error } = await sb.from('vpp_san_pham').upsert(chunk, { onConflict: 'id' })
+    const { error } = await sb.from('vhjscvpp_san_pham').upsert(chunk, { onConflict: 'id' })
     if (error) throw error
   }
   console.log('✅ Import sản phẩm:', recs.length)
@@ -118,9 +118,9 @@ async function importProducts(imgMap) {
 
 async function ensureSeedAccounts() {
   // Phòng ban Kinh doanh
-  let { data: pb } = await sb.from('vpp_phong_ban').select('id').eq('ten', 'Phòng kinh doanh').maybeSingle()
+  let { data: pb } = await sb.from('vhjscvpp_phong_ban').select('id').eq('ten', 'Phòng kinh doanh').maybeSingle()
   if (!pb) {
-    const { data, error } = await sb.from('vpp_phong_ban')
+    const { data, error } = await sb.from('vhjscvpp_phong_ban')
       .insert({ ten: 'Phòng kinh doanh', ma: 'PKD' }).select('id').single()
     if (error) throw error
     pb = data
@@ -128,10 +128,10 @@ async function ensureSeedAccounts() {
   } else console.log('• Phòng ban Phòng kinh doanh đã có')
 
   // Tài khoản admin
-  const { data: admin } = await sb.from('vpp_nguoi_dung').select('id').eq('username', 'admin').maybeSingle()
+  const { data: admin } = await sb.from('vhjscvpp_nguoi_dung').select('id').eq('username', 'admin').maybeSingle()
   if (!admin) {
     const pw = process.env.SEED_ADMIN_PASSWORD || 'admin123'
-    const { error } = await sb.from('vpp_nguoi_dung').insert({
+    const { error } = await sb.from('vhjscvpp_nguoi_dung').insert({
       ho_ten: 'Quản trị', username: 'admin', password_hash: hashPassword(pw),
       role: 'admin', phong_ban_id: null, is_active: true,
     })
@@ -140,9 +140,9 @@ async function ensureSeedAccounts() {
   } else console.log('• Tài khoản admin đã có')
 
   // 1 tài khoản người đề nghị mẫu cho PKD
-  const { data: u } = await sb.from('vpp_nguoi_dung').select('id').eq('username', 'pkd').maybeSingle()
+  const { data: u } = await sb.from('vhjscvpp_nguoi_dung').select('id').eq('username', 'pkd').maybeSingle()
   if (!u) {
-    const { error } = await sb.from('vpp_nguoi_dung').insert({
+    const { error } = await sb.from('vhjscvpp_nguoi_dung').insert({
       ho_ten: 'Nguyễn Hà Thu', username: 'pkd', password_hash: hashPassword('pkd123'),
       role: 'nguoi_de_nghi', phong_ban_id: pb.id, is_active: true,
     })

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   let phongBanTen = ''
   if (session.phong_ban_id) {
     const { data } = await supabaseAdmin
-      .from('vpp_phong_ban')
+      .from('vhjscvpp_phong_ban')
       .select('ten')
       .eq('id', session.phong_ban_id)
       .maybeSingle()
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
   )
 
   const { data: phieu, error: e1 } = await supabaseAdmin
-    .from('vpp_phieu')
+    .from('vhjscvpp_phieu')
     .insert({
       phong_ban_id: session.phong_ban_id,
       phong_ban_ten: phongBanTen,
@@ -58,10 +58,10 @@ export async function POST(req: Request) {
     thu_tu: typeof d.thu_tu === 'number' ? d.thu_tu : i,
   }))
 
-  const { error: e2 } = await supabaseAdmin.from('vpp_phieu_dong').insert(rows)
+  const { error: e2 } = await supabaseAdmin.from('vhjscvpp_phieu_dong').insert(rows)
   if (e2) {
     // rollback thủ công: phiếu vừa tạo mà dòng lỗi -> xoá phiếu để không để rác
-    await supabaseAdmin.from('vpp_phieu').delete().eq('id', phieu.id)
+    await supabaseAdmin.from('vhjscvpp_phieu').delete().eq('id', phieu.id)
     return NextResponse.json({ error: 'Không lưu được dòng phiếu' }, { status: 500 })
   }
 

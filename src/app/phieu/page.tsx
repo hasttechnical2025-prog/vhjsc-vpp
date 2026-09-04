@@ -18,7 +18,7 @@ export default async function PhieuListPage() {
   const canAll = session.role === 'admin' || session.role === 'hcns'
   const phieu = await selectAll<PhieuLite>((from, to) => {
     let q = supabaseAdmin
-      .from('vpp_phieu')
+      .from('vhjscvpp_phieu')
       .select('id, phong_ban_ten, nguoi_de_nghi_ten, thang, trang_thai, tong_tien, created_at')
       .order('created_at', { ascending: false })
       .range(from, to)
