@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* Chỉ giao diện SÁNG (không dark mode), accent xanh — đồng nhất phong cách App Sổ công tác. */
+:root {
+  --background: #f5f7fa;
+  --surface: #ffffff;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #0ea5e9;
+  --accent-600: #0284c7;
+  --accent-50: #e0f2fe;
+  --danger: #dc2626;
+  --ok: #16a34a;
+  --warn: #d97706;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-600: var(--accent-600);
+  --color-accent-50: var(--accent-50);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+}
+
+html {
+  font-size: 15px;
+  color-scheme: light;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Tiện ích dùng lại */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}

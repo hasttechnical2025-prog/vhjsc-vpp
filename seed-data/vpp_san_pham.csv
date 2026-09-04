@@ -1,0 +1,635 @@
+﻿id,nhom_hang,stt,ten,xuat_xu,quy_cach,dvt,don_gia,anh
+1,Giấy in,1,Giấy in A4 Bãi Bằng ĐL70/90 vỏ trắng(tem),Việt Nam,A4 - 500tờ,ream,58000,giay-in_0001.webp
+2,Giấy in,2,Giấy in A4 An Hòa ĐL 70/90 ( bọc nilon),Việt Nam,A4 - 500tờ,ream,58000,giay-in_0002.webp
+3,Giấy in,3,Giấy in A4 Epaper ĐL70/90,Indonesia,A4 - 500tờ,ream,65000,giay-in_0003.webp
+4,Giấy in,4,Giấy in A4 ĐL70/90 Plus vàng,Indonesia,A4 - 500tờ,ream,70000,giay-in_0004.webp
+5,Giấy in,5,Giấy in A4 ĐL70/90 Paper One,Indonesia,A4 - 500tờ,ream,70000,giay-in_0005.webp
+6,Giấy in,6,Giấy in A4 Double A ĐL70/90,Thái lan,A4- 500 tờ,ream,77000,giay-in_0006.webp
+7,Giấy in,7,Giấy in A4 SuperMe ĐL70,Thái lan,A4 - 500tờ,ream,70000,giay-in_0007.webp
+8,Giấy in,8,Giấy in A4 Paper one ĐL80,Indonesia,A4 - 500tờ,ream,85000,giay-in_0008.webp
+9,Giấy in,9,Giấy in A4 Supreme ĐL80,Thái lan,A4 - 500tờ,ream,87000,giay-in_0009.webp
+10,Giấy in,10,Giấy in Quality A4 ĐL70/90,Thái lan,A4 - 500tờ,ream,62000,giay-in_0010.webp
+11,Giấy in,11,Giấy in A4 Plus ĐL80,Indonesia,A4 - 500tờ,ream,80000,giay-in_0011.webp
+12,Giấy in,12,Giấy in A4 Smartist ĐL 70/90,Thái Lan,A4 - 500tờ,Ream,62000,giay-in_0012.webp
+13,Giấy in,13,Giấy in A4 Double A ĐL80 Thái Lan,Thái lan,A4 - 500tờ,ream,92000,giay-in_0013.webp
+14,Giấy in,14,Giấy in A4 Pagi ĐL 70,Indonesia,A4 - 500tờ,ream,58000,giay-in_0014.webp
+15,Giấy in,15,"Giấy photo màu A4 - ĐL80 ( xanh nhạt, xanh cốm, hồng, vàng)",Việt Nam,A4 - 500 tờ,ream,130000,giay-in_0015.webp
+16,Giấy in,1,Giấy in A5 An hòa ĐL70/90,Việt Nam,A5 - 500tờ,ream,29000,giay-in_0016.webp
+17,Giấy in,2,Giấy in A5 Plus ĐL70/90 vàng,Indonesia,A5 - 500tờ,ream,35000,giay-in_0017.webp
+18,Giấy in,3,Giấy in Double A- A5 ĐL70/90,Thái lan,A5- 500 tờ,ream,38500,giay-in_0018.webp
+19,Giấy in,1,Giấy Plus vàng A3 ĐL 70/90,Indonesia,A3 - 500tờ,ream,140000,giay-in_0019.webp
+20,Giấy in,2,Giấy A3 Supreme- ĐL70/90,Thái lan,A3 - 500tờ,ream,140000,giay-in_0020.webp
+21,Giấy in,3,Giấy A3 Double A ĐL70/90,Thái lan,A3 - 500tờ,ream,154000,giay-in_0021.webp
+22,Giấy in,4,Giấy in Quality A3 ĐL70/90,Thái lan,A3 - 500tờ,ream,124000,giay-in_0022.webp
+23,Giấy in,6,Giấy in A3 An hòa ĐL70/90 vỏ trắng( bọc nilon),Việt nam,A3 - 500tờ,ream,116000,giay-in_0023.webp
+24,Giấy in,1,Giấy A1 tờ ĐL100- trắng,Indonesia,A1,Tờ,3500,giay-in_0024.webp
+25,Giấy in,2,Giấy A0 tờ ĐL100- trắng,Indonesia,A0,Tờ,4500,giay-in_0025.webp
+26,Giấy in,3,Giấy A0 tờ ĐL80- Xi măng,Nhật,A0,Tờ,3000,
+27,Giấy in ảnh,1,Giấy in ảnh 1mặt Kanshai A4 ĐL 230,Đài Loan,20tờ/ram,ream,25000,giay-in-anh_0027.webp
+28,Giấy in ảnh,2,Giấy in ảnh 1 mặt Kanshai A3 ĐL 230,Đài Loan,20tờ/ram,ream,50000,giay-in-anh_0028.webp
+29,Giấy in ảnh,3,Giấy in ảnh 1 mặt Kanshai A4 ĐL 135,Đài Loan,100 tờ/ ream,ream,65000,giay-in-anh_0029.webp
+30,Giấy in ảnh,4,Giấy in ảnh đề can 1 mặt Kanshai A4 ĐL 135,Đài Loan,50 tờ/ ream,ream,75000,giay-in-anh_0030.webp
+31,Giấy in ảnh,1,Giấy in ảnh 2 mặt Kanshai A4 ĐL 140,Đài Loan,50 tờ/ ream,ream,55000,
+32,Giấy in ảnh,2,Giấy in ảnh 2 mặt Kanshai A4 ĐL 160,Đài Loan,50 tờ/ ream,ream,60000,
+33,Giấy in ảnh,3,Giấy in ảnh 2 mặt Kanshai A4 ĐL 200,Đài Loan,50 tờ/ ream,ream,65000,
+34,Giấy in ảnh,4,Giấy in ảnh 2 mặt Kanshai A4 ĐL 230,Đài Loan,50tờ/ ream,ream,70000,
+35,Giấy in ảnh,5,Giấy in ảnh 2 mặt Kanshai A4 ĐL 250,Đài Loan,50tờ/ ream,ream,75000,
+36,Giấy in ảnh,6,Giấy in ảnh 2 mặt Kanshai A4 ĐL 300,Đài Loan,50tờ/ ream,ream,80000,
+37,Giấy in ảnh,7,Giấy in ảnh 2 mặt Kanshai A3 ĐL 160,Đài Loan,50tờ/ ream,ream,120000,
+38,Giấy in ảnh,8,Giấy in ảnh 2 mặt Kanshai A3 ĐL 200,Đài Loan,50tờ/ ream,ream,130000,
+39,Giấy in ảnh,9,Giấy in ảnh 2 mặt Kanshai A3 ĐL 230,Đài Loan,50tờ/ ream,ream,140000,
+40,Giấy in ảnh,10,Giấy in ảnh 2 mặt Kanshai A3 ĐL 250,Đài Loan,50 tờ/ ream,ream,150000,giay-in-anh_0040.webp
+41,Giấy in ảnh,11,Giấy in ảnh 2 mặt Kanshai A3 ĐL 300,Đài Loan,50 tờ/ ream,ream,160000,
+42,Giấy in ảnh,1,Giấy in ảnh 1 mặt kanshai A4- ĐL 230 Có vân,Đài Loan,50 tờ/ ream,ream,70000,
+43,Giấy in ảnh,2,Giấy in ảnh 1 mặt kanshai A4- ĐL 250 Có vân,Đài Loan,50 tờ/ ream,ream,75000,
+44,Giấy in ảnh,3,Giấy in ảnh 2 mặt kanshai A4- ĐL 230 Có vân,Đài Loan,50 tờ/ ream,ream,75000,
+45,Giấy in ảnh,4,Giấy in ảnh 2 mặt kanshai A4- ĐL 250 Có vân,Đài Loan,50 tờ/ ream,ream,80000,giay-in-anh_0045.webp
+46,Giấy in ảnh,5,Giấy in ảnh 2 mặt kanshai A3- ĐL 250 Có vân,Đài Loan,50 tờ/ ream,ream,170000,
+47,Giấy in ảnh,1,Giấy in màu 1 mặt A4 Kanshai ĐL 130,Đài Loan,100 tờ,ream,65000,
+48,Giấy in ảnh,2,Giấy in màu 1 mặt A3 Kanshai ĐL 130,Đài Loan,100 tờ,ream,130000,
+49,Giấy in ảnh,3,Giấy in màu 2 mặt A4 Kanshai ĐL 150,Đài Loan,100 tờ,ream,70000,
+50,Giấy in ảnh,4,Giấy in màu 2 mặt A3 Kanshai ĐL 150,Đài Loan,100 tờ,ream,140000,
+51,Giấy in ảnh,5,Giấy in màu 2 mặt A4 Kanshai ĐL 220( Card trơn),Đài Loan,50 tờ,ream,70000,
+52,Giấy in ảnh,6,Giấy in màu 2 mặt A4 Kanshai ĐL 250( Card trơn),Đài Loan,50 tờ,ream,75000,
+53,Giấy in ảnh,7,Giấy in màu 2 mặt A3 Kanshai ĐL 220( Card trơn),Đài Loan,50 tờ,ream,140000,
+54,Giấy in ảnh,8,Giấy in màu 2 mặt A3 Kanshai ĐL 250( Card trơn),Đài Loan,50 tờ,ream,150000,
+55,Giấy liên tục,1,Giấy đục lỗ liên tục A4 - 1 liên 2 dao(1500 tờ/ thùng),Việt nam,210 x 279,Thùng,275000,giay-lien-tuc_0055.webp
+56,Giấy liên tục,2,Giấy đục lỗ liên tục A4 - 1 liên 2 dao(1500 tờ/ thùng),Việt nam,241 x 279,Thùng,315000,giay-lien-tuc_0056.webp
+57,Giấy liên tục,3,Giấy đục lỗ liên tục A4 - 2 liên 2 dao(1500 tờ/ thùng),Việt nam,210 x 279,Thùng,450000,giay-lien-tuc_0057.webp
+58,Giấy liên tục,4,Giấy đục lỗ liên tục A4 - 2 liên 2 dao(1500 tờ/ thùng),Việt nam,241 x 279,Thùng,550000,giay-lien-tuc_0058.webp
+59,Giấy liên tục,5,Giấy đục lỗ liên tục A4 - 3 liên 2 dao(1500 tờ/ thùng),Việt nam,210 x 279,Thùng,450000,giay-lien-tuc_0059.webp
+60,Giấy liên tục,6,Giấy đục lỗ liên tục A4 3 liên 2 dao (1500 tờ/ thùng),Việt nam,241 x 279,Thùng,550000,
+61,Giấy liên tục,7,Giấy đục lỗ liên tục A4 - 4 liên 2 dao(1500 tờ/ thùng),Việt nam,210 x 279,Thùng,450000,giay-lien-tuc_0061.webp
+62,Giấy liên tục,8,Giấy đục lỗ liên tục A4 - 4 liên 2 dao(1500 tờ/ thùng),Việt nam,241 x 279,Thùng,550000,
+63,Giấy liên tục,1,Giấy than Horse A4 xanh - đen (Hàng hãng),Thái Lan,100 tờ/ tập,Tập,90000,
+64,Bìa các loại,1,Bìa màu A4 ĐL160- SUMMER,Việt nam,100tờ/ream,ream,45000,bia-cac-loai_0064.webp
+65,Bìa các loại,2,Bìa màu A3 ĐL160- SUMMER,Việt nam,100tờ/ream,ream,90000,bia-cac-loai_0065.webp
+66,Bìa các loại,3,Bìa A4 vân thơm ĐL160,Thái lan,100tờ/ream,ream,85000,bia-cac-loai_0066.webp
+67,Bìa các loại,4,Bìa A4 màu ĐL 160 (5 màu/ream),Việt nam,100tờ/ream,ream,70000,bia-cac-loai_0067.webp
+68,Bìa các loại,5,Bìa A4 màu đặc biệt ĐL160,Việt nam,100tờ/ream,ream,70000,bia-cac-loai_0068.webp
+69,Bìa các loại,1,Bìa mica A4 trung 100 tờ,Việt nam,100tờ/ream,ream,75000,bia-cac-loai_0069.webp
+70,Bìa các loại,2,Bìa mica A4 dày 100 tờ,Việt nam,100tờ/ream,ream,80000,bia-cac-loai_0070.webp
+71,Bìa các loại,3,Bìa mica A3 dày 100 tờ,Việt nam,100tờ/ream,ream,160000,bia-cac-loai_0071.webp
+72,Bìa các loại,4,Bìa mica A4 sần mờ( 50 tờ/ ream),Việt nam,100tờ/ream,ream,110000,bia-cac-loai_0072.webp
+73,"Giấy note, decan",1,Giấy dính 1.5x2 Pronoti 15221( màu vàng),Trung quốc,38x51mm,tập,4500,giay-note-decan_0073.webp
+74,"Giấy note, decan",2,Giấy dinh 2x3 Pronoti 30200( màu vàng),Trung quốc,50x75mm,Tập,5500,giay-note-decan_0074.webp
+75,"Giấy note, decan",3,Giấy dính 3x3 Pronoti 30300( màu vàng),Trung quốc,75x75mm,Tập,7500,giay-note-decan_0075.webp
+76,"Giấy note, decan",4,Giấy dính 3x4 Pronoti 30400( màu vàng),Trung quốc,75x100mm,Tập,9500,giay-note-decan_0076.webp
+77,"Giấy note, decan",5,Giấy dính 3x5 Pronoti 30500( màu vàng),Trung quốc,75x125mm,Tập,12000,giay-note-decan_0077.webp
+78,"Giấy note, decan",6,Giấy dính kẻ ngang 3x3 Pronoti 50336( màu vàng),Trung quốc,76x76mm,Tập,11500,giay-note-decan_0078.webp
+79,"Giấy note, decan",7,Giấy dính kẻ ngang 3x4 Pronoti- 50346( màu vàng),Trung quốc,76x102mm,Tập,14500,giay-note-decan_0079.webp
+80,"Giấy note, decan",8,"Giấy dính phản quang 4 màu 30232 ( 3x2)- hồng, vàng, xanh, cam",Trung quốc,50x75mm,tập,10000,giay-note-decan_0080.webp
+81,"Giấy note, decan",9,"Giấy dính phản quang 4 màu 30388 ( 3x3)- hồng, vàng, xanh, cam",Trung quốc,75x75mm,tập,11000,giay-note-decan_0081.webp
+82,"Giấy note, decan",10,"Giấy dính 2x3 Deli A012( Vàng, hồng, xanh biển, xanh cốm)",Trung quốc,50x75mm,Tập,9000,giay-note-decan_0082.webp
+83,"Giấy note, decan",11,"Giấy đính 3x3 Deli A013( Vàng, hồng, xanh biển, xanh cốm)",Trung quốc,75x75mm,Tập,11500,giay-note-decan_0083.webp
+84,"Giấy note, decan",12,"Giấy dính 3x4 Deli A014( Vàng, hồng, xanh biển, xanh cốm)",Trung quốc,75x100mm,Tập,15000,giay-note-decan_0084.webp
+85,"Giấy note, decan",13,"Giấy dính 3x5 Deli A015( Vàng, hồng, xanh biển, xanh cốm)",Trung quốc,75x125mm,Tập,18500,giay-note-decan_0085.webp
+86,"Giấy note, decan",14,Giấy phân trang Pronoti 07008 3x3 ( 3 màu),Trung Quốc,25x75mm,tập,12000,giay-note-decan_0086.webp
+87,"Giấy note, decan",16,Giấy phân trang Pronoti 07320 3x3 ( 5 màu),Trung Quốc,12x76mm,tập,16500,giay-note-decan_0087.webp
+88,"Giấy note, decan",17,Giấy dính trình ký 5 màu giấy Deli 7154,Trung Quốc,12x50mm,tập,16000,giay-note-decan_0088.webp
+89,"Giấy note, decan",18,Giấy phân trang 5 màu giấy proti 40434,Trung Quốc,12x50mm,tập,13000,giay-note-decan_0089.webp
+90,"Giấy note, decan",19,Giấy dính trình ký 5 màu nhựa mũi tên proti 45502,Trung Quốc,5 màu,tập,13000,giay-note-decan_0090.webp
+91,"Giấy note, decan",20,Giấy dính trình ký 5 màu nhựa deli A106 mũi tên,Trung Quốc,5 màu,tập,16000,giay-note-decan_0091.webp
+92,"Giấy note, decan",21,Giấy dính trình ký 5 màu nhựa deli A102,Trung Quốc,5 màu,tập,22000,giay-note-decan_0092.webp
+93,"Giấy note, decan",22,Giấy dính trình ký Please sign nhựa 5649 Pronoti,Trung Quốc,5 màu,tập,22000,giay-note-decan_0093.webp
+94,"Giấy note, decan",23,Giấy dính trình ký Signhere 5 màu 45668 Pronoti,Trung Quốc,5 màu,tập,23000,giay-note-decan_0094.webp
+95,"Giấy note, decan",24,Giấy Sign here Deli A101,Trung Quốc,1 màu vàng,tập,30000,giay-note-decan_0095.webp
+96,"Giấy note, decan",25,Giấy dính trình ký nhựa SIGN HERE 3M,Đức,1 màu vàng,tập,42000,giay-note-decan_0096.webp
+97,"Giấy note, decan",26,Giấy dán giá trắng cuộn nhỏ,Trung quốc,10 cuộn/cây,cuộn,2500,giay-note-decan_0097.webp
+98,"Giấy note, decan",27,Giấy dán giá màu cuộn nhỏ,Trung quốc,10 cuộn/cây,Cuộn,3500,giay-note-decan_0098.webp
+99,"Giấy note, decan",28,Giấy dán giá trắng cuộn to,Trung quốc,10 cuộn/cây,Cuộn,3500,giay-note-decan_0099.webp
+100,"Giấy note, decan",29,Giấy Tomy A5 các cỡ,Trung Quốc,10 tờ/tập,tập,13000,giay-note-decan_0100.webp
+101,"Giấy note, decan",30,Giấy Tomy A4 các cỡ,Trung Quốc,100 tờ,ream,150000,giay-note-decan_0101.webp
+102,"Giấy note, decan",31,Giấy dính A4 đề can-100 tờ /ream( Trắng- Vàng),Việt nam,100 tờ,ream,90000,giay-note-decan_0102.webp
+103,"Giấy note, decan",32,Giấy dính A4 đề can-100 tờ /ream( Trắng- Xanh),Đài Loan,100 tờ,ream,85000,giay-note-decan_0103.webp
+104,"Giấy note, decan",32,Giấy dính decal trong dán nhãn A4,248,,ream,270000,giay-note-decan_0104.webp
+105,"Giấy note, decan",1,Giấy ép Plastic khổ A7 dày (KT 8x11cm)- 125 MIC,Đài Loan,A7,ream,40000,giay-note-decan_0105.webp
+106,"Giấy note, decan",2,Giấy ép Plastic khổ A6 Mỏng(KT 10x15cm)-35 MIC,Đài Loan,A6,ream,26000,giay-note-decan_0106.webp
+107,"Giấy note, decan",3,Giấy ép Plastic khổ A5 Mỏng(KT16x21cm)-35 MIC,Đài Loan,A5,ream,40000,giay-note-decan_0107.webp
+108,"Giấy note, decan",4,Giấy ép Plastic khổ A5 Trung (KT16x21cm)-45 MIC,Đài Loan,A5,ream,50000,giay-note-decan_0108.webp
+109,"Giấy note, decan",5,Giấy ép Plastic khổ A5 dày (KT16x21cm)- 80 MIC,Đài Loan,A5,ream,70000,
+110,"Giấy note, decan",6,Giấy ép Plastic khổ A4 Mỏng(KT21x30cm)- 50 MIC,Đài Loan,A4,ream,80000,giay-note-decan_0110.webp
+111,"Giấy note, decan",7,Giấy ép Plastic khổ A4 trung (KT21x30cm)- 80 MIC,Đài Loan,A4,ream,120000,
+112,"Giấy note, decan",8,Giấy ép Plastic khổ A4 dày (KT21x30cm)- 135 MIC,Đài Loan,A4,ream,195000,
+113,"Giấy note, decan",9,Giấy ép Plastic khổ A3 Trung(KT 31x42cm) -80 MIC,Đài Loan,A3,ream,220000,
+114,"Giấy note, decan",10,Giấy ép Plastic khổ A3 dày (KT 31x42cm) -135 MIC,Đài Loan,A3,ream,390000,
+115,"Bút, thước, tẩy",3,Bút bi nến thiên long 093,Việt nam,20 chiếc/ hộp,chiếc,3100,but-thuoc-tay_0115.webp
+116,"Bút, thước, tẩy",4,"Bút bi Thiên Long 08 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,5000,but-thuoc-tay_0116.webp
+117,"Bút, thước, tẩy",5,"Bút bi Thiên Long 023 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,6000,but-thuoc-tay_0117.webp
+118,"Bút, thước, tẩy",6,"Bút bi Thiên Long 025 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,6500,but-thuoc-tay_0118.webp
+119,"Bút, thước, tẩy",7,"Bút bi Thiên Long 027 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,5000,but-thuoc-tay_0119.webp
+120,"Bút, thước, tẩy",8,"Bút bi Thiên Long 079 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,4000,but-thuoc-tay_0120.webp
+121,"Bút, thước, tẩy",9,"Bút bi Thiên Long 036 (Xanh, đen, đỏ)",Việt nam,20 chiếc/hộp,chiếc,12500,but-thuoc-tay_0121.webp
+122,"Bút, thước, tẩy",10,"Bút bi thiên long 049 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,4000,but-thuoc-tay_0122.webp
+123,"Bút, thước, tẩy",11,"Bút bi Thiên long 024 (Xanh, đen, đỏ)",Việt nam,20 chiếc/ hộp,chiếc,5500,but-thuoc-tay_0123.webp
+124,"Bút, thước, tẩy",12,"Bút thiên long Gel- B01 Master (Xanh, đen, đỏ)",Việt nam,12 chiếc/hộp,chiếc,6500,but-thuoc-tay_0124.webp
+125,"Bút, thước, tẩy",13,Bút bi Linc Flycer,Ấn độ,20 chiếc/ hộp,chiếc,5500,but-thuoc-tay_0125.webp
+126,"Bút, thước, tẩy",14,Bút dính bàn đôi PH2 Thiên Long,Việt nam,02 chiếc,Bộ,17500,but-thuoc-tay_0126.webp
+127,"Bút, thước, tẩy",15,Bút bi Double A Tritouch Ball pen 0.7,Việt Nam,12 chiếc/hộp,Chiếc,3500,but-thuoc-tay_0127.webp
+128,"Bút, thước, tẩy",16,Bút bi 4 màu M&G,Việt Nam,4 màu,Chiếc,14000,but-thuoc-tay_0128.webp
+129,"Bút, thước, tẩy",1,"Bút nước AIHAO- AH-801 (Xanh, đen, đỏ, tím)",Trung Quốc,48c/hộp,chiếc,3500,but-thuoc-tay_0129.webp
+130,"Bút, thước, tẩy",2,Bút nuớc chữ A Eras E114 (48 chiếc/ Cốc),Trung Quốc,48c/hộp,chiếc,4000,but-thuoc-tay_0130.webp
+131,"Bút, thước, tẩy",3,"Bút nước MINI (Xanh, đen, đỏ)",Trung Quốc,12c/hộp,chiếc,3000,but-thuoc-tay_0131.webp
+132,"Bút, thước, tẩy",4,"Bút nước Techjob TG310 (Xanh, đen)",Trung quốc,12c/ hộp,chiếc,4500,but-thuoc-tay_0132.webp
+133,"Bút, thước, tẩy",5,Bút nước thiên long Gel - B08,Việt nam,12c/hộp,chiếc,7000,but-thuoc-tay_0133.webp
+134,"Bút, thước, tẩy",6,Bút nước Linc Executive,Ấn độ,20c/ hộp,chiếc,9000,but-thuoc-tay_0134.webp
+135,"Bút, thước, tẩy",7,Bút nước thiên long Gel -B03,Việt nam,12c/hộp,chiếc,9500,but-thuoc-tay_0135.webp
+136,"Bút, thước, tẩy",8,Bút bi nước bấm baoke A35 Classic 0.5,Trung quốc,12c/hộp,chiếc,10000,but-thuoc-tay_0136.webp
+137,"Bút, thước, tẩy",9,Bút nước Gel 0.5 ml Cello Pointec,Ấn độ,12c/ hộp,chiếc,10500,but-thuoc-tay_0137.webp
+138,"Bút, thước, tẩy",10,Bút bi nước M&G AGP02376 New 21 nét 0.5,Trung quốc,12c/ hộp,chiếc,13000,but-thuoc-tay_0138.webp
+139,"Bút, thước, tẩy",11,Bút ký nước GP 777- nét 0.7,Trung quốc,12c/ hộp,chiếc,7000,but-thuoc-tay_0139.webp
+140,"Bút, thước, tẩy",12,Bút ký nước Baoke PC-1588 nét 0.7,Trung quốc,12c/ hộp,chiếc,12000,but-thuoc-tay_0140.webp
+141,"Bút, thước, tẩy",13,Bút ký nước Baoke PC-1048 nét 1.0,Trung quốc,12c/ hộp,chiếc,12000,but-thuoc-tay_0141.webp
+142,"Bút, thước, tẩy",14,"Bút ký nướcUB-150( Xanh, đen, đỏ)- Hàng thường",Trung Quốc,12c/hộp,chiếc,10000,but-thuoc-tay_0142.webp
+143,"Bút, thước, tẩy",15,"Bút ký nước UB-150 (Xanh, đen, đỏ)- Chính hãng",Nhật,10c/hộp,chiếc,35000,but-thuoc-tay_0143.webp
+144,"Bút, thước, tẩy",16,"Bút ký nước UB-200( Xanh, đen, đỏ)- Chính hãng",Nhật,10c/hộp,chiếc,56000,but-thuoc-tay_0144.webp
+145,"Bút, thước, tẩy",17,"Bút ký nước UM-153( Xanh, đen, đỏ)- Hàng thường",Trung quốc,12c/hộp,chiếc,35000,but-thuoc-tay_0145.webp
+146,"Bút, thước, tẩy",18,"Bút ký nước UM-153( Xanh, đen, đỏ)- Hàng hãng",Nhật,12c/hộp,chiếc,52000,but-thuoc-tay_0146.webp
+147,"Bút, thước, tẩy",19,Bút ký nước Pentel BL- L75 nét 0.5( Bấm)- Hàng hãng,Nhật,12c/ hộp,chiếc,45000,but-thuoc-tay_0147.webp
+148,"Bút, thước, tẩy",20,Bút ký nước Pentel BL-55 nét 0.5( Nắp đậy)- Hàng hãng,Nhật,12c/ hộp,chiếc,45000,but-thuoc-tay_0148.webp
+149,"Bút, thước, tẩy",21,Bút ký nước Pentel BL77 nét 0.7( Bấm)- Hàng hãng,Nhật,12c/ hộp,chiếc,45000,but-thuoc-tay_0149.webp
+150,"Bút, thước, tẩy",22,Bút ký nước pentel BL 57 nét 0.7( Nắp đậy)- Hàng hãng,Nhật,12c/ hộp,chiếc,45000,but-thuoc-tay_0150.webp
+151,"Bút, thước, tẩy",23,Bút ký nước pentel BL 60 nét 1.0( Nắp đậy)- Hàng hãng,Nhật,12c/ hộp,chiếc,45000,but-thuoc-tay_0151.webp
+152,"Bút, thước, tẩy",24,Bút nước baoke PC3808,Trung quốc,12c/hộp,chiếc,6000,but-thuoc-tay_0152.webp
+153,"Bút, thước, tẩy",25,"Bút ký số UNI Pin Finline"" 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8""",Nhật,12c/ hộp,chiếc,36000,but-thuoc-tay_0153.webp
+154,"Bút, thước, tẩy",1,"Bút dạ bảng TL WB02( Xanh, đen, đỏ)",Việt nam,20 chiếc/hộp,chiếc,6000,but-thuoc-tay_0154.webp
+155,"Bút, thước, tẩy",2,"Bút dạ bảng Thiên long WB03( Xanh, đen, đỏ)",Việt nam,10 chiếc/hộp,chiếc,8500,but-thuoc-tay_0155.webp
+156,"Bút, thước, tẩy",3,"Bút dạ dầu Thiên Long PM09( Xanh, đen, đỏ)",Việt nam,10 chiếc/hộp,chiếc,10000,but-thuoc-tay_0156.webp
+157,"Bút, thước, tẩy",4,"Bút dạ kính Thiên Long PM04( Xanh, đen, đỏ)",Việt nam,10 chiếc/hộp,chiếc,9500,but-thuoc-tay_0157.webp
+158,"Bút, thước, tẩy",1,Bút dấu dòng thiên long HL03( tròn nhỏ),Việt Nam,12 chiếc/hộp,chiếc,9000,but-thuoc-tay_0158.webp
+159,"Bút, thước, tẩy",2,Bút dấu dòng thiên long HL02( dẹt to),Việt Nam,12 chiếc/hộp,chiếc,10000,but-thuoc-tay_0159.webp
+160,"Bút, thước, tẩy",3,Bút dấu dòng 364 Staedtler (dẹt to),Đức,12 chiếc/hộp,chiếc,22000,but-thuoc-tay_0160.webp
+161,"Bút, thước, tẩy",1,Băng xoá PLUS nhỏ WH 505-7 mét,Việt Nhật,20 chiếc/ hộp,chiếc,14000,but-thuoc-tay_0161.webp
+162,"Bút, thước, tẩy",2,Băng xoá PLUS to WH 105-12 mét,Việt Nhật,10 chiếc/ hộp,chiếc,22000,but-thuoc-tay_0162.webp
+163,"Bút, thước, tẩy",3,Ruột băng xoá Plus 105- 12 mét,Việt Nhật,10 chiếc/ hộp,chiếc,16500,but-thuoc-tay_0163.webp
+164,"Bút, thước, tẩy",4,Bút xoá Thiên Long CP05,Việt nam,12 chiếc/hộp,chiếc,17500,but-thuoc-tay_0164.webp
+165,"Bút, thước, tẩy",5,Bút xoá Thiên Long CP02,Việt nam,12 chiếc/hộp,chiếc,22000,but-thuoc-tay_0165.webp
+166,"Bút, thước, tẩy",1,Bút chì khúc thiên long PC09,Việt nam,20 chiếc/hộp,chiếc,4000,but-thuoc-tay_0166.webp
+167,"Bút, thước, tẩy",2,Bút chì STAEDLER 134-2B có tẩy,Đức,12 chiếc/hộp,chiếc,4000,but-thuoc-tay_0167.webp
+168,"Bút, thước, tẩy",3,Bút chì thiên long 2HB- GP01,Việt nam,12 chiếc/hộp,chiếc,3500,but-thuoc-tay_0168.webp
+169,"Bút, thước, tẩy",4,Bút chì thiên long HB- GP04,Việt nam,12 chiếc/hộp,chiếc,4000,but-thuoc-tay_0169.webp
+170,"Bút, thước, tẩy",5,Bút chì STEADLER 120- 2B( Thân sọc vàng),Đức,12 chiếc/hộp,chiếc,12000,but-thuoc-tay_0170.webp
+171,"Bút, thước, tẩy",6,"Bút chì kỹ thuật staedler 110- HB, 3B, 4B, 5B, 6B( Thân sọc đỏ)",Đức,12 chiếc/hộp,chiếc,14000,but-thuoc-tay_0171.webp
+172,"Bút, thước, tẩy",7,"Bút chì kim 777 STAEDLER( 0.5, 0.7)",Đức,12 chiếc/hộp,chiếc,28000,but-thuoc-tay_0172.webp
+173,"Bút, thước, tẩy",8,Ruột chì Deli 0.5( 7003),Trung Quốc,24 chiếc/hộp,chiếc,10000,but-thuoc-tay_0173.webp
+174,"Bút, thước, tẩy",9,Ruột chì kim Steadler 0.3/2B,Đức,12 chiếc/hộp,hộp,25000,but-thuoc-tay_0174.webp
+175,"Bút, thước, tẩy",10,Ruột chì kim Steadler 0.5/2B,Đức,12 chiếc/hộp,hộp,16500,but-thuoc-tay_0175.webp
+176,"Bút, thước, tẩy",11,Ruột chì kim Steadler 0.7/2B,Đức,12 chiếc/hộp,hộp,20500,but-thuoc-tay_0176.webp
+177,"Bút, thước, tẩy",1,Tẩy STAEDLER 526 L20- to,Đức,20viên/hộp,viên,10000,but-thuoc-tay_0177.webp
+178,"Bút, thước, tẩy",2,Tẩy STAEDLER 526 H40- bé,Đức,40 viên/ hộp,viên,7500,but-thuoc-tay_0178.webp
+179,"Bút, thước, tẩy",3,Tẩy bút chì Plus nhỏ,Nhật,40 viên/ hộp,viên,4500,but-thuoc-tay_0179.webp
+180,"Bút, thước, tẩy",4,Tẩy bút chì Plus to,Nhật,20viên/hộp,viên,7500,but-thuoc-tay_0180.webp
+181,"Bút, thước, tẩy",5,Gọt chì SDI 0137,Trung quốc,50 chiếc/ hộp,chiếc,5000,but-thuoc-tay_0181.webp
+182,"Bút, thước, tẩy",6,Gọt chì Delli 554,Đài Loan,20 chiếc/ hộp,chiếc,10000,but-thuoc-tay_0182.webp
+183,"Bút, thước, tẩy",7,Gọt chì Delli 578,Đài Loan,20 chiếc/ hộp,chiếc,12000,but-thuoc-tay_0183.webp
+184,"Bút, thước, tẩy",1,Thước mica 20cm,Trung Quốc,20cm,chiếc,3000,but-thuoc-tay_0184.webp
+185,"Bút, thước, tẩy",2,Thước mica 30cm,Trung Quốc,30cm,cái,4500,but-thuoc-tay_0185.webp
+186,"Bút, thước, tẩy",3,Thước mica 20 cm Deli 6220,Đài loan,20cm,chiếc,7500,but-thuoc-tay_0186.webp
+187,"Bút, thước, tẩy",4,Thước mica 30 cm Deli 6230,Đài loan,30cm,chiếc,11000,but-thuoc-tay_0187.webp
+188,"Bút, thước, tẩy",5,Thước mica 50cm Deli 6250,Đài loan,50cm,chiếc,19000,
+189,"Bút, thước, tẩy",6,Thước mica 50cm Deli 6260,Đài loan,60cm,chiếc,30000,
+190,"hồ sơ, P.bì",1,Túi 1 khuy bấm khổ A trung,Việt nam,Khổ A,chiếc,2200,ho-so-p-bi_0190.webp
+191,"hồ sơ, P.bì",2,Túi 1 khuy bấm khổ A dày,Việt nam,Khổ A,chiếc,3000,ho-so-p-bi_0191.webp
+192,"hồ sơ, P.bì",3,Túi 1 khuy bấm khổ F dày,Việt nam,Khổ F,chiếc,4000,ho-so-p-bi_0192.webp
+193,"hồ sơ, P.bì",4,Túi 11 lỗ A4 HQ303A Loại Mỏng,Trung Quốc,100chiếc/tập,chiếc,350,ho-so-p-bi_0193.webp
+194,"hồ sơ, P.bì",5,Túi sơ mi 11 lỗ Deli 20002,Trung Quốc,100chiếc/tập,chiếc,500,ho-so-p-bi_0194.webp
+195,"hồ sơ, P.bì",6,Túi sơmi 11 lỗ Flexoffice CS03 ( 100 chiếc/ tập)- Dày,Việt nam,100chiếc/tập,chiếc,800,ho-so-p-bi_0195.webp
+196,"hồ sơ, P.bì",7,Túi Plus RE - 141PP ( 11 lỗ ) Loại A1 dày 70MF,Việt Nhật,Khổ A,chiếc,1400,ho-so-p-bi_0196.webp
+197,"hồ sơ, P.bì",8,Túi 1 Khuy khổ A4 Plus CB 2333,Việt Nhật,Khổ A,chiếc,5500,ho-so-p-bi_0197.webp
+198,"hồ sơ, P.bì",9,Túi 1 khuy Khổ F Plus CB 2636,Việt Nhật,Khổ F,chiếc,6500,ho-so-p-bi_0198.webp
+199,"hồ sơ, P.bì",9,Túi hồ sơ nhựa F118,Trung Quốc,Khổ A,chiếc,5500,ho-so-p-bi_0199.webp
+200,"hồ sơ, P.bì",10,Túi hồ sơ nhựa F119,Trung Quốc,Khổ F,chiếc,6500,ho-so-p-bi_0200.webp
+201,"hồ sơ, P.bì",1,Cặp tài liệu 1 ngăn 2 khuy deli 5576,Đài Loan,Khổ A,chiếc,30000,ho-so-p-bi_0201.webp
+202,"hồ sơ, P.bì",2,Cặp xốp chun nhiều ngăn F8214,Trung Quốc,Khổ A,chiếc,37000,ho-so-p-bi_0202.webp
+203,"hồ sơ, P.bì",3,Cặp xốp chun 6 ngăn Deli 5554,Đài Loan,Khổ A,chiếc,75000,ho-so-p-bi_0203.webp
+204,"hồ sơ, P.bì",4,Cặp tài liệu có quai deli 5556( sần),Đài Loan,Khổ A,chiếc,105000,ho-so-p-bi_0204.webp
+205,"hồ sơ, P.bì",5,Cặp tài liệu có quai deli 5557( bóng),Đài Loan,Khổ A,chiếc,95000,ho-so-p-bi_0205.webp
+206,"hồ sơ, P.bì",1,Phong bì thư nhỏ( Bưu điện),Việt nam,ĐL70,chiếc,250,ho-so-p-bi_0206.webp
+207,"hồ sơ, P.bì",2,Phong bì trắng A6,Việt nam,ĐL100,chiếc,350,ho-so-p-bi_0207.webp
+208,"hồ sơ, P.bì",3,Phong bì trắng A5,Việt nam,ĐL100,chiếc,500,ho-so-p-bi_0208.webp
+209,"hồ sơ, P.bì",4,Phong bì trắng A4,Việt nam,ĐL100,chiếc,1300,ho-so-p-bi_0209.webp
+210,"hồ sơ, P.bì",5,Phong bì A4 ngoại trắng có đáy có dây,Việt nam,ĐL120,chiếc,4500,ho-so-p-bi_0210.webp
+211,"hồ sơ, P.bì",6,Phong bì A4 Trắng ngoại không đáy có dây,Việt nam,ĐL120,chiếc,2600,ho-so-p-bi_0211.webp
+212,"hồ sơ, P.bì",7,Phong bì A4 xi măng có đáy có dây,Việt nam,ĐL120,chiếc,4000,ho-so-p-bi_0212.webp
+213,"hồ sơ, P.bì",8,Phong bì A4 xi măng không đáy có dây,Việt nam,ĐL120,chiếc,3000,ho-so-p-bi_0213.webp
+214,"hồ sơ, P.bì",9,Bộ hồ sơ A4 xin việc,Việt nam,ĐL120,bộ,10000,
+215,"hồ sơ, P.bì",10,Vỏ hồ sơ xin việc,Việt nam,ĐL120,chiếc,3500,
+216,"hồ sơ, P.bì",11,Phong bì A3 xi măng có đáy có dây,Việt nam,ĐL120,chiếc,7500,
+217,File tài liệu,1,Chia FILE nhựa 10 màu,Việt Nam,10bộ/tập,Bộ,10000,file-tai-lieu_0217.webp
+218,File tài liệu,2,Chia FILE giấy 10 màu,Việt Nam,5bộ/tập,Bộ,10000,file-tai-lieu_0218.webp
+219,File tài liệu,3,Chia File nhựa 12 màu,Việt nam,10bộ/tập,Bộ,12000,file-tai-lieu_0219.webp
+220,File tài liệu,4,Chia FILE giấy 12 số,Việt nam,10bộ/tập,Bộ,12000,file-tai-lieu_0220.webp
+221,File tài liệu,5,Chia File giấy 16 màu,Việt nam,1bộ/tập,Bộ,18000,file-tai-lieu_0221.webp
+222,File tài liệu,6,Chia File nhựa 1 màu 12 số,Việt nam,1bộ/tập,Bộ,22000,file-tai-lieu_0222.webp
+223,File tài liệu,7,Chia File giấy 31số,Việt nam,1bộ/tập,Bộ,36000,file-tai-lieu_0223.webp
+224,File tài liệu,8,Chia File nhựa 31 số,Việt nam,1bộ/tập,Bộ,40000,file-tai-lieu_0224.webp
+225,File tài liệu,9,Chia File nhựa A - Z,Việt nam,1bộ/ tập,Bộ,40000,file-tai-lieu_0225.webp
+226,File tài liệu,10,Chia File giấy A - Z,Việt nam,1bộ/ tập,Bộ,26000,file-tai-lieu_0226.webp
+227,File tài liệu,1,FILE còng bật Eagle 5F- EK( Loại 2),Việt nam,5F,chiếc,27500,
+228,File tài liệu,2,FILE còng bật Eagle 7F- EK( Loại 2),Việt nam,7F,chiếc,27500,
+229,File tài liệu,3,FILE còng bật Eagle 5F- EK( Loại 1),Việt nam,5F,chiếc,30000,
+230,File tài liệu,4,FILE còng bật Eagle 7F- EK( Loại 1),Việt nam,7F,chiếc,35000,
+231,File tài liệu,5,FILE còng bật Eagle 9F- EK( Loại 1),Việt nam,9F,chiếc,40000,
+232,File tài liệu,6,File còng bật Eagel 5F- A3 EK,Việt nam,5F,chiếc,52500,
+233,File tài liệu,7,File còng bật Eagel 7F- A3 EK,Việt nam,7F,chiếc,52500,file-tai-lieu_0233.webp
+234,File tài liệu,8,File còng bật Eagel 5F KOKUYO( Khổ F),Việt Nhật,5F,chiếc,57500,
+235,File tài liệu,9,File còng bật Eagle 7F KOKUYO ( Khổ F),Việt Nhật,7F,chiếc,57500,
+236,File tài liệu,10,File còng bật Eagel 5F KOKUYO( Khổ A),Việt Nhật,5F,chiếc,56500,
+237,File tài liệu,11,File còng bật Eagle 7F KOKUYO ( Khổ A),Việt Nhật,7F,chiếc,56500,
+238,File tài liệu,12,"File còng bật Eagle 9F KOKUYO ( Khổ A,F)",Việt Nhật,9F,cái,75000,
+239,File tài liệu,13,"File còng bật Eagle 5F Plus (Khổ A, F)",Việt Nhật,5F,chiếc,52000,file-tai-lieu_0239.webp
+240,File tài liệu,14,"File còng bật Eagel 7F Plus (Khổ A, F)",Việt Nhật,7F,chiếc,57000,
+241,File tài liệu,15,"File còng bật Eagel 9F Plus (Khổ A, F)",Việt Nhật,9F,chiếc,72500,
+242,File tài liệu,16,"File còng bật Eagel 7F Kingjim (Khổ A, F)",Việt Nhật,7F,chiếc,48000,
+243,File tài liệu,17,"File còng bật Eagel 5F Kingjim (Khổ A, F)",Việt Nhật,5F,chiếc,48000,file-tai-lieu_0243.webp
+244,File tài liệu,18,"File còng bật Eagel 9F Kingjim (Khổ A, F)",Việt Nhật,9F,chiếc,67000,
+245,File tài liệu,1,File còng nhẫn 3.5F- bìa xi xanh,Việt nam,3.5F,chiếc,21000,file-tai-lieu_0245.webp
+246,File tài liệu,2,FILE còng nhẫn 4F - 2 còng(bọc nilon xanh- trắng),Việt nam,3F,chiếc,25000,
+247,File tài liệu,3,FILE còng nhẫn 5F - 2 còng(bọc nilon xanh- trắng),Việt nam,5F,chiếc,28000,file-tai-lieu_0247.webp
+248,File tài liệu,4,FILE còng nhẫn 7F - 2 còng( bọc nilon xanh- trắng),Việt nam,7F,chiếc,32000,file-tai-lieu_0248.webp
+249,File tài liệu,5,File còng nhẫn 10F - 2 còng( bọc nilon xanh- trắng),Việt nam,10F,chiếc,41000,file-tai-lieu_0249.webp
+250,File tài liệu,6,File 2 còng bìa nhựa RB3302A,Trung Quốc,1.5F,chiếc,17500,
+251,File tài liệu,7,"File 2 còng bìa nhựa 3,5F - TC532A",Trung Quốc,3F,chiếc,20500,file-tai-lieu_0251.webp
+252,File tài liệu,8,File 2 còng nhẫn bìa nhựa 3F Deli 5382,Đài Loan,"2,5F",chiếc,50000,
+253,File tài liệu,9,File 2 còng nhẫn bìa nhựa 4F Deli 5387,Đài Loan,4F,chiếc,65000,file-tai-lieu_0253.webp
+254,File tài liệu,10,File 2 còng nhẫn D-Ring- Plus bìa nhựa các màu,Việt- nhật,3F,chiếc,42000,
+255,File tài liệu,1,File còng ống Kingjim A4 1473 (3cm),Việt- nhật,3F,chiếc,73000,
+256,File tài liệu,2,File còng ống Kingjim A4 1475 (5cm),Việt- nhật,5F,chiếc,79000,
+257,File tài liệu,3,File còng ống Kingjim A4 1478 (8cm),Việt- nhật,8F,chiếc,90000,file-tai-lieu_0257.webp
+258,File tài liệu,4,File còng ống Kingzim 1470 (10cm),Việt- nhật,10F,chiếc,100000,
+259,File tài liệu,5,File còng ống Kingjim 3513(13cm),Việt- nhật,13F,chiếc,170000,
+260,File tài liệu,6,File còng ống Kingzim 3515 (15cm),Việt- nhật,15F,chiếc,180000,
+261,File tài liệu,7,File còng ống Kingjim A3 1503 (3cm),Việt- nhật,3F,chiếc,205000,
+262,File tài liệu,8,File còng ống Kingjim A3 1505 (5cm),Việt- nhật,5F,chiếc,225000,file-tai-lieu_0262.webp
+263,File tài liệu,2,FILE hộp dán 7F- EK-Loại 1,Việt nam,7F,chiếc,29500,
+264,File tài liệu,3,FILE hộp dán 10F -EK Loại 1,Việt nam,10F,chiếc,34000,
+265,File tài liệu,4,FILE hộp dán 15F- EK Loại 1,Việt nam,15F,chiếc,39500,
+266,File tài liệu,5,FILE hộp dán 20F- EK Loại 1,Việt nam,20F,chiếc,46000,
+267,File tài liệu,6,FILE hộp dán 25F- EK Loại 1,Việt nam,25F,chiếc,58500,file-tai-lieu_0267.webp
+268,File tài liệu,7,FILE hộp dán 30F- EK Loại 1,Việt nam,30F,chiếc,67000,
+269,File tài liệu,8,File hộp dán 5F Hyphen HP 045,Việt nam,5F,chiếc,30000,
+270,File tài liệu,9,File hộp dán 7F Hyphen HP 246,Việt nam,7F,chiếc,32500,
+271,File tài liệu,10,File hộp dán 10F Hyphen HP 047,Việt nam,10F,chiếc,40000,
+272,File tài liệu,11,File hộp dán 15F Hyphen HP 048,Việt nam,15F,chiếc,46500,file-tai-lieu_0272.webp
+273,File tài liệu,12,File hộp dán 20F Hyphen HP 050,Việt nam,20F,chiếc,57500,file-tai-lieu_0273.webp
+274,File tài liệu,1,FILE vát 1 ngăn xanh,Việt nam,1 ngăn,chiếc,23000,file-tai-lieu_0274.webp
+275,File tài liệu,2,File nan 3 ngăn đứng HR312,Việt nam,3 ngăn,chiếc,35000,file-tai-lieu_0275.webp
+276,File tài liệu,3,File nan 3 ngăn đứng Comix 2173,Đài Loan,3 ngăn,chiếc,90000,file-tai-lieu_0276.webp
+277,File tài liệu,4,File nan 3 ngăn đứng Deli 9845,Đài Loan,3 ngăn,chiếc,90000,file-tai-lieu_0277.webp
+278,File tài liệu,5,File nan 3 ngăn lưới sắt Sunwood SW1220,Đài Loan,3 ngăn,chiếc,275000,file-tai-lieu_0278.webp
+279,File tài liệu,6,File nan 4 ngăn đứng Deli 9846,Đài Loan,4 ngăn,chiếc,110000,file-tai-lieu_0279.webp
+280,File tài liệu,7,File nan 5 ngăn đứng Deli 9838,Đài Loan,5 ngăn,chiếc,140000,
+281,File tài liệu,1,FILE trình ký A4 bìa xi 2 mặt EK loại 2,Việt nam,Khổ A4,chiếc,16500,file-tai-lieu_0281.webp
+282,File tài liệu,2,FILE trình ký A4 bìa xi 2 mặt EK loại 1 (6002 Trình ký),Trung Quốc,Khổ A4,chiếc,22000,
+283,File tài liệu,3,File trình ký da A4 2 mặt LTW-092,Trung Quốc,Khổ A4,chiếc,35000,
+284,File tài liệu,4,File trình ký da A4 2 mặt XF8002,Trung Quốc,Khổ A4,chiếc,75000,file-tai-lieu_0284.webp
+285,File tài liệu,5,File trình ký A5 nhựa 1 mặt S820,Đài Loan,Khổ A5,chiếc,16500,file-tai-lieu_0285.webp
+286,File tài liệu,6,File trình ký A4 nhựa 1 mặt S4610,Đài Loan,Khổ A4,chiếc,24000,file-tai-lieu_0286.webp
+287,File tài liệu,7,File trình ký A4 nhựa 1 mặt Deli 9256,Đài Loan,Khổ A4,chiếc,70000,file-tai-lieu_0287.webp
+288,File tài liệu,8,File trình ký A4 nhựa 2 mặt thiên long FO-CB03,Việt nam,Khổ A4,chiếc,30000,file-tai-lieu_0288.webp
+289,File tài liệu,9,File trình ký A4 nhựa 2 mặt Deli 5440,Đài Loan,Khổ A4,chiếc,70000,
+290,File tài liệu,10,File trình ký A4 nhựa 2 mặt Deli 5545,Đài Loan,Khổ A4,chiếc,105000,file-tai-lieu_0290.webp
+291,File tài liệu,1,File bìa giấy 021N Plus,Việt Nhật,Khổ A,chiếc,9000,file-tai-lieu_0291.webp
+292,File tài liệu,2,"FLLE treo các màu khổ A, F",Đài Loan,Khổ F,chiếc,10000,file-tai-lieu_0292.webp
+293,File tài liệu,3,File Plus 10 lá,Việt Nhật,Khổ A,chiếc,25000,
+294,File tài liệu,4,File Plus 20 lá,Việt Nhật,Khổ A,chiếc,36000,
+295,File tài liệu,5,File Plus 40 lá,Việt Nhật,Khổ A,chiếc,58000,file-tai-lieu_0295.webp
+296,File tài liệu,6,File Plus 60 lá,Việt Nhật,Khổ A,chiếc,75000,file-tai-lieu_0296.webp
+297,File tài liệu,7,File Plus 80 lá,Việt Nhật,Khổ A,chiếc,101000,
+298,File tài liệu,8,File 100 lá Deli 5200- Có hộp,Trung Quốc,Khổ A,chiếc,130000,file-tai-lieu_0298.webp
+299,File tài liệu,9,File E355 Plus 161 Khổ A,Việt Nhật,Khổ A,chiếc,2700,file-tai-lieu_0299.webp
+300,File tài liệu,10,File E355 Plus 171 Khổ F,Việt Nhật,Khổ F,chiếc,2800,file-tai-lieu_0300.webp
+301,File tài liệu,11,File xâu tài liệu Xifu QW325( 10 chiếc/ tập),Đài Loan,Khổ A,chiếc,6000,
+302,File tài liệu,12,File QW 325 Gáy có lỗ Flex office( 10 chiếc/ tập),Việt nam,Khổ A,chiếc,6000,file-tai-lieu_0302.webp
+303,File tài liệu,13,File xâu tài liệu Shuter QW325,Đài Loan,Khổ A,chiếc,13000,
+304,File tài liệu,14,File xâu tài liệu Plus 808.101RT,Việt nhật,Khổ A,chiếc,12500,file-tai-lieu_0304.webp
+305,File tài liệu,15,File rút gáy thường Q310( gáy nhỏ),Việt nam,Khổ A,chiếc,3000,file-tai-lieu_0305.webp
+306,File tài liệu,16,File rút gáy thường Q310( gáy to),Việt nam,Khổ A,chiếc,4000,file-tai-lieu_0306.webp
+307,File tài liệu,17,File rút gáy thường Q311dày ( 1mặt sần),Trung Quốc,Khổ A,chiếc,5000,
+308,File tài liệu,18,File rút gáy 10 tờ A4 Deli 5530,Trung Quốc,Khổ A,chiếc,10000,file-tai-lieu_0308.webp
+309,File tài liệu,19,File chốt gáy QW 324- Trung Quốc,Trung Quốc,Khổ A,chiếc,5000,file-tai-lieu_0309.webp
+310,File tài liệu,1,File 3 dây bìa giấy bìa hoa 10F- dày đẹp,Việt nam,Khổ F,chiếc,14000,file-tai-lieu_0310.webp
+311,File tài liệu,2,File 3 dây bìa giấy bìa hoa 15F- dày đẹp,Việt nam,Khổ F,chiếc,16000,file-tai-lieu_0311.webp
+312,File tài liệu,3,File 3 dây gáy gấp bìa xi 7F,Việt nam,Khổ F,chiếc,18000,
+313,File tài liệu,4,File 3 dây gáy gấp bìa xi 10F,Việt nam,Khổ F,chiếc,19000,
+314,File tài liệu,5,File 3 dây gáy cứng 7F bìa xi,Việt nam,Khổ F,chiếc,20000,
+315,"keo, băng dính",1,Băng dính 5F trong- đục - 1 kg/ cây/ 6 cuộn,Việt nam,1 kg/ cây,cuộn,13500,keo-bang-dinh_0315.webp
+316,"keo, băng dính",2,Băng dính 4.8cm *200y,Việt nam,2.1 kg/ cây,cuộn,27000,keo-bang-dinh_0316.webp
+317,"keo, băng dính",3,Băng dính 5F trong- đục - 6 kg/ cây/ 6 cuộn,Việt nam,6 kg/ cây,cuộn,68000,keo-bang-dinh_0317.webp
+318,"keo, băng dính",4,Băng dính trong VP nhỏ 1F (dày),Việt nam,1F,cuộn,2500,keo-bang-dinh_0318.webp
+319,"keo, băng dính",5,Băng dính trong VP nhỏ 2F(dày),Việt nam,2F,cuộn,3000,keo-bang-dinh_0319.webp
+320,"keo, băng dính",6,"Băng dính Simily 3,6cm - 5m",Việt nam,"3,6F",cuộn,6000,keo-bang-dinh_0320.webp
+321,"keo, băng dính",7,Băng dính SIMILY 4.8 cm*5m,Việt nam,5F,cuộn,7500,
+322,"keo, băng dính",8,Băng dính SIMILY 7F - 5M,Việt nam,7F,cuộn,11000,
+323,"keo, băng dính",9,"Băng dính Simily 3,6cm - 16 m",Việt nam,7F,cuộn,14500,keo-bang-dinh_0323.webp
+324,"keo, băng dính",10,Băng dính SIMILY 4.8 cm*16 m,Việt nam,7F,cuộn,19000,
+325,"keo, băng dính",11,Băng dính simily 7 cm * 16 m,Việt nam,7F,cuộn,27000,keo-bang-dinh_0325.webp
+326,"keo, băng dính",12,Băng dính 2 mặt 1F - 7M,Việt nam,7m/ cuộn,cuộn,2000,
+327,"keo, băng dính",13,"Băng dính 2 mặt 1,5F - 7M",Việt nam,7m/ cuộn,cuộn,2500,
+328,"keo, băng dính",14,Băng dính 2 mặt 2F- 7M,Việt nam,7m/ cuộn,cuộn,3000,
+329,"keo, băng dính",15,"Băng dính 2 mặt 2,5F - 7M",Việt nam,7m/ cuộn,cuộn,3500,keo-bang-dinh_0329.webp
+330,"keo, băng dính",16,Băng dính 2 mặt 5F - 7M,Việt nam,7m/ cuộn,cuộn,7000,
+331,"keo, băng dính",17,Băng dính giấy 1F- 7M,Việt nam,1F,cuộn,2000,
+332,"keo, băng dính",18,Băng dính giấy 1.5F-7M,Việt nam,"1,5F",cuộn,2500,
+333,"keo, băng dính",19,Băng dính giấy 2F-7M,Việt nam,2F,cuộn,3000,keo-bang-dinh_0333.webp
+334,"keo, băng dính",20,"Băng dính giấy 2,5F-7M",Việt nam,"2,5F",cuộn,3500,
+335,"keo, băng dính",21,Băng dính giấy 5F-7M,Việt nam,5F,cuộn,7000,keo-bang-dinh_0335.webp
+336,"keo, băng dính",22,Băng dính điện nhỏ 10Y,Việt nam,2F,cuộn,5000,
+337,"keo, băng dính",23,Băng dính điện nhỏ 20Y,Việt nam,2F,cuộn,8500,
+338,"keo, băng dính",24,Băng dính xốp 2F- vàng,Việt nam,2F,cuộn,10000,keo-bang-dinh_0338.webp
+339,"keo, băng dính",25,Băng dính xốp 2.5F- vàng,Việt nam,2F,cuộn,11000,
+340,"keo, băng dính",26,Băng dính xốp 5F- vàng,Việt nam,5F,cuộn,18000,
+341,"keo, băng dính",27,Băng dính xốp 2F- xanh,Việt nam,2F,cuộn,10000,keo-bang-dinh_0341.webp
+342,"keo, băng dính",28,Băng dính xốp 2.5F- xanh,Việt nam,2F,cuộn,11000,keo-bang-dinh_0342.webp
+343,"keo, băng dính",29,Băng dính xốp 5F- xanh,Việt nam,5F,cuộn,18000,keo-bang-dinh_0343.webp
+344,"keo, băng dính",30,Cắt băng dính VP 2F Dân hoa- 2001,Việt nam,2F,chiếc,17000,keo-bang-dinh_0344.webp
+345,"keo, băng dính",31,Cắt băng dính VP 2F Deli 811,Đài Loan,2F,chiếc,32000,keo-bang-dinh_0345.webp
+346,"keo, băng dính",32,Cắt băng dính lõi to VP 2F- 2002,Việt nam,2F,chiếc,50000,keo-bang-dinh_0346.webp
+347,"keo, băng dính",33,Cắt băng sắt Dân hoa 5F,Việt nam,5F,chiếc,35000,keo-bang-dinh_0347.webp
+348,"keo, băng dính",34,Cắt băng dính 5F nhựa Deli - 801,Đài Loan,5F,chiếc,50000,
+349,"keo, băng dính",35,Cắt băng dính 5F sắt Deli 823,Đài Loan,5F,chiếc,54000,keo-bang-dinh_0349.webp
+350,"keo, băng dính",36,Cắt băng sắt Dân hoa 5F- 200Y,Việt nam,5F,chiếc,40000,keo-bang-dinh_0350.webp
+351,"keo, băng dính",1,Hồ khô Thiên Long G-014,Việt nam,08 gam,Lọ,7000,keo-bang-dinh_0351.webp
+352,"keo, băng dính",2,Hồ nước G08 Thiên Long 30ml,Việt nam,30 ml,Lọ,4000,keo-bang-dinh_0352.webp
+353,"keo, băng dính",3,Hồ khô Staedtler 920108 - loại 8g,Đức,08 gam,Lọ,15500,keo-bang-dinh_0353.webp
+354,"keo, băng dính",5,Hồ khô Deli A200- 8g,Trung Quốc,08 gram,Lọ,6000,keo-bang-dinh_0354.webp
+355,"keo, băng dính",6,Hồ khô Staedtler 920122 - loại 22g,Đức,22 gam,Lọ,34000,
+356,"keo, băng dính",7,Keo 502,Việt nam,50 ml,Lọ,7000,
+357,Dập ghim,1,Dập ghim số 10 Plus PS-10E(không ghim),Việt Nhật,15 tờ,chiếc,36000,dap-ghim_0357.webp
+358,Dập ghim,2,Dập ghim số 10 Deli 238 ( 15 tờ),Đài Loan,15 tờ,chiếc,31000,dap-ghim_0358.webp
+359,Dập ghim,3,Dập ghim số 10 Deli 221 ( 15 tờ),Đài Loan,15 tờ,chiếc,34000,dap-ghim_0359.webp
+360,Dập ghim,4,Dập ghim số 10 Deli 229 ( 15 tờ),Đài Loan,15 tờ,chiếc,38000,dap-ghim_0360.webp
+361,Dập ghim,5,Dập ghim số 3 xoay chiều Deli 0414,Đài Loan,30 tờ,chiếc,75000,dap-ghim_0361.webp
+362,Dập ghim,7,Dập ghim Deli 0391( 60 tờ),Đài Loan,60 tờ,chiếc,210000,dap-ghim_0362.webp
+363,Dập ghim,8,Dập ghim Deli 394 ( 80 tờ),Đài Loan,80 tờ,chiếc,315000,dap-ghim_0363.webp
+364,Dập ghim,9,Dập ghim KW-trio 50SA- Loại 1,Đài Loan,100 Trang,chiếc,320000,dap-ghim_0364.webp
+365,Dập ghim,10,Dập ghim KW-triO 50LA- Loại 1,Đài Loan,210 Trang,chiếc,550000,dap-ghim_0365.webp
+366,Dập ghim,11,Dập ghim Deli 385 (210 tờ),Đài Loan,210 Trang,chiếc,650000,dap-ghim_0366.webp
+367,Dập ghim,12,Dập ghim Deli 0395- 240 Tờ,Đài Loan,240 Trang,chiếc,580000,dap-ghim_0367.webp
+368,Dập ghim,1,Ghim dập số 10 Plus,Việt Nhật,15 tờ,hộp,3600,dap-ghim_0368.webp
+369,Dập ghim,2,Ghim dập KW-TRIO số 10,Đài Loan,15 tờ,hộp,3000,dap-ghim_0369.webp
+370,Dập ghim,3,Ghim dập KW-TRIO-24/6,Đài Loan,30 tờ,hộp,5500,dap-ghim_0370.webp
+371,Dập ghim,4,Ghim dập KW TRIO-23/8,Đài Loan,50 tờ,hộp,15000,dap-ghim_0371.webp
+372,Dập ghim,5,Ghim dập KWTRIO-23/10,Đài Loan,70 tờ,hộp,17000,dap-ghim_0372.webp
+373,Dập ghim,6,Ghim dập KWTRIO-23/13,Đài Loan,100 tờ,hộp,18500,
+374,Dập ghim,7,Ghim dập KWTRIO-23/15,Đài Loan,120 tờ,hộp,23000,
+375,Dập ghim,8,Ghim dập KW-TRIO23/17,Đài Loan,140 tờ,hộp,25500,
+376,Dập ghim,9,Ghim dập KW-TRIO-23/20,Đài Loan,170 tờ,hộp,26000,
+377,Dập ghim,10,Ghim dập KW-TRIO-23/23,Đài Loan,200 tờ,hộp,33000,dap-ghim_0377.webp
+378,Dập ghim,11,Ghim dập KW-TRIO-23/24,Đài Loan,210 tờ,hộp,53500,dap-ghim_0378.webp
+379,Dập ghim,1,Nhổ ghim Deli 0232,Đài Loan,15 tờ,chiếc,17000,dap-ghim_0379.webp
+380,Dập ghim,2,Nhổ ghim KW- TriO 508B- Số 10,Đài Loan,15 tờ,chiếc,9500,dap-ghim_0380.webp
+381,Dập ghim,3,Nhổ ghim KW- TriO 5093,Đài Loan,200 tờ,chiếc,80000,dap-ghim_0381.webp
+382,Dập ghim,1,Ghim cài tam giác C62- Batos,Việt nam,100 c/hộp,hộp,4500,dap-ghim_0382.webp
+383,Dập ghim,2,Ghim vòng C32,Trung Quốc,100 c/hộp,hộp,4000,dap-ghim_0383.webp
+384,Dập ghim,3,Ghim vòng C82,Trung Quốc,100 c/hộp,hộp,5000,dap-ghim_0384.webp
+385,Dập ghim,4,Ghim vòng nhựa 0024,Đài loan,100c/ hộp,hộp,11000,dap-ghim_0385.webp
+386,Dập ghim,5,Đinh ghim mũ nhựa 0021 Deli,Đài loan,35 c/hộp,hộp,12500,dap-ghim_0386.webp
+387,Dập ghim,6,Hộp đựng nghim nam châm Deli N0.9881,Đài loan,6 chiếc/ lốc,chiếc,23000,dap-ghim_0387.webp
+388,Dập ghim,7,Hộp đựng nghim nam châm Deli N0.0988,Đài loan,6 chiếc/ lốc,chiếc,21000,dap-ghim_0388.webp
+389,Dập ghim,1,Khoá Acco nhựa 8CM Fastener,Trung Quốc,50 pcs,hộp,16000,dap-ghim_0389.webp
+390,Dập ghim,2,Khoá Acco sắt 8Cm,Trung Quốc,50 pcs,hộp,21500,dap-ghim_0390.webp
+391,Dập ghim,3,Khoá Acco nhựa Deli 5548,Đài Loan,50 pcs,hộp,37000,
+392,Dập ghim,4,Nẹp acco sắt Deli 5549,Đài Loan,50 pcs,hộp,50000,
+393,"Mực,con dấu",1,Mực dấu Shiny S- 63/62( Chính hãng),Nhật,"đỏ, xanh",lọ,52000,muc-con-dau_0393.webp
+394,"Mực,con dấu",1,Dấu sao y bản chính S852 Shiny,Việt nam,loại tốt,chiếc,90000,muc-con-dau_0394.webp
+395,"Mực,con dấu",2,Dấu bán hàng qua điện thoại S852 Shiny,Việt nam,loại tốt,chiếc,90000,muc-con-dau_0395.webp
+396,"Mực,con dấu",3,Dấu bán Đã thanh toán S852 Shiny,Việt nam,loại tốt,chiếc,90000,muc-con-dau_0396.webp
+397,"Mực,con dấu",4,Dấu chức danh S852 Shiny,Việt nam,loại tốt,chiếc,90000,muc-con-dau_0397.webp
+398,"Mực,con dấu",5,Dấu chức danh S853 Shiny,Việt nam,loại tốt,chiếc,110000,muc-con-dau_0398.webp
+399,"Mực,con dấu",6,Dấu chức danh S854 Shiny,Việt nam,loại tốt,chiếc,130000,
+400,Dao Kéo,1,Dao trổ SDI-0404 nhỏ,Đài Loan,3 lưỡi,chiếc,12000,dao-keo_0400.webp
+401,Dao Kéo,2,Dao trổ SDI 0423/E103 to,Đài Loan,3 lưỡi,chiếc,16000,dao-keo_0401.webp
+402,Dao Kéo,3,Dao trổ Deli 2053 bằng sắt nhỏ,Đài Loan,1 lưỡi,chiếc,13000,dao-keo_0402.webp
+403,Dao Kéo,4,Dao trổ Deli 2031- 3 lưỡi,Đài Loan,3 lưỡi,chiếc,18000,dao-keo_0403.webp
+404,Dao Kéo,5,Dao trổ to Deli 2064,Đài Loan,3 lưỡi,chiếc,42000,dao-keo_0404.webp
+405,Dao Kéo,6,Dao trổ to Deli 2043- Núm tròn,Đài Loan,3 lưỡi,chiếc,42000,dao-keo_0405.webp
+406,Dao Kéo,7,Lưỡi dao trổ bé SDI-1403,Đài Loan,10 lưỡi/hộp,hộp,8000,dao-keo_0406.webp
+407,Dao Kéo,8,Lưỡi dao trổ to SDI-1404,Đài Loan,10 lưỡi/hộp,hộp,11000,dao-keo_0407.webp
+408,Dao Kéo,9,Lưỡi dao trổ bé Deli SK5- Đầu nhọn 360,Đài Loan,10 lưỡi/hộp,hộp,24000,dao-keo_0408.webp
+409,Dao Kéo,10,Lưỡi dao trổ bé SK5 Deli 2012,Đài Loan,10 lưỡi/hộp,hộp,11500,dao-keo_0409.webp
+410,Dao Kéo,11,Lưỡi dao dọc giấy to SK5 Deli 2011,Đài Loan,10 lưỡi/hộp,hộp,26000,dao-keo_0410.webp
+411,Dao Kéo,1,Kéo 809,Trung Quốc,210mm,chiếc,16000,dao-keo_0411.webp
+412,Dao Kéo,2,Kéo cán đen S008,Trung Quốc,170mm,chiếc,16000,dao-keo_0412.webp
+413,Dao Kéo,3,Kéo cán đen S100,Trung Quốc,215mm,chiếc,19000,dao-keo_0413.webp
+414,Dao Kéo,4,Kéo Deli 6009,Trung Quốc,180mm,chiếc,25000,dao-keo_0414.webp
+415,Dao Kéo,5,Kéo Deli 6001,Trung Quốc,190mm,chiếc,45000,dao-keo_0415.webp
+416,Dao Kéo,6,Kéo Deli 6010,Trung Quốc,210mm,chiếc,41000,dao-keo_0416.webp
+417,Dao Kéo,7,Kéo Plus SC-175S,Nhật,180mm,chiếc,52000,dao-keo_0417.webp
+418,"Kẹp giấy, thẻ",1,Kẹp giấy màu đen 15mm (12 chiếc/hộp),Việt nam,12c/hộp,hộp,5000,kep-giay-the_0418.webp
+419,"Kẹp giấy, thẻ",2,Kẹp giấy màu đen 19mm(12 chiếc/hộp),Việt nam,12c/hộp,hộp,6500,kep-giay-the_0419.webp
+420,"Kẹp giấy, thẻ",3,Kẹp giấy màu đen 25mm (12 chiếc/hộp),Việt nam,12c/hộp,hộp,8500,
+421,"Kẹp giấy, thẻ",4,Kẹp giấy màu đen 32mm(12 chiếc /hộp),Việt nam,12c/hộp,hộp,12500,
+422,"Kẹp giấy, thẻ",5,Kẹp giấy màu đen 41mm (12chiếc/hộp),Việt nam,12c/hộp,hộp,19000,kep-giay-the_0422.webp
+423,"Kẹp giấy, thẻ",6,Kẹp giấy màu đen 51mm (12 chiếc/hộp),Việt nam,12c/hộp,hộp,28500,kep-giay-the_0423.webp
+424,"Kẹp giấy, thẻ",1,Thẻ tên cài SAKURA ngang có kim măng,Trung Quốc,40x60mm,chiếc,1500,kep-giay-the_0424.webp
+425,"Kẹp giấy, thẻ",2,Mặt thẻ nhựaTL07 dọc ( Miết đầu)- 60x100mm,Trung Quốc,60x100mm,chiếc,1800,kep-giay-the_0425.webp
+426,"Kẹp giấy, thẻ",3,Mặt thẻ nhựa TL108 ngang( Miết đầu)- 60x100mm,Trung Quốc,60x100mm,chiếc,1800,kep-giay-the_0426.webp
+427,"Kẹp giấy, thẻ",4,Mặt thẻ nhựa cỡ 75x110mm TL 207- dọc,Trung Quốc,75x100mm,chiếc,2200,kep-giay-the_0427.webp
+428,"Kẹp giấy, thẻ",5,Mặt thẻ nhựa cỡ 80x135mm TL 208- Ngang,Trung Quốc,80x135mm,chiếc,2200,kep-giay-the_0428.webp
+429,"Kẹp giấy, thẻ",6,Mặt thẻ dọc to nhựa 304 (100x135mm),Trung Quốc,100x135mm,chiếc,3000,kep-giay-the_0429.webp
+430,"Kẹp giấy, thẻ",7,Mặt thẻ da cỡ 60x100mm( ngang- dọc),Trung Quốc,60x100mm,chiếc,3000,kep-giay-the_0430.webp
+431,"Kẹp giấy, thẻ",8,Dây đeo thẻ các màu lụa dây trơn 1F móc nhựa,Trung Quốc,các màu,chiếc,1700,kep-giay-the_0431.webp
+432,"Kẹp giấy, thẻ",9,Dây đeo thẻ các màu lụa dây trơn 1F móc sắt,Trung Quốc,các màu,chiếc,2500,
+433,"Pin,Máy tính",1,Máy tính Casio MX 120B- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,250000,pin-may-tinh_0433.webp
+434,"Pin,Máy tính",2,Máy tính CASIO 12 số MX-12B- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,210000,pin-may-tinh_0434.webp
+435,"Pin,Máy tính",3,Máy tính CASIO 12 số AX-120B- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,320000,pin-may-tinh_0435.webp
+436,"Pin,Máy tính",4,Máy tính CASIO 12 số AX-12B- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,280000,pin-may-tinh_0436.webp
+437,"Pin,Máy tính",5,Máy tính CASIO 12 số JF- 120 BM- Chính hãng ( BH 2 năm),Trung Quốc,12 số,chiếc,370000,pin-may-tinh_0437.webp
+438,"Pin,Máy tính",6,Máy tính CASIO 12 số DC- 120M- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,385000,pin-may-tinh_0438.webp
+439,"Pin,Máy tính",7,Máy tính FX 570 ES Plus- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,500000,pin-may-tinh_0439.webp
+440,"Pin,Máy tính",8,Máy tính FX 570 VN Plus- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,650000,pin-may-tinh_0440.webp
+441,"Pin,Máy tính",9,Máy Tính Casio 12 số JS 20B- Chính hãng( BH 2 năm),Trung Quốc,12 số,chiếc,700000,pin-may-tinh_0441.webp
+442,"Pin,Máy tính",10,Máy Tính Casio 14 số JS 40B- Chính hãng( BH 2 năm),Trung Quốc,14 số,chiếc,850000,pin-may-tinh_0442.webp
+443,"Pin,Máy tính",1,Pin Evo Zinc AA Double A (vỉ 4 viên),839,,,16000,pin-may-tinh_0443.webp
+444,"Pin,Máy tính",2,Pin Evo Zinc AAA Double A (vỉ 4 viên),839,,,16000,pin-may-tinh_0444.webp
+445,"Pin,Máy tính",3,Pin con Thỏ R6P ( tiểu- đũa),Việt nam,đũa/tiểu,Viên,2000,pin-may-tinh_0445.webp
+446,"Pin,Máy tính",4,Pin đũa Panasonic 3A R03NT,Nhật,đũa,Viên,4000,pin-may-tinh_0446.webp
+447,"Pin,Máy tính",5,Pin tiểu panasonic 2A- ALKALINE( Hãng),Nhật,Tiểu,đôi,35000,pin-may-tinh_0447.webp
+448,"Pin,Máy tính",6,Pin đũa panasonic 3A-ALKALINE( Hãng),Nhật,đũa,đôi,35000,
+449,"Sổ, vở",1,Sổ đựng 180 card PU,Đài Loan,3 ngăn,quyển,45000,so-vo_0449.webp
+450,"Sổ, vở",2,Sổ đựng 300 card PU,Đài Loan,3 ngăn,quyển,60000,so-vo_0450.webp
+451,"Sổ, vở",3,Sổ đựng 480 card PU,Đài Loan,8 ngăn,quyển,100000,
+452,"Sổ, vở",4,Sổ đựng 600 card PU,Đài Loan,12 ngăn,quyển,160000,so-vo_0452.webp
+453,"Sổ, vở",5,Hộp đựng card 4400- 400 Card,Đài Loan,-,Hộp,120000,so-vo_0453.webp
+454,"Sổ, vở",1,Sổ Hải tiến Busininess B2-120 trang,Việt nam,KT: 70x100,quyển,5500,so-vo_0454.webp
+455,"Sổ, vở",2,Sổ Hải tiến Busininess B3-160 trang,Việt nam,KT: 100x150,quyển,13000,
+456,"Sổ, vở",4,Sổ Hải tiến Busininess B4-160 trang,Việt nam,KT: 100x170,quyển,13500,so-vo_0456.webp
+457,"Sổ, vở",8,Sổ Hải tiến Busininess B5-160 trang,Việt nam,KT: 135x195,quyển,20000,
+458,"Sổ, vở",9,Sổ Hải tiến Busininess B6-160 trang,Việt nam,KT: 150x210,quyển,22500,
+459,"Sổ, vở",10,Sổ Hải tiến Busininess B7-160 trang,Việt nam,KT: 160x220,quyển,24000,so-vo_0459.webp
+460,"Sổ, vở",11,Sổ Hải tiến Busininess B8-160 trang,Việt nam,KT: 175x250,quyển,29000,
+461,"Sổ, vở",12,Sổ Hải tiến Busininess B9-160 trang,Việt nam,KT: 195x270,quyển,35000,
+462,"Sổ, vở",13,Sổ Hải tiến Business B6-240trang,Việt nam,KT: 150x210,quyển,28000,
+463,"Sổ, vở",14,Sổ Hải tiến Business B7-240trang,Việt nam,KT: 160x220,quyển,29500,so-vo_0463.webp
+464,"Sổ, vở",15,Sổ Hải tiến Busininess B8-240 trang,Việt nam,KT: 175x250,quyển,35000,
+465,"Sổ, vở",16,Sổ Hải tiến Busininess B9-240 trang,Việt nam,KT: 195x270,quyển,44000,
+466,"Sổ, vở",17,Sổ Hải tiến Busininess BA4-160 trang,Việt nam,KT: 210x300,quyển,42000,so-vo_0466.webp
+467,"Sổ, vở",18,Sổ Hải tiến Busininess BA4-240 trang,Việt nam,KT: 210x300,quyển,52500,so-vo_0467.webp
+468,"Sổ, vở",19,Sổ Hải tiến Busininess BA4-400 trang,Việt nam,KT: 210x300,quyển,75500,
+469,"Sổ, vở",20,Sổ Hải tiến Busininess KB6-160 trang có khuy bấm,Việt nam,KT: 150x210,quyển,26000,
+470,"Sổ, vở",21,Sổ Hải tiến Busininess KB6-240 trang có khuy bấm,Việt nam,KT: 150x210,quyển,32500,
+471,"Sổ, vở",22,Sổ Hải tiến Busininess KB8-160 trang có khuy bấm,Việt nam,KT: 175x250,quyển,32500,so-vo_0471.webp
+472,"Sổ, vở",23,Sổ Hải tiến Busininess KB8-240 trang có khuy bấm,Việt nam,KT: 175x250,quyển,40000,so-vo_0472.webp
+473,"Sổ, vở",1,Sổ Bìa da Classic C4- 160 trang,Việt nam,KT: 100x170,quyển,17000,
+474,"Sổ, vở",2,Sổ Bìa da Classic C4 - 240 trang,Việt nam,KT: 100x170,quyển,20000,so-vo_0474.webp
+475,"Sổ, vở",3,Sổ Bìa da Classic C6- 160 trang,Việt nam,KT: 150x210,quyển,26000,so-vo_0475.webp
+476,"Sổ, vở",4,Sổ Bìa da Classic C6- 240 trang,Việt nam,KT: 150x210,quyển,32000,
+477,"Sổ, vở",5,Sổ Bìa da Classic KC6 - 240 trang khuy bấm,Việt nam,KT: 150x210,quyển,35000,
+478,"Sổ, vở",6,Sổ bìa da Classic C8- 160 trang,Việt nam,KT: 175x250,quyển,34000,
+479,"Sổ, vở",7,Sổ bìa da Classic C8- 240 trang,s,KT: 175x250,quyển,41000,
+480,"Sổ, vở",8,Sổ bìa da Classic KC8- 160 trang khuy bấm,Việt nam,KT: 175x250,quyển,37000,so-vo_0480.webp
+481,"Sổ, vở",9,Sổ bìa da Classic KC8- 240 trang khuy bấm,Việt nam,KT: 175x250,quyển,44500,
+482,"Sổ, vở",1,Sổ da 6 còng Heeton A25-823,Đài Loan,KT: 175x250,quyển,120000,
+483,"Sổ, vở",2,Sổ bìa da A5 có khuy Heeton A25-833,Đài Loan,KT: 150x210,quyển,55000,
+484,"Sổ, vở",3,Sổ bìa da A5 có khuy Heeton A25-906,Đài Loan,KT: 150x210,quyển,79500,
+485,"Sổ, vở",4,Sổ bìa da A5 có khuy Heeton A25-828,Đài Loan,KT: 150x210,quyển,82000,
+486,"Sổ, vở",1,Sổ A5 bìa bóng 200 trang bằng đầu- Hải tiến,Việt Nam,KT:155x220,quyển,18000,
+487,"Sổ, vở",2,Sổ A5 bìa bóng 200 trang Thừa đầu- Hải tiến,Việt Nam,KT:155x220,quyển,18000,
+488,"Sổ, vở",3,Sổ B5 bìa bóng 160 trang bằng đầu- Hải tiến,Việt Nam,KT:175x250,quyển,18000,so-vo_0488.webp
+489,"Sổ, vở",4,Sổ B5 bìa bóng 160 trang thừa đầu- Hải tiến,Việt Nam,KT:175x250,quyển,21000,
+490,"Sổ, vở",5,Sổ B5 bìa bóng 240 trang bằng đầu- Hải tiến,Việt Nam,KT:175x250,quyển,23500,
+491,"Sổ, vở",6,Sổ B5 bìa bóng 240 trang thừa đầu- Hải tiến,Việt Nam,KT:175x250,quyển,26000,
+492,"Sổ, vở",7,Sổ A4 bìa cứng bằng đầu 160 trang- Hải tiến,Việt nam,KT:210x300,quyển,28000,
+493,"Sổ, vở",8,Sổ A4 bìa cứng thừa đầu 160 trang- Hải tiến,Việt nam,KT:210x300,quyển,33000,
+494,"Sổ, vở",9,Sổ A4 bìa bóng bằng đầu 240 trang- Hải tiến,Việt nam,KT:210x300,quyển,37000,
+495,"Sổ, vở",10,Sổ A4 bìa bóng thừa đầu 240 trang- Hải tiến,Việt nam,KT:210x300,quyển,41500,
+496,"Sổ, vở",11,Sổ A4 bìa bóng bằng đầu 320 trang- Hải tiến,Việt nam,KT:210x300,quyển,46000,
+497,"Sổ, vở",12,Sổ B4 bìa bóng bằng đầu 160 trang- Hải tiến,Việt nam,KT:250x350,quyển,38000,
+498,"Sổ, vở",13,Sổ B4 bìa bóng thừa đầu 160 trang- Hải tiến,Việt nam,KT:250x350,quyển,43500,
+499,"Sổ, vở",14,Sổ B4 bìa bóng bằng đầu 240 trang- Hải tiến,Việt nam,KT:250x350,quyển,50000,so-vo_0499.webp
+500,"Sổ, vở",15,Sổ B4 bìa bóng thừa đầu 240 trang- Hải tiến,Việt nam,KT:250x350,quyển,55000,
+501,"Sổ, vở",1,Sổ công văn đi 160 trang- Hải tiến,Việt nam,KT:210x300,quyển,30000,so-vo_0501.webp
+502,"Sổ, vở",2,Sổ công văn đến 160 trang- Hải tiến,Việt nam,KT:210x300,quyển,30000,
+503,"Sổ, vở",1,Sổ kế toán tổng hợp A4 200 trang - Hải Tiến,Việt nam,(KT: 210x297),quyển,20500,
+504,"Sổ, vở",2,Sổ kế toán tổng hợp A4 260 trang - Hải Tiến,Việt nam,(KT: 210x297),quyển,26000,
+505,"Sổ, vở",3,Sổ kế toán tổng hợp A4 300 trang- Hải tiến,Việt nam,(KT: 210x297),quyển,30000,
+506,"Sổ, vở",1,Sổ lò xo A7 kép dày (200 trang)- Hải tiến,Việt nam,A7,quyển,8000,so-vo_0506.webp
+507,"Sổ, vở",2,Sổ lò xo A6 kép mỏng(100 trang)- Hải tiến,Việt nam,A6,quyển,7000,so-vo_0507.webp
+508,"Sổ, vở",3,Sổ lò xo A6 kép dày (200 trang)- Hải tiến,Việt nam,A6,quyển,10500,
+509,"Sổ, vở",4,Sổ lò xo A5 mỏng( 100 trang)- Hải tiến,Việt nam,A5,quyển,13000,
+510,"Sổ, vở",5,Sổ lò xo A5 kép dày (200 trang)- Hải tiến,Việt nam,A5,quyển,18000,
+511,"Sổ, vở",6,Sổ lò xo B5 mỏng( 100 trang)- Hải tiến,Việt nam,B5,quyển,17000,
+512,"Sổ, vở",7,Sổ lò xo B5 dày( 200 trang)- Hải tiến,Việt nam,B5,quyển,26500,so-vo_0512.webp
+513,"Sổ, vở",8,Sổ lò xo A4 Kép mỏng (100 trang)- Hải tiến,Việt nam,A4,quyển,21000,
+514,"Sổ, vở",9,Sổ lò xo A4 Kép dày ( 200 trang)- Hải tiến,Việt nam,A4,quyển,33000,
+515,"Sổ, vở",10,Sổ lò xo Viva A6 200 trang 6713 Hải Tiến,Việt nam,A6,quyển,14000,
+516,"Sổ, vở",1,Vở kẻ ngang 72 hải tiến (X- H- T- Đ),Việt nam,kẻ ngang,quyển,8000,so-vo_0516.webp
+517,"Sổ, vở",2,Vở kẻ ngang 120 hải tiến( X-H-T-Đ),Việt nam,kẻ ngang,quyển,10000,
+518,"Sổ, vở",1,Vở kẻ ngang 200 hải tiến Newway,Việt nam,kẻ ngang,quyển,20000,
+519,Chứng từ KT,1,Sổ quỹ tiền mặt dày,Việt nam,BTC,quyển,7500,chung-tu-kt_0519.webp
+520,Chứng từ KT,2,Giấy giới thiệu loại đẹp,Việt nam,BTC,quyển,8000,chung-tu-kt_0520.webp
+521,Chứng từ KT,3,Hóa đơn bán lẻ nhỏ thường( giấy bãi bằng),Việt nam,BTC,quyển,5000,chung-tu-kt_0521.webp
+522,Chứng từ KT,4,Phiếu chi nhỏ DN(Giấy BB),Việt nam,BTC,quyển,5000,chung-tu-kt_0522.webp
+523,Chứng từ KT,5,Phiếu thu nhỏ DN(Giấy BB),Việt nam,BTC,quyển,5000,chung-tu-kt_0523.webp
+524,Chứng từ KT,6,Phiếu nhập kho nhỏ,Việt nam,BTC,quyển,3000,chung-tu-kt_0524.webp
+525,Chứng từ KT,7,Phiếu xuất kho nhỏ,Việt nam,BTC,quyển,3000,chung-tu-kt_0525.webp
+526,Chứng từ KT,8,Phiếu nhập kho A4 Giấy bãi bằng,Việt nam,BTC,quyển,10000,chung-tu-kt_0526.webp
+527,Chứng từ KT,9,Phiếu xuất kho A4 Giấy bãi bằng,Việt nam,BTC,quyển,10000,chung-tu-kt_0527.webp
+528,Chứng từ KT,10,phiếu chi Cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt Nam,BTC,quyển,15000,chung-tu-kt_0528.webp
+529,Chứng từ KT,11,phiếu chi Cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,12000,chung-tu-kt_0529.webp
+530,Chứng từ KT,12,phiếu thu Cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt nam,BTC,quyển,15000,chung-tu-kt_0530.webp
+531,Chứng từ KT,13,phiếu thu Cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,12000,chung-tu-kt_0531.webp
+532,Chứng từ KT,14,Phiếu xuất kho nhỏ Cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt nam,BTC,quyển,15000,
+533,Chứng từ KT,15,Phiếu xuất kho nhỏ Cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,12000,chung-tu-kt_0533.webp
+534,Chứng từ KT,16,Phiếu nhập kho nhỏ Cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt nam,BTC,quyển,15000,
+535,Chứng từ KT,17,Phiếu nhập kho nhỏ Cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,12000,
+536,Chứng từ KT,18,Phiếu xuất kho to cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt nam,BTC,quyển,28000,
+537,Chứng từ KT,19,Phiếu xuất kho to cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,24000,chung-tu-kt_0537.webp
+538,Chứng từ KT,20,Phiếu nhập kho to cacbon ( 2 liên/3 liên)- 100 tờ,Việt nam,BTC,quyển,28000,
+539,Chứng từ KT,21,Phiếu nhập kho to cacbon ( 2 liên/3 liên)- 60 tờ,Việt nam,BTC,quyển,24000,
+540,Chứng từ KT,22,Hoá đơn bán lẻ nhỏ cacbon ( 2 liên/ 3 liên)- 100 tờ,Việt nam,BTC,quyển,15000,chung-tu-kt_0540.webp
+541,Chứng từ KT,23,Hoá đơn bán lẻ nhỏ cacbon ( 2 liên/ 3 liên)- 60 tờ,Việt nam,BTC,quyển,12000,
+542,Chứng từ KT,1,"Chun vòng kếp ( to, nhỏ)",Việt nam,loại tốt,túi,14000,chung-tu-kt_0542.webp
+543,Chứng từ KT,2,Dây chun (Gói 100gr),Việt nam,loại tốt,túi,24000,chung-tu-kt_0543.webp
+544,Chứng từ KT,3,Sáp đếm tiền,Việt nam,loại tốt,chiếc,6500,chung-tu-kt_0544.webp
+545,Chứng từ KT,4,Mút đếm tiền,Việt nam,loại tốt,chiếc,6500,
+546,Chứng từ KT,5,Bóng đếm tiền Deli 9109,Đài Loan,loại tốt,chiếc,26000,
+547,"giá (bút,tài liệu)",1,Giá cắm bút HR 311 xoay,Việt nam,quay,chiếc,37000,gia-but-tai-lieu_0547.webp
+548,"giá (bút,tài liệu)",2,Giá cắm bút Deli 904,Đài Loan,đứng,chiếc,47000,gia-but-tai-lieu_0548.webp
+549,"giá (bút,tài liệu)",3,Giá cắm bút bằng sắt Deli 9172,Đài Loan,đứng,chiếc,37000,gia-but-tai-lieu_0549.webp
+550,"giá (bút,tài liệu)",4,Giá cắm bút Deli 9133,Đài Loan,đứng,chiếc,57000,gia-but-tai-lieu_0550.webp
+551,"giá (bút,tài liệu)",5,Khay đựng bút Deli 9154( bằng sắt),Đài Loan,đứng,chiếc,100000,gia-but-tai-lieu_0551.webp
+552,"giá (bút,tài liệu)",6,Giá cắm bút gỗ 1019,Đài Loan,vuông,chiếc,150000,gia-but-tai-lieu_0552.webp
+553,"giá (bút,tài liệu)",1,Khay mica 3 tầng HR,Trung Quốc,3tầng,chiếc,130000,gia-but-tai-lieu_0553.webp
+554,"giá (bút,tài liệu)",2,Khay nhựa 3 tầng HR,Trung Quốc,3 tầng,chiếc,75000,gia-but-tai-lieu_0554.webp
+555,"giá (bút,tài liệu)",3,TCT230 - Khay tài liệu 3 tầng,Đài Loan,3 tầng,chiếc,150000,gia-but-tai-lieu_0555.webp
+556,"giá (bút,tài liệu)",4,Khay 3 tầng gỗ 5013,Đài Loan,3 tầng,chiếc,285000,gia-but-tai-lieu_0556.webp
+557,"giá (bút,tài liệu)",5,Khay 3 tầng sắt Sunwood SW1206,Đài Loan,3 tầng,chiếc,220000,gia-but-tai-lieu_0557.webp
+558,"giá (bút,tài liệu)",6,Khay 3 tầng sắt Comix 2163,Đài Loan,3 tầng,chiếc,250000,gia-but-tai-lieu_0558.webp
+559,"giá (bút,tài liệu)",7,Khay 3 tầng sắt Deli 9181,Đài Loan,3 tầng,chiếc,300000,gia-but-tai-lieu_0559.webp
+560,"Đục lỗ, Dập số",1,Đục lỗ Deli 105 (15 tờ),Đài Loan,15 tờ,chiếc,85000,duc-lo-dap-so_0560.webp
+561,"Đục lỗ, Dập số",2,Đục lỗ KWtrio 978(30 tờ),Đài Loan,30 tờ,chiếc,110000,duc-lo-dap-so_0561.webp
+562,"Đục lỗ, Dập số",3,Đục lỗ Deli 104 ( 35 tờ),Đài Loan,35 tờ,chiếc,145000,duc-lo-dap-so_0562.webp
+563,"Đục lỗ, Dập số",4,Đục lỗ KW-trio 9670 ( 70 tờ),Đài Loan,70 tờ,chiếc,385000,duc-lo-dap-so_0563.webp
+564,"Đục lỗ, Dập số",5,Đột lỗ Deli 130 ( 100 tờ),Đài Loan,100 tờ,chiếc,810000,duc-lo-dap-so_0564.webp
+565,"Đục lỗ, Dập số",6,Đụclỗ KW-trio 938 (100 tờ),Đài Loan,100 tờ,chiếc,1100000,duc-lo-dap-so_0565.webp
+566,"Đục lỗ, Dập số",7,Đục lỗ KW-trio 952 (150 tờ),Đài Loan,150 tờ,chiếc,1050000,
+567,"Đục lỗ, Dập số",8,Đục lỗ KW-trio 933 (190 tờ),Đài Loan,190 tờ,chiếc,1820000,duc-lo-dap-so_0567.webp
+568,"Đục lỗ, Dập số",9,Đục lỗ Deli 150 ( 150 tờ),Đài Loan,150 tờ,chiếc,1390000,
+569,"Đục lỗ, Dập số",1,Dập số thứ tự tự động 6 số Deli 7506,Đài Loan,6 số,chiếc,260000,duc-lo-dap-so_0569.webp
+570,"Đục lỗ, Dập số",2,Dập số thứ tự tự động 7 số Deli 7507,Đài Loan,7 số,chiếc,270000,
+571,"Đục lỗ, Dập số",3,Dập số thứ tự tự động 8 số Deli 7508,Đài Loan,8 số,chiếc,365000,
+572,"Đục lỗ, Dập số",4,Dập số thứ tự tự động 9 số Deli 7509,Đài Loan,9 số,chiếc,405000,
+573,"Đục lỗ, Dập số",5,Dập số thứ tự tự động 10 số Deli 7510,Đài Loan,10 số,chiếc,435000,
+574,Hàng tạp phẩm,1,Nước lau nhà Sunlight 1kg(997ml),Việt nam,997ml,Chai,35000,hang-tap-pham_0574.webp
+575,Hàng tạp phẩm,3,Nước lau sàn sunlight 1kg(997ml)-Quế,Việt nam,997ml,Chai,45000,hang-tap-pham_0575.webp
+576,Hàng tạp phẩm,2,Nước rửa chén Sunlight 750ml,Việt nam,750ml,Chai,27000,hang-tap-pham_0576.webp
+577,Hàng tạp phẩm,3,Nước tẩy vệ sinh bồn cầu Vim 900ml,Việt nam,900ml,Chai,40000,hang-tap-pham_0577.webp
+578,Hàng tạp phẩm,4,Xà phòng bánh Life boy 90g,Việt nam,90g,Hộp,14000,hang-tap-pham_0578.webp
+579,Hàng tạp phẩm,5,Nước rửa tay Life boy 180g(173ml),Việt nam,173ml,Chai,35000,hang-tap-pham_0579.webp
+580,Hàng tạp phẩm,6,Nước rửa tay Life boy 500g(493ml),Việt nam,493ml,Chai,75000,hang-tap-pham_0580.webp
+581,Hàng tạp phẩm,9,Nước rửa tay lifeboy 3.8 kg,Việt nam,3.8 kg/ can,Can,315000,hang-tap-pham_0581.webp
+582,Hàng tạp phẩm,7,Nước xịt kính Cif 520ml,Việt nam,520ml,Chai,28000,hang-tap-pham_0582.webp
+583,Hàng tạp phẩm,8,Tẩy cift to 690ml,Việt nam,690ml,Chai,33000,hang-tap-pham_0583.webp
+584,Hàng tạp phẩm,10,Nước lau sàn Sunlight can 3.6 Lít,Việt nam,3.6 lít / can,Can,95000,hang-tap-pham_0584.webp
+585,Hàng tạp phẩm,11,Nước rửa chén Sunligt 3.8 kg/can,Việt nam,3.8 kg/ can,Can,105000,hang-tap-pham_0585.webp
+586,Hàng tạp phẩm,12,Sáp thơm Oasis,Thái,180g,Chai,55000,hang-tap-pham_0586.webp
+587,Hàng tạp phẩm,13,Sáp thơm Ami,Việt nam,220g,Chai,50000,hang-tap-pham_0587.webp
+588,Hàng tạp phẩm,14,Bình xịt côn trùng ARS 600ml( có mùi),Việt nam,600ml,Chai,65000,hang-tap-pham_0588.webp
+589,Hàng tạp phẩm,15,Bình xịt côn trùng PRO X 500ml( ko mùi),Việt nam,500ml,Chai,70000,hang-tap-pham_0589.webp
+590,Hàng tạp phẩm,16,Bộ chổi lau nhà 360 độ Sunhouse,Việt nam,3 món,Bộ,340000,hang-tap-pham_0590.webp
+591,Hàng tạp phẩm,17,Chổi chít quét nhà,Việt nam,Chiếc,Chiếc,45000,hang-tap-pham_0591.webp
+592,Hàng tạp phẩm,18,Chổi nhựa quét nước,Việt nam,Chiếc,Chiếc,38000,hang-tap-pham_0592.webp
+593,Hàng tạp phẩm,19,Chổi cọ bồn cầu,Việt nam,Chiếc,Chiếc,25000,hang-tap-pham_0593.webp
+594,Hàng tạp phẩm,20,Thùng rác 15L,Việt nam,15L,Chiếc,260000,hang-tap-pham_0594.webp
+595,Hàng tạp phẩm,21,Thùng rác 10L,Việt nam,10L,Chiếc,230000,hang-tap-pham_0595.webp
+596,Hàng tạp phẩm,22,Sọt rác HIRO 10L,Việt nam,10L,chiếc,70000,
+597,Hàng tạp phẩm,23,Băng cá nhân Urgo,Việt nam,Hộp,Hộp,50000,hang-tap-pham_0597.webp
+598,Hàng tạp phẩm,24,Khẩu trang,Việt nam,Hộp,Hộp,55000,hang-tap-pham_0598.webp
+599,Hàng tạp phẩm,24,Găng tay cao su,Việt nam,Hộp,Hộp,150000,hang-tap-pham_0599.webp
+600,Hàng tạp phẩm,25,Bộ lau sàn Công Nghiệp,Việt nam,Bộ 3 món,Bộ,210000,
+601,Hàng tạp phẩm,26,Cốc giấy 180ml,1124,,bịch,35000,
+602,Hàng tạp phẩm,27,Hót rác cán dài,Việt nam,chiếc,chiếc,45000,
+603,Hàng tạp phẩm,1,Túi nilon trắng- xanh M35 loại 10 kg,Việt nam,loại tốt,Kg,50000,hang-tap-pham_0603.webp
+604,Hàng tạp phẩm,2,Túi nilon đen đựng đồ loại 5 kg- Loại 1,Việt nam,loại tốt,Kg,42000,
+605,Hàng tạp phẩm,3,Túi nilon đen đựng đồ loại 10 kg- Loại 1,Việt nam,loại tốt,Kg,42000,
+606,Hàng tạp phẩm,4,Túi nilon đen đựng đồ loại 15 kg- Loại 1,Việt nam,loại tốt,Kg,42000,
+607,Hàng tạp phẩm,5,Túi nilon đen đựng đồ loại 20 kg- Loại 1,Việt nam,loại tốt,Kg,42000,
+608,Hàng tạp phẩm,6,Túi nilon đen đựng đồ loại 25 kg- Loại 1,Việt nam,loại tốt,Kg,42000,hang-tap-pham_0608.webp
+609,Hàng tạp phẩm,7,Túi nilon đen đựng đồ loại 30 kg- Loại 1,Việt nam,loại tốt,Kg,42000,hang-tap-pham_0609.webp
+610,Hàng tạp phẩm,1,Khăn giấy Wattersilk 200 tờ/gói,Việt nam,200tờ/gói,Gói,20000,hang-tap-pham_0610.webp
+611,Hàng tạp phẩm,2,Giấy rút hà nội ngắn 150 tờ,Việt nam,150 tờ/gói,Gói,15000,hang-tap-pham_0611.webp
+612,Hàng tạp phẩm,3,Giấy rút Fairy Đào 3 lớp,Việt nam,150 tờ/gói,Gói,15000,hang-tap-pham_0612.webp
+613,Hàng tạp phẩm,4,Khăn giấy Fairy 280 tờ/gói,Việt nam,280tờ/gói,Gói,23000,hang-tap-pham_0613.webp
+614,Hàng tạp phẩm,5,Khăn giấy hộp Wattersilk 200 tờ/hộp,Việt nam,200tờ/hộp,hộp,24000,hang-tap-pham_0614.webp
+615,Hàng tạp phẩm,6,Khăn giấy hộp Pulppy 180 tờ/hộp,Việt nam,180tờ/hộp,hộp,24000,hang-tap-pham_0615.webp
+616,Hàng tạp phẩm,1,Giấy vệ sinh Watersilk( 12 cuộn/ bịch),Việt nam,12cuộn/túi,túi,45000,hang-tap-pham_0616.webp
+617,Hàng tạp phẩm,2,Giấy vệ sinh Silkwell,Việt nam,10cuộn/túi,túi,57000,hang-tap-pham_0617.webp
+618,Hàng tạp phẩm,2,Giấy vệ sinh hàng không không lõi (10 cuộn/bịch),Việt nam,10cuộn/túi,túi,55000,hang-tap-pham_0618.webp
+619,Hàng tạp phẩm,3,Giấy vệ sinh Watersilk- có lõi ( 10 cuộn/ bịch)- Cao cấp,Việt nam,10cuộn/túi,túi,80000,hang-tap-pham_0619.webp
+620,Hàng tạp phẩm,3,Giấy vệ sinh Watersilk- Không lõi ( 10 cuộn/ bịch)- Cao cấp,Việt nam,10cuộn/túi,túi,80000,hang-tap-pham_0620.webp
+621,Hàng tạp phẩm,4,Giấy vệ sinh Hà nội tím TIE- có lõi ( 10 cuộn/ bịch- cao cấp),Việt nam,10cuộn/túi,túi,86500,hang-tap-pham_0621.webp
+622,Hàng tạp phẩm,4,Giấy vệ sinh cuộn Fairy 700g( Công nghiệp cuộn to),Việt nam,10cuộn/túi,Cuộn,35000,hang-tap-pham_0622.webp
+623,Hàng tạp phẩm,5,Giấy vệ sinh Hà nội xanh TIE-( 10 cuộn/ bịch) loại 1,Việt nam,10cuộn/túi,túi,87500,hang-tap-pham_0623.webp
+624,Hàng tạp phẩm,5,Nước lọc lavie 350 ml (24 chai/thùng),Việt nam,24 chai/thùng,chai,5400,hang-tap-pham_0624.webp
+625,Hàng tạp phẩm,6,Nước lọc lavie 500 ml (24 chai/thùng),Việt nam,24 chai/thùng,chai,6500,hang-tap-pham_0625.webp
+626,Hàng tạp phẩm,7,Nước TH True Water 350ml,Việt nam,24 chai/thùng,thùng,140000,hang-tap-pham_0626.webp
+627,Hàng tạp phẩm,6,Nước khoáng Lavie 19L,Việt nam,19 lít,bình,96000,
+628,Hàng tạp phẩm,8,Ổ cắm lioa 3D3S 3m,Việt Nam,10 chiếc/thùng,Chiếc,140000,
+629,"Phấn,l.bảng,N.châm",1,Phấn Đức thanh trắng( 10 viên/ hộp),Việt nam,loại tốt,hộp,3500,phan-l-bang-n-cham_0629.webp
+630,"Phấn,l.bảng,N.châm",2,Phấn Đức Thanh màu( 10 viên/ hộp),Việt nam,loại tốt,hộp,5000,phan-l-bang-n-cham_0630.webp
+631,"Phấn,l.bảng,N.châm",#REF!,Lau bảng Deli 7837,Đài Loan,loại tốt,cái,19000,phan-l-bang-n-cham_0631.webp
+632,"Phấn,l.bảng,N.châm",#REF!,Nam châm đính bảng,Việt nam,loại tốt,vỉ,12500,phan-l-bang-n-cham_0632.webp
+633,"Phấn,l.bảng,N.châm",#REF!,Kẹp từ tính nhỏ Plus,Việt nam,loại tốt,chiếc,27000,phan-l-bang-n-cham_0633.webp
+634,"Phấn,l.bảng,N.châm",#REF!,Kẹp từ tính to Plus,Việt nam,loại tốt,chiếc,31500,phan-l-bang-n-cham_0634.webp
