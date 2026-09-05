@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import type { PhongBanRow, NguoiDungRow } from '@/app/admin/nguoi-dung/page'
+import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 import ConfirmDialog from './ConfirmDialog'
 
 type Role = 'admin' | 'hcns' | 'nguoi_de_nghi'

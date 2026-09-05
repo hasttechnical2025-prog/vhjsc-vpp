@@ -2,7 +2,6 @@ import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 import XoaPhieuButton from '@/components/XoaPhieuButton'
 import { formatThang, formatTien } from '@/lib/format'
 
@@ -38,7 +37,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
   const rows = (dong || []) as unknown as DongRow[]
 
   return (
-    <AppShell user={session}>
+    <>
       <div className="flex items-center justify-between gap-3 mb-4">
         <Link href="/phieu" className="text-sm text-accent-600 hover:underline">← Danh sách phiếu</Link>
         <div className="flex items-center gap-2">
@@ -104,6 +103,6 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
           Tạm tính (tham khảo): <b className="text-accent-600">{formatTien(phieu.tong_tien)} đ</b>
         </div>
       </div>
-    </AppShell>
+    </>
   )
 }

@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 import { formatThang, thangHienTai } from '@/lib/format'
 
 async function dem(table: string, filter?: (q: any) => any) {
@@ -32,7 +31,7 @@ export default async function DashboardPage() {
   ]
 
   return (
-    <AppShell user={session}>
+    <>
       <h1 className="text-xl font-bold mb-1">Xin chào, {session.phong_ban_ten || session.ho_ten}</h1>
       <p className="text-sm text-muted mb-6">Lập phiếu đề xuất mua văn phòng phẩm theo mẫu BM01/QLTS/04-HCNS.</p>
 
@@ -53,6 +52,6 @@ export default async function DashboardPage() {
           Xem danh sách phiếu
         </Link>
       </div>
-    </AppShell>
+    </>
   )
 }

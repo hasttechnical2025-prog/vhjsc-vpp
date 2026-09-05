@@ -2,18 +2,8 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 import QuanLyToChuc from '@/components/QuanLyToChuc'
-
-export type PhongBanRow = { id: string; ten: string; ma: string | null }
-export type NguoiDungRow = {
-  id: string
-  ho_ten: string
-  username: string
-  role: 'admin' | 'hcns' | 'nguoi_de_nghi'
-  is_active: boolean
-  phong_ban_id: string | null
-}
+import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 
 export default async function NguoiDungPage() {
   const session = await getSession()
@@ -32,11 +22,11 @@ export default async function NguoiDungPage() {
   )
 
   return (
-    <AppShell user={session}>
+    <>
       <Link href="/admin" className="text-sm text-accent-600 hover:underline">← Quản trị</Link>
       <h1 className="text-xl font-bold mt-2 mb-1">Người dùng & Phòng ban</h1>
       <p className="text-sm text-muted mb-5">Tạo tài khoản đăng nhập cho từng phòng ban và quản lý phân quyền.</p>
       <QuanLyToChuc phongBan={phongBan} users={users} selfId={session.id} />
-    </AppShell>
+    </>
   )
 }

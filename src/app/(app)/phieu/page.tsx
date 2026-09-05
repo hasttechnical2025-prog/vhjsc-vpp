@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 import PhieuList from '@/components/PhieuList'
 
 type Row = {
@@ -38,7 +37,7 @@ export default async function PhieuListPage() {
   }
 
   return (
-    <AppShell user={session}>
+    <>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Danh sách phiếu</h1>
         <Link href="/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium">
@@ -46,6 +45,6 @@ export default async function PhieuListPage() {
         </Link>
       </div>
       <PhieuList phieu={phieu} phongBan={phongBan} canAll={canAll} />
-    </AppShell>
+    </>
   )
 }

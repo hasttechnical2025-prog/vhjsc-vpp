@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 
 export default async function AdminPage() {
   const session = await getSession()
@@ -22,7 +21,7 @@ export default async function AdminPage() {
   }
 
   return (
-    <AppShell user={session}>
+    <>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Quản trị</h1>
         <div className="flex items-center gap-2">
@@ -105,6 +104,6 @@ export default async function AdminPage() {
       <p className="text-xs text-muted mt-6">
         Quản lý người dùng / phòng ban / bật-tắt sản phẩm chi tiết sẽ bổ sung ở bước sau.
       </p>
-    </AppShell>
+    </>
   )
 }

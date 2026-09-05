@@ -1,7 +1,6 @@
 import { redirect, notFound } from 'next/navigation'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import AppShell from '@/components/AppShell'
 import LapPhieu, { type PhieuBanDau } from '@/components/LapPhieu'
 import { getSanPhamDangBan } from '@/lib/catalog'
 
@@ -51,7 +50,7 @@ export default async function SuaPhieuPage({ params }: { params: Promise<{ id: s
   }
 
   return (
-    <AppShell user={session}>
+    <>
       <LapPhieu
         sanPham={sanPham}
         nguoiDeNghi={session.ho_ten}
@@ -59,6 +58,6 @@ export default async function SuaPhieuPage({ params }: { params: Promise<{ id: s
         phieuId={id}
         initial={initial}
       />
-    </AppShell>
+    </>
   )
 }

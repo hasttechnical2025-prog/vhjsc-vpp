@@ -1,3 +1,13 @@
+export type PhongBanRow = { id: string; ten: string; ma: string | null }
+export type NguoiDungRow = {
+  id: string
+  ho_ten: string
+  username: string
+  role: 'admin' | 'hcns' | 'nguoi_de_nghi'
+  is_active: boolean
+  phong_ban_id: string | null
+}
+
 export type SanPham = {
   id: number
   nhom_hang: string

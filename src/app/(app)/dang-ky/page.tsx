@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/session'
-import AppShell from '@/components/AppShell'
 import LapPhieu from '@/components/LapPhieu'
 import { getSanPhamDangBan } from '@/lib/catalog'
 
@@ -12,8 +11,8 @@ export default async function DangKyPage() {
   const sanPham = await getSanPhamDangBan()
 
   return (
-    <AppShell user={session}>
+    <>
       <LapPhieu sanPham={sanPham} nguoiDeNghi={session.ho_ten} phongBanTen={session.phong_ban_ten || ''} />
-    </AppShell>
+    </>
   )
 }
