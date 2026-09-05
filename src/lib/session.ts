@@ -12,6 +12,7 @@ export type SessionUser = {
   ho_ten: string
   role: Role
   phong_ban_id: string | null
+  phong_ban_ten: string | null
 }
 
 type SessionPayload = SessionUser & { exp: number }

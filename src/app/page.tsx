@@ -15,6 +15,8 @@ async function dem(table: string, filter?: (q: any) => any) {
 export default async function DashboardPage() {
   const session = await getSession()
   if (!session) redirect('/login')
+  // Tổng quan (toàn công ty) chỉ dành cho admin và HCNS; phòng ban vào thẳng phiếu của mình
+  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/phieu')
 
   const thang = thangHienTai()
   const [soSanPham, soPhieu, soPhieuThang] = await Promise.all([
@@ -31,7 +33,7 @@ export default async function DashboardPage() {
 
   return (
     <AppShell user={session}>
-      <h1 className="text-xl font-bold mb-1">Xin chào, {session.ho_ten}</h1>
+      <h1 className="text-xl font-bold mb-1">Xin chào, {session.phong_ban_ten || session.ho_ten}</h1>
       <p className="text-sm text-muted mb-6">Lập phiếu đề xuất mua văn phòng phẩm theo mẫu BM01/QLTS/04-HCNS.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">

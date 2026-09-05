@@ -25,12 +25,22 @@ export default async function AdminPage() {
     <AppShell user={session}>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Quản trị</h1>
-        <Link
-          href="/admin/cap-nhat-gia"
-          className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
-        >
-          Cập nhật giá từ báo giá
-        </Link>
+        <div className="flex items-center gap-2">
+          {session.role === 'admin' && (
+            <Link
+              href="/admin/cau-hinh"
+              className="card px-4 py-2 text-sm font-medium hover:border-accent"
+            >
+              Cấu hình hiển thị
+            </Link>
+          )}
+          <Link
+            href="/admin/cap-nhat-gia"
+            className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            Cập nhật giá từ báo giá
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

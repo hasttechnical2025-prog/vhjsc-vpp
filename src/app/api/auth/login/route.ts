@@ -19,11 +19,23 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Sai tài khoản hoặc mật khẩu' }, { status: 401 })
   }
 
+  // Lấy tên phòng ban để hiển thị (tài khoản đăng nhập theo phòng)
+  let phongBanTen: string | null = null
+  if (user.phong_ban_id) {
+    const { data: pb } = await supabaseAdmin
+      .from('vhjscvpp_phong_ban')
+      .select('ten')
+      .eq('id', user.phong_ban_id)
+      .maybeSingle()
+    phongBanTen = pb?.ten || null
+  }
+
   await setSessionCookie({
     id: user.id,
     ho_ten: user.ho_ten,
     role: user.role as Role,
     phong_ban_id: user.phong_ban_id,
+    phong_ban_ten: phongBanTen,
   })
   return NextResponse.json({ ok: true, role: user.role })
 }
