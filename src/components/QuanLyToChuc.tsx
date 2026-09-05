@@ -61,8 +61,8 @@ export default function QuanLyToChuc({
   const [showAdd, setShowAdd] = useState(false)
   const [nu, setNu] = useState(empty)
   const [editUId, setEditUId] = useState<string | null>(null)
-  const [eU, setEU] = useState<{ ho_ten: string; role: Role; phong_ban_id: string; password: string }>({
-    ho_ten: '', role: 'nguoi_de_nghi', phong_ban_id: '', password: '',
+  const [eU, setEU] = useState<{ ho_ten: string; username: string; role: Role; phong_ban_id: string; password: string }>({
+    ho_ten: '', username: '', role: 'nguoi_de_nghi', phong_ban_id: '', password: '',
   })
 
   async function themUser() {
@@ -73,11 +73,11 @@ export default function QuanLyToChuc({
   }
   function batDauSuaU(u: NguoiDungRow) {
     setEditUId(u.id)
-    setEU({ ho_ten: u.ho_ten, role: u.role, phong_ban_id: u.phong_ban_id || '', password: '' })
+    setEU({ ho_ten: u.ho_ten, username: u.username, role: u.role, phong_ban_id: u.phong_ban_id || '', password: '' })
   }
   async function luuU(id: string) {
     const { ok, data } = await api('PATCH', '/api/admin/nguoi-dung', {
-      id, ho_ten: eU.ho_ten, role: eU.role, phong_ban_id: eU.phong_ban_id, password: eU.password || undefined,
+      id, ho_ten: eU.ho_ten, username: eU.username, role: eU.role, phong_ban_id: eU.phong_ban_id, password: eU.password || undefined,
     })
     if (!ok) return fail(data.error || 'Lỗi')
     setEditUId(null); done('Đã cập nhật người dùng')
@@ -184,7 +184,7 @@ export default function QuanLyToChuc({
                 editUId === u.id ? (
                   <tr key={u.id} className="border-t border-border bg-accent-50/40">
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.ho_ten} onChange={(e) => setEU({ ...eU, ho_ten: e.target.value })} /></td>
-                    <td className="py-1.5 text-muted">{u.username}</td>
+                    <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.username} onChange={(e) => setEU({ ...eU, username: e.target.value })} /></td>
                     <td className="py-1.5 pr-2">
                       <select className={inp} value={eU.role} onChange={(e) => setEU({ ...eU, role: e.target.value as Role })}>
                         <option value="nguoi_de_nghi">Người đề nghị</option><option value="hcns">HCNS</option><option value="admin">Quản trị</option>

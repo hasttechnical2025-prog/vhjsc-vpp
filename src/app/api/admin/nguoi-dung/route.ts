@@ -63,6 +63,18 @@ export async function PATCH(req: Request) {
     if (!t) return NextResponse.json({ error: 'Họ tên không được để trống' }, { status: 400 })
     upd.ho_ten = t
   }
+  if (b.username != null) {
+    const un = b.username.toString().trim().toLowerCase()
+    if (!un) return NextResponse.json({ error: 'Tài khoản không được để trống' }, { status: 400 })
+    const { data: taken } = await supabaseAdmin
+      .from('vhjscvpp_nguoi_dung')
+      .select('id')
+      .eq('username', un)
+      .neq('id', b.id)
+      .maybeSingle()
+    if (taken) return NextResponse.json({ error: 'Tài khoản đã tồn tại' }, { status: 409 })
+    upd.username = un
+  }
   if (b.role != null) {
     if (!ROLES.includes(b.role)) return NextResponse.json({ error: 'Vai trò không hợp lệ' }, { status: 400 })
     upd.role = b.role
@@ -71,11 +83,8 @@ export async function PATCH(req: Request) {
   if (b.is_active != null) upd.is_active = !!b.is_active
   if (b.password) upd.password_hash = hashPassword(b.password.toString())
 
-  // Chặn tự khoá chính mình
-  if (b.id === session.id && upd.is_active === false)
-    return NextResponse.json({ error: 'Không thể tự khoá tài khoản của mình' }, { status: 400 })
-
-  // Chặn hạ vai trò / khoá admin cuối cùng
+  // Chốt duy nhất: luôn phải còn ít nhất 1 admin đang hoạt động
+  // (cho phép tự khoá/hạ quyền nếu vẫn còn admin khác)
   const boAdmin = (upd.role != null && upd.role !== 'admin' && cur.role === 'admin') || (upd.is_active === false && cur.role === 'admin')
   if (boAdmin && (await soAdminConHoatDong(cur.id)) === 0)
     return NextResponse.json({ error: 'Phải còn ít nhất 1 admin đang hoạt động' }, { status: 400 })
@@ -91,7 +100,6 @@ export async function DELETE(req: Request) {
   if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
-  if (b.id === session.id) return NextResponse.json({ error: 'Không thể tự xoá tài khoản của mình' }, { status: 400 })
 
   const { data: cur } = await supabaseAdmin.from('vhjscvpp_nguoi_dung').select('id, role').eq('id', b.id).maybeSingle()
   if (!cur) return NextResponse.json({ error: 'Không tìm thấy' }, { status: 404 })
