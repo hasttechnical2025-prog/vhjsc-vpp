@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { xoaCacheSanPham } from '@/lib/catalog'
 
 // Áp dụng thay đổi giá admin đã duyệt: cập nhật giá theo mã hàng (id),
 // thêm sản phẩm mới (cấp id mới nối tiếp), ẩn sản phẩm không còn.
@@ -71,5 +72,6 @@ export async function POST(req: Request) {
     if (!error) soAn = anSp.length
   }
 
+  if (soCapNhat || soThem || soAn) xoaCacheSanPham()
   return NextResponse.json({ ok: true, soCapNhat, soThem, soAn })
 }

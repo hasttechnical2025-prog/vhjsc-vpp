@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { xoaCacheCauHinh } from '@/lib/config'
 
 // Lưu chữ thương hiệu (thay cho "VHJSC · VPP"). Chỉ admin.
 export async function POST(req: Request) {
@@ -16,5 +17,6 @@ export async function POST(req: Request) {
     .upsert({ key: 'brand_text', value: brand }, { onConflict: 'key' })
   if (error) return NextResponse.json({ error: 'Lưu thất bại' }, { status: 500 })
 
+  xoaCacheCauHinh()
   return NextResponse.json({ ok: true })
 }

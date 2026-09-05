@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { xoaCacheCauHinh } from '@/lib/config'
 
 export const runtime = 'nodejs'
 
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
     .upsert({ key: 'logo_url', value: url }, { onConflict: 'key' })
   if (e2) return NextResponse.json({ error: 'Lưu URL thất bại' }, { status: 500 })
 
+  xoaCacheCauHinh()
   return NextResponse.json({ ok: true, url })
 }
 
@@ -41,5 +43,6 @@ export async function DELETE() {
   const session = await requireRole('admin')
   if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   await supabaseAdmin.from('vhjscvpp_cauhinh').delete().eq('key', 'logo_url')
+  xoaCacheCauHinh()
   return NextResponse.json({ ok: true })
 }

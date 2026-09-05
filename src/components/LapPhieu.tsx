@@ -347,11 +347,11 @@ export default function LapPhieu({
               <div className="text-sm text-muted text-center py-6">Chưa có mặt hàng nào. Chọn từ danh mục bên trái.</div>
             )}
             {dong.map((d) => (
-              <div key={d.key} className="border-t border-border py-3 first:border-t-0">
-                <div className="flex gap-3">
+              <div key={d.key} className="border-t border-border py-2 first:border-t-0">
+                <div className="flex gap-2.5">
                   {/* Ảnh */}
                   {d.san_pham_id ? (
-                    <div className="w-12 h-12 rounded-md border border-border bg-white overflow-hidden flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-md border border-border bg-white overflow-hidden flex items-center justify-center shrink-0">
                       {d.anh ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={d.anh} alt="" className="max-h-full max-w-full object-contain" loading="lazy" />
@@ -360,7 +360,7 @@ export default function LapPhieu({
                       )}
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-md border border-dashed border-border flex items-center justify-center shrink-0 text-muted">
+                    <div className="w-10 h-10 rounded-md border border-dashed border-border flex items-center justify-center shrink-0 text-muted">
                       ✎
                     </div>
                   )}
@@ -381,15 +381,15 @@ export default function LapPhieu({
                       )}
                       <button
                         onClick={() => xoa(d.key)}
-                        className="text-muted hover:text-danger shrink-0 leading-none mt-0.5"
+                        className="text-muted hover:text-danger shrink-0 leading-none"
                         aria-label="Xoá"
                       >
                         ✕
                       </button>
                     </div>
 
-                    {/* Thông tin: mã hàng · ĐVT · đơn giá */}
-                    <div className="text-xs text-muted mt-1 flex items-center flex-wrap gap-x-1.5">
+                    {/* Thông tin: mã hàng · ĐVT · đơn giá · ghi chú */}
+                    <div className="text-xs text-muted mt-0.5 flex items-center flex-wrap gap-x-1.5">
                       {d.san_pham_id ? (
                         <>
                           <span className="text-accent-600/80">MH {d.san_pham_id}</span>
@@ -406,31 +406,41 @@ export default function LapPhieu({
                           className="w-20 border border-border rounded px-1.5 py-0.5 text-xs outline-none focus:border-accent"
                         />
                       )}
+                      {!d.showGhiChu && (
+                        <>
+                          <span>·</span>
+                          <button onClick={() => capNhat(d.key, { showGhiChu: true })} className="hover:text-accent-600">
+                            {d.ghi_chu ? '✎ ghi chú' : '＋ ghi chú'}
+                          </button>
+                        </>
+                      )}
                     </div>
 
                     {/* Số lượng + thành tiền */}
-                    <div className="flex items-center justify-between mt-2 gap-2">
+                    <div className="flex items-center justify-between mt-1.5 gap-2">
                       <Stepper value={d.so_luong} onChange={(n) => datSoLuong(d.key, n)} />
                       <span className="text-sm font-semibold text-foreground">
                         {d.don_gia ? formatTien(d.don_gia * d.so_luong) + 'đ' : '—'}
                       </span>
                     </div>
 
-                    {/* Ghi chú */}
-                    {d.showGhiChu ? (
-                      <input
-                        placeholder="Ghi chú cho mặt hàng này"
-                        value={d.ghi_chu}
-                        onChange={(e) => capNhat(d.key, { ghi_chu: e.target.value })}
-                        className="w-full border border-border rounded px-2 py-1 text-sm mt-2 outline-none focus:border-accent"
-                      />
-                    ) : (
-                      <button
-                        onClick={() => capNhat(d.key, { showGhiChu: true })}
-                        className="text-xs text-muted hover:text-accent-600 mt-1.5"
-                      >
-                        ＋ ghi chú
-                      </button>
+                    {/* Ghi chú (mở) */}
+                    {d.showGhiChu && (
+                      <div className="mt-1.5">
+                        <input
+                          placeholder="Ghi chú cho mặt hàng này"
+                          value={d.ghi_chu}
+                          onChange={(e) => capNhat(d.key, { ghi_chu: e.target.value })}
+                          className="w-full border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent"
+                          autoFocus
+                        />
+                        <button
+                          onClick={() => capNhat(d.key, { showGhiChu: false })}
+                          className="text-xs text-muted hover:text-accent-600 mt-1"
+                        >
+                          Thu gọn ghi chú
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
