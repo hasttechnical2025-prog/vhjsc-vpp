@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import AppShell from '@/components/AppShell'
+import XoaPhieuButton from '@/components/XoaPhieuButton'
 import { formatThang, formatTien } from '@/lib/format'
 
 type DongRow = {
@@ -38,16 +39,25 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
 
   return (
     <AppShell user={session}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between gap-3 mb-4">
         <Link href="/phieu" className="text-sm text-accent-600 hover:underline">← Danh sách phiếu</Link>
-        <a
-          href={`/api/phieu/${id}/pdf`}
-          target="_blank"
-          rel="noreferrer"
-          className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
-        >
-          ⬇ Xuất PDF (mẫu BM01)
-        </a>
+        <div className="flex items-center gap-2">
+          <XoaPhieuButton id={id} />
+          <Link
+            href={`/phieu/${id}/sua`}
+            className="border border-border rounded-lg px-4 py-2 text-sm font-medium hover:border-accent"
+          >
+            Sửa
+          </Link>
+          <a
+            href={`/api/phieu/${id}/pdf`}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            ⬇ Xuất PDF
+          </a>
+        </div>
       </div>
 
       <div className="card p-6">

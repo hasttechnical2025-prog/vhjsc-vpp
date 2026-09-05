@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { getSession } from '@/lib/session'
+import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export async function POST(req: Request) {
-  const session = await getSession()
+  const session = await requireRole()
   if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
 
   const body = await req.json().catch(() => null)

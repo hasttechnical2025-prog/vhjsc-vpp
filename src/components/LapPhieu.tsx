@@ -19,6 +19,23 @@ type Dong = {
   showGhiChu: boolean
 }
 
+type InitDong = {
+  san_pham_id: number | null
+  ten_hang: string | null
+  ten_tay: string | null
+  dvt: string | null
+  don_gia: number | null
+  so_luong: number
+  ghi_chu: string | null
+}
+export type PhieuBanDau = {
+  thang: string
+  tieu_de: string | null
+  thoi_gian_can: string | null
+  ke_hoach_su_dung: string | null
+  dong: InitDong[]
+}
+
 let seq = 0
 const newKey = () => `k${Date.now()}_${seq++}`
 
@@ -55,20 +72,25 @@ export default function LapPhieu({
   sanPham,
   nguoiDeNghi,
   phongBanTen,
+  phieuId,
+  initial,
 }: {
   sanPham: SanPham[]
   nguoiDeNghi: string
   phongBanTen: string
+  phieuId?: string
+  initial?: PhieuBanDau
 }) {
   const router = useRouter()
+  const laSua = !!phieuId
   const thangMacDinh = thangHienTai()
   const tieuDeMacDinh = (t: string) =>
     `Mua sắm văn phòng phẩm tháng ${formatThang(t)}${phongBanTen ? ` cho ${phongBanTen}` : ''}`
-  const [thang, setThang] = useState(thangMacDinh)
-  const [tieuDe, setTieuDe] = useState(tieuDeMacDinh(thangMacDinh))
-  const [tieuDeTuChinh, setTieuDeTuChinh] = useState(false)
-  const [thoiGianCan, setThoiGianCan] = useState('')
-  const [keHoachSuDung, setKeHoachSuDung] = useState('')
+  const [thang, setThang] = useState(initial?.thang || thangMacDinh)
+  const [tieuDe, setTieuDe] = useState(initial?.tieu_de ?? tieuDeMacDinh(initial?.thang || thangMacDinh))
+  const [tieuDeTuChinh, setTieuDeTuChinh] = useState(!!initial?.tieu_de)
+  const [thoiGianCan, setThoiGianCan] = useState(initial?.thoi_gian_can || '')
+  const [keHoachSuDung, setKeHoachSuDung] = useState(initial?.ke_hoach_su_dung || '')
   const [moTT, setMoTT] = useState(false) // mở/thu gọn khối thông tin chung
 
   // Đổi tháng -> tự cập nhật tháng/năm trong Nội dung đề nghị (nếu người dùng chưa tự sửa)
@@ -80,7 +102,22 @@ export default function LapPhieu({
     setTieuDe(v)
     setTieuDeTuChinh(v.trim() !== tieuDeMacDinh(thang).trim())
   }
-  const [dong, setDong] = useState<Dong[]>([])
+  const [dong, setDong] = useState<Dong[]>(() => {
+    if (!initial) return []
+    const anhMap = new Map(sanPham.map((s) => [s.id, s.anh_url]))
+    return initial.dong.map((d) => ({
+      key: newKey(),
+      san_pham_id: d.san_pham_id,
+      ten: d.ten_hang || d.ten_tay || '',
+      ten_tay: d.san_pham_id ? null : d.ten_tay || '',
+      dvt: d.dvt,
+      don_gia: d.don_gia,
+      anh: d.san_pham_id ? anhMap.get(d.san_pham_id) ?? null : null,
+      so_luong: d.so_luong,
+      ghi_chu: d.ghi_chu || '',
+      showGhiChu: false,
+    }))
+  })
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState('')
 
@@ -168,8 +205,8 @@ export default function LapPhieu({
     }
     setSaving(true)
     try {
-      const res = await fetch('/api/phieu', {
-        method: 'POST',
+      const res = await fetch(phieuId ? `/api/phieu/${phieuId}` : '/api/phieu', {
+        method: phieuId ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           thang,
@@ -193,7 +230,8 @@ export default function LapPhieu({
         setErr(data.error || 'Lưu phiếu thất bại')
         return
       }
-      router.push(`/phieu/${data.id}`)
+      router.push(`/phieu/${phieuId || data.id}`)
+      router.refresh()
     } catch {
       setErr('Lỗi kết nối')
     } finally {
@@ -205,7 +243,7 @@ export default function LapPhieu({
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
       {/* CỘT TRÁI: danh mục */}
       <div>
-        <h1 className="text-xl font-bold mb-3">Lập phiếu đề xuất VPP</h1>
+        <h1 className="text-xl font-bold mb-3">{laSua ? 'Sửa phiếu đề xuất' : 'Lập phiếu đề xuất VPP'}</h1>
         <input
           placeholder="Tìm sản phẩm theo tên…"
           value={tuKhoa}
@@ -467,7 +505,7 @@ export default function LapPhieu({
               disabled={saving}
               className="bg-accent hover:bg-accent-600 text-white rounded-lg px-6 py-2.5 font-medium disabled:opacity-60"
             >
-              {saving ? 'Đang lưu…' : 'Lưu phiếu'}
+              {saving ? 'Đang lưu…' : laSua ? 'Lưu thay đổi' : 'Lưu phiếu'}
             </button>
           </div>
         </div>
