@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import AppShell from '@/components/AppShell'
@@ -22,7 +23,15 @@ export default async function AdminPage() {
 
   return (
     <AppShell user={session}>
-      <h1 className="text-xl font-bold mb-4">Quản trị</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-bold">Quản trị</h1>
+        <Link
+          href="/admin/cap-nhat-gia"
+          className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          Cập nhật giá từ báo giá
+        </Link>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="card p-4">
