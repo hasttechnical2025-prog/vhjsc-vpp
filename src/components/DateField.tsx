@@ -25,6 +25,15 @@ export default function DateField({
         type="date"
         value={iso}
         onChange={(e) => onChange(isoToDmy(e.target.value))}
+        onClick={(e) => {
+          // Ô ẩn opacity-0 nên click không tự bung lịch -> gọi showPicker thủ công
+          const el = e.currentTarget as HTMLInputElement & { showPicker?: () => void }
+          try {
+            el.showPicker?.()
+          } catch {
+            /* trình duyệt không hỗ trợ showPicker: bỏ qua, vẫn focus được */
+          }
+        }}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         aria-label="Chọn ngày"
       />
