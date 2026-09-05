@@ -255,15 +255,15 @@ export default function LapPhieu({
       </div>
 
       {/* CỘT PHẢI: giỏ hàng / phiếu */}
-      <div className="lg:sticky lg:top-4 self-start">
-        <div className="card p-4">
-          <div className="flex items-center justify-between mb-3">
+      <div className="lg:sticky lg:top-16 self-start">
+        <div className="card p-4 lg:flex lg:flex-col lg:max-h-[calc(100vh_-_5rem)]">
+          <div className="flex items-center justify-between mb-3 shrink-0">
             <span className="font-semibold">Phiếu đề xuất</span>
             <span className="text-sm text-accent-600 font-medium">{soMatHang} mặt hàng</span>
           </div>
 
           {/* Thông tin chung của phiếu */}
-          <div className="border border-border rounded-xl p-3 mb-3 bg-white">
+          <div className="border border-border rounded-xl p-3 mb-3 bg-white shrink-0">
             <div className="text-[11px] text-muted mb-2">Thông tin chung của phiếu</div>
             <div className="grid grid-cols-2 gap-2">
               <div>
@@ -309,8 +309,8 @@ export default function LapPhieu({
             <div className="text-[11px] text-muted mt-1.5">Thời gian cần / Kế hoạch dùng chung cho cả phiếu</div>
           </div>
 
-          {/* Danh sách mặt hàng */}
-          <div className="max-h-[44vh] overflow-auto -mx-1 px-1">
+          {/* Danh sách mặt hàng — cuộn trong; trên desktop chiếm hết chỗ còn lại để nút Lưu luôn hiện */}
+          <div className="overflow-auto -mx-1 px-1 max-h-[44vh] lg:max-h-none lg:flex-1 lg:min-h-0">
             {dong.length === 0 && (
               <div className="text-sm text-muted text-center py-6">Chưa có mặt hàng nào. Chọn từ danh mục bên trái.</div>
             )}
@@ -394,14 +394,14 @@ export default function LapPhieu({
 
           <button
             onClick={themMucKhac}
-            className="w-full mt-3 border border-dashed border-border rounded-lg py-1.5 text-sm text-muted hover:border-accent hover:text-accent-600"
+            className="w-full mt-3 border border-dashed border-border rounded-lg py-1.5 text-sm text-muted hover:border-accent hover:text-accent-600 shrink-0"
           >
             + Thêm mục khác (gõ tay)
           </button>
 
-          {err && <div className="text-sm text-danger mt-3">{err}</div>}
+          {err && <div className="text-sm text-danger mt-3 shrink-0">{err}</div>}
 
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-border shrink-0">
             <div className="text-xs text-muted">
               Tạm tính (tham khảo)
               <div className="text-lg font-semibold text-foreground">{formatTien(tongTien)} đ</div>
