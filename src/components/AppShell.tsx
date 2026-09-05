@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import LogoutButton from './LogoutButton'
+import NavLinks from './NavLinks'
 import { getCauHinh } from '@/lib/config'
 import type { Role } from '@/lib/session'
 
@@ -34,17 +35,7 @@ export default async function AppShell({
             ) : null}
             <span>{cauHinh.brand_text}</span>
           </Link>
-          <nav className="flex items-center gap-1 flex-1">
-            {items.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                className="px-3 py-1.5 rounded-lg text-sm text-foreground/80 hover:bg-accent-50 hover:text-accent-600"
-              >
-                {n.label}
-              </Link>
-            ))}
-          </nav>
+          <NavLinks items={items.map((n) => ({ href: n.href, label: n.label }))} />
           <div className="flex items-center gap-3 shrink-0">
             <span className="text-sm text-muted hidden sm:inline">{tenHienThi}</span>
             <LogoutButton />

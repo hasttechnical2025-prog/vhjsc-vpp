@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { PhongBanRow, NguoiDungRow } from '@/app/admin/nguoi-dung/page'
+import ConfirmDialog from './ConfirmDialog'
 
 type Role = 'admin' | 'hcns' | 'nguoi_de_nghi'
 const ROLE_LABEL: Record<Role, string> = { admin: 'Quản trị', hcns: 'HCNS', nguoi_de_nghi: 'Người đề nghị' }
@@ -25,6 +26,7 @@ export default function QuanLyToChuc({
   const router = useRouter()
   const [err, setErr] = useState('')
   const [msg, setMsg] = useState('')
+  const [xacNhan, setXacNhan] = useState<{ message: string; onOk: () => void } | null>(null)
   const pbMap = useMemo(() => new Map(phongBan.map((p) => [p.id, p.ten])), [phongBan])
 
   function done(m: string) { setErr(''); setMsg(m); router.refresh() }
@@ -49,11 +51,15 @@ export default function QuanLyToChuc({
     if (!ok) return fail(data.error || 'Lỗi')
     setEditPbId(null); done('Đã cập nhật phòng ban')
   }
-  async function xoaPB(p: PhongBanRow) {
-    if (!confirm(`Xoá phòng ban "${p.ten}"? Tài khoản/phiếu thuộc phòng này sẽ được gỡ liên kết (không mất).`)) return
-    const { ok, data } = await api('DELETE', '/api/admin/phong-ban', { id: p.id })
-    if (!ok) return fail(data.error || 'Lỗi')
-    done('Đã xoá phòng ban')
+  function xoaPB(p: PhongBanRow) {
+    setXacNhan({
+      message: `Xoá phòng ban "${p.ten}"? Tài khoản/phiếu thuộc phòng này sẽ được gỡ liên kết (không mất).`,
+      onOk: async () => {
+        const { ok, data } = await api('DELETE', '/api/admin/phong-ban', { id: p.id })
+        if (!ok) return fail(data.error || 'Lỗi')
+        done('Đã xoá phòng ban')
+      },
+    })
   }
 
   // ---- Người dùng ----
@@ -87,11 +93,15 @@ export default function QuanLyToChuc({
     if (!ok) return fail(data.error || 'Lỗi')
     done(u.is_active ? 'Đã khoá tài khoản' : 'Đã mở tài khoản')
   }
-  async function xoaU(u: NguoiDungRow) {
-    if (!confirm(`Xoá người dùng "${u.ho_ten}" (${u.username})?`)) return
-    const { ok, data } = await api('DELETE', '/api/admin/nguoi-dung', { id: u.id })
-    if (!ok) return fail(data.error || 'Lỗi')
-    done('Đã xoá người dùng')
+  function xoaU(u: NguoiDungRow) {
+    setXacNhan({
+      message: `Xoá người dùng "${u.ho_ten}" (${u.username})?`,
+      onOk: async () => {
+        const { ok, data } = await api('DELETE', '/api/admin/nguoi-dung', { id: u.id })
+        if (!ok) return fail(data.error || 'Lỗi')
+        done('Đã xoá người dùng')
+      },
+    })
   }
 
   const inp = 'border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent'
@@ -223,6 +233,17 @@ export default function QuanLyToChuc({
           </table>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={!!xacNhan}
+        message={xacNhan?.message || ''}
+        onConfirm={() => {
+          const f = xacNhan?.onOk
+          setXacNhan(null)
+          f?.()
+        }}
+        onClose={() => setXacNhan(null)}
+      />
     </div>
   )
 }
