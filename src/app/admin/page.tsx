@@ -28,6 +28,14 @@ export default async function AdminPage() {
         <div className="flex items-center gap-2">
           {session.role === 'admin' && (
             <Link
+              href="/admin/nguoi-dung"
+              className="card px-4 py-2 text-sm font-medium hover:border-accent"
+            >
+              Người dùng & Phòng ban
+            </Link>
+          )}
+          {session.role === 'admin' && (
+            <Link
               href="/admin/cau-hinh"
               className="card px-4 py-2 text-sm font-medium hover:border-accent"
             >
