@@ -51,3 +51,10 @@ body {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
 }
+
+/* Thanh tiến trình chạy khi chuyển trang (báo "app đang xử lý") */
+@keyframes vpp-bar {
+  0% { transform: translateX(-120%); }
+  60% { transform: translateX(180%); }
+  100% { transform: translateX(320%); }
+}
