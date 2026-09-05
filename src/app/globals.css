@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
-/* Chỉ giao diện SÁNG (không dark mode), accent xanh — đồng nhất phong cách App Sổ công tác. */
+/* Chỉ giao diện SÁNG (không dark mode). Tông màu theo LOGO công ty:
+   xanh dương cobalt (khung logo) làm màu chính, xanh lá (khối logo) làm màu phụ/success. */
 :root {
   --background: #f5f7fa;
   --surface: #ffffff;
   --foreground: #0f172a;
   --muted: #64748b;
   --border: #e2e8f0;
-  --accent: #0ea5e9;
-  --accent-600: #0284c7;
-  --accent-50: #e0f2fe;
+  --accent: #2b4ca3;        /* xanh dương logo (nút, link, trạng thái) */
+  --accent-600: #223f88;    /* đậm hơn cho hover */
+  --accent-50: #eaeef8;     /* nền nhạt */
+  --brand-green: #62b046;   /* xanh lá logo (điểm nhấn phụ) */
+  --brand-green-600: #4f9438;
   --danger: #dc2626;
-  --ok: #16a34a;
+  --ok: #57a838;            /* success theo xanh lá logo */
   --warn: #d97706;
 }
 
@@ -24,6 +27,8 @@
   --color-accent: var(--accent);
   --color-accent-600: var(--accent-600);
   --color-accent-50: var(--accent-50);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-600: var(--brand-green-600);
   --color-danger: var(--danger);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
