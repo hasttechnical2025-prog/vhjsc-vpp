@@ -27,10 +27,10 @@ export default async function AppShell({
     <div className="min-h-screen">
       <header className="bg-surface border-b border-border sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-6">
-          <Link href={brandHref} className="flex items-center gap-2 font-bold text-accent-600 shrink-0">
+          <Link href={brandHref} className="flex items-center gap-2 text-lg font-bold tracking-tight text-accent-600 shrink-0">
             {cauHinh.logo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={cauHinh.logo_url} alt="Logo" className="h-8 w-auto object-contain" />
+              <img src={cauHinh.logo_url} alt="Logo" className="h-9 w-auto object-contain" />
             ) : null}
             <span>{cauHinh.brand_text}</span>
           </Link>

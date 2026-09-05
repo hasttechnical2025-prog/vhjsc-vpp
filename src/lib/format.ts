@@ -27,3 +27,19 @@ export function thangHienTai(): string {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
 }
+
+// ISO ("2026-09-05") -> "05/09/2026"
+export function isoToDmy(iso: string | null | undefined): string {
+  if (!iso) return ''
+  const [y, m, d] = iso.split('-')
+  if (!y || !m || !d) return ''
+  return `${d}/${m}/${y}`
+}
+
+// "05/09/2026" -> ISO "2026-09-05" (rỗng nếu không hợp lệ)
+export function dmyToIso(dmy: string | null | undefined): string {
+  if (!dmy) return ''
+  const m = dmy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (!m) return ''
+  return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`
+}

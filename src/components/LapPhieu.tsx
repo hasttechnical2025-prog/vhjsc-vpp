@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { formatTien, formatThang, thangHienTai } from '@/lib/format'
 import type { SanPham } from '@/lib/types'
+import DateField from './DateField'
 
 type Dong = {
   key: string
@@ -61,12 +62,24 @@ export default function LapPhieu({
 }) {
   const router = useRouter()
   const thangMacDinh = thangHienTai()
+  const tieuDeMacDinh = (t: string) =>
+    `Mua sắm văn phòng phẩm tháng ${formatThang(t)}${phongBanTen ? ` cho ${phongBanTen}` : ''}`
   const [thang, setThang] = useState(thangMacDinh)
-  const [tieuDe, setTieuDe] = useState(
-    `Mua sắm văn phòng phẩm tháng ${formatThang(thangMacDinh)}${phongBanTen ? ` cho ${phongBanTen}` : ''}`,
-  )
-  const [thoiGianCan, setThoiGianCan] = useState(formatThang(thangMacDinh))
+  const [tieuDe, setTieuDe] = useState(tieuDeMacDinh(thangMacDinh))
+  const [tieuDeTuChinh, setTieuDeTuChinh] = useState(false)
+  const [thoiGianCan, setThoiGianCan] = useState('')
   const [keHoachSuDung, setKeHoachSuDung] = useState('')
+  const [moTT, setMoTT] = useState(false) // mở/thu gọn khối thông tin chung
+
+  // Đổi tháng -> tự cập nhật tháng/năm trong Nội dung đề nghị (nếu người dùng chưa tự sửa)
+  function doiThang(t: string) {
+    setThang(t)
+    if (!tieuDeTuChinh) setTieuDe(tieuDeMacDinh(t))
+  }
+  function doiTieuDe(v: string) {
+    setTieuDe(v)
+    setTieuDeTuChinh(v.trim() !== tieuDeMacDinh(thang).trim())
+  }
   const [dong, setDong] = useState<Dong[]>([])
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState('')
@@ -262,51 +275,68 @@ export default function LapPhieu({
             <span className="text-sm text-accent-600 font-medium">{soMatHang} mặt hàng</span>
           </div>
 
-          {/* Thông tin chung của phiếu */}
-          <div className="border border-border rounded-xl p-3 mb-3 bg-white shrink-0">
-            <div className="text-[11px] text-muted mb-2">Thông tin chung của phiếu</div>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <div className="text-[11px] text-muted mb-0.5">Tháng</div>
-                <input
-                  type="month"
-                  value={thang}
-                  onChange={(e) => setThang(e.target.value)}
-                  className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
-                />
+          {/* Thông tin chung của phiếu — thu gọn để chừa chỗ cho danh sách hàng */}
+          <div className="border border-border rounded-xl mb-3 bg-white shrink-0">
+            <button
+              type="button"
+              onClick={() => setMoTT(!moTT)}
+              className="w-full flex items-center justify-between gap-2 px-3 py-2 text-left"
+            >
+              <div className="min-w-0">
+                <div className="text-[11px] text-muted">Thông tin chung của phiếu</div>
+                {!moTT && (
+                  <div className="text-xs truncate text-foreground/80">
+                    Tháng {formatThang(thang)}
+                    {thoiGianCan ? ` · Cần ${thoiGianCan}` : ''}
+                    {keHoachSuDung ? ` · ${keHoachSuDung}` : ''}
+                  </div>
+                )}
               </div>
-              <div>
-                <div className="text-[11px] text-muted mb-0.5">Người đề nghị</div>
-                <div className="text-sm py-1 truncate" title={nguoiDeNghi}>{nguoiDeNghi}</div>
+              <span className="text-xs text-accent-600 shrink-0">{moTT ? 'Thu gọn ▲' : 'Sửa ▼'}</span>
+            </button>
+
+            {moTT && (
+              <div className="px-3 pb-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <div className="text-[11px] text-muted mb-0.5">Tháng</div>
+                    <input
+                      type="month"
+                      value={thang}
+                      onChange={(e) => doiThang(e.target.value)}
+                      className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-[11px] text-muted mb-0.5">Người đề nghị</div>
+                    <div className="text-sm py-1 truncate" title={nguoiDeNghi}>{nguoiDeNghi}</div>
+                  </div>
+                  <div>
+                    <div className="text-[11px] text-muted mb-0.5">Thời gian cần</div>
+                    <DateField value={thoiGianCan} onChange={setThoiGianCan} className="w-full" />
+                  </div>
+                  <div>
+                    <div className="text-[11px] text-muted mb-0.5">Kế hoạch sử dụng</div>
+                    <input
+                      value={keHoachSuDung}
+                      onChange={(e) => setKeHoachSuDung(e.target.value)}
+                      placeholder="VD: 1 tháng"
+                      className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
+                    />
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <div className="text-[11px] text-muted mb-0.5">Nội dung đề nghị</div>
+                  <textarea
+                    value={tieuDe}
+                    onChange={(e) => doiTieuDe(e.target.value)}
+                    rows={2}
+                    className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
+                  />
+                </div>
+                <div className="text-[11px] text-muted mt-1.5">Thời gian cần / Kế hoạch dùng chung cho cả phiếu</div>
               </div>
-              <div>
-                <div className="text-[11px] text-muted mb-0.5">Thời gian cần</div>
-                <input
-                  value={thoiGianCan}
-                  onChange={(e) => setThoiGianCan(e.target.value)}
-                  className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
-                />
-              </div>
-              <div>
-                <div className="text-[11px] text-muted mb-0.5">Kế hoạch sử dụng</div>
-                <input
-                  value={keHoachSuDung}
-                  onChange={(e) => setKeHoachSuDung(e.target.value)}
-                  placeholder="VD: 1 tháng"
-                  className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
-                />
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="text-[11px] text-muted mb-0.5">Nội dung đề nghị</div>
-              <textarea
-                value={tieuDe}
-                onChange={(e) => setTieuDe(e.target.value)}
-                rows={2}
-                className="w-full border border-border rounded-md px-2 py-1 text-sm outline-none focus:border-accent"
-              />
-            </div>
-            <div className="text-[11px] text-muted mt-1.5">Thời gian cần / Kế hoạch dùng chung cho cả phiếu</div>
+            )}
           </div>
 
           {/* Danh sách mặt hàng — cuộn trong; trên desktop chiếm hết chỗ còn lại để nút Lưu luôn hiện */}
