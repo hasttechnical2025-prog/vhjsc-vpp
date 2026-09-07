@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       thoi_gian_can: body.thoi_gian_can || null,
       ke_hoach_su_dung: body.ke_hoach_su_dung || null,
       ghi_chu: body.ghi_chu || null,
-      trang_thai: 'nhap',
+      trang_thai: 'cho_duyet',
       tong_tien: tongTien,
     })
     .select('id')

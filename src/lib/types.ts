@@ -20,7 +20,13 @@ export type SanPham = {
   dang_ban: boolean
 }
 
-export type TrangThaiPhieu = 'nhap' | 'hoan_tat'
+export type TrangThaiPhieu = 'cho_duyet' | 'da_duyet' | 'tu_choi'
+
+export const NHAN_TRANG_THAI: Record<TrangThaiPhieu, string> = {
+  cho_duyet: 'Chờ duyệt',
+  da_duyet: 'Đã duyệt',
+  tu_choi: 'Từ chối',
+}
 
 export type PhieuDong = {
   id?: string
@@ -47,5 +53,8 @@ export type Phieu = {
   trang_thai: TrangThaiPhieu
   ghi_chu: string | null
   tong_tien: number
+  nguoi_duyet_ten: string | null
+  thoi_diem_duyet: string | null
+  ly_do_tu_choi: string | null
   created_at: string
 }

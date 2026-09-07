@@ -14,6 +14,24 @@ async function layPhieuNeuDuocPhep(id: string, session: { id: string; role: stri
   return { phieu: data, allowed }
 }
 
+// Lấy chi tiết phiếu + các dòng (cho accordion xem nhanh)
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await requireRole()
+  if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
+  const { id } = await params
+  const { phieu, allowed } = await layPhieuNeuDuocPhep(id, session)
+  if (!phieu) return NextResponse.json({ error: 'Không tìm thấy phiếu' }, { status: 404 })
+  if (!allowed) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+
+  const { data: dong } = await supabaseAdmin
+    .from('vhjscvpp_phieu_dong')
+    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu')
+    .eq('phieu_id', id)
+    .order('thu_tu', { ascending: true })
+
+  return NextResponse.json({ dong: dong || [] })
+}
+
 // Sửa phiếu: cập nhật thông tin chung + thay toàn bộ dòng
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await requireRole()
@@ -42,6 +60,11 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       ke_hoach_su_dung: body.ke_hoach_su_dung || null,
       ghi_chu: body.ghi_chu || null,
       tong_tien: tongTien,
+      // Sửa phiếu -> quay lại Chờ duyệt, xoá dấu duyệt/từ chối cũ
+      trang_thai: 'cho_duyet',
+      nguoi_duyet_ten: null,
+      thoi_diem_duyet: null,
+      ly_do_tu_choi: null,
       updated_at: new Date().toISOString(),
     })
     .eq('id', id)

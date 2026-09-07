@@ -11,6 +11,13 @@ type Row = {
   nguoi_de_nghi_ten: string
   thang: string
   tong_tien: number
+  trang_thai: 'cho_duyet' | 'da_duyet' | 'tu_choi'
+  nguoi_duyet_ten: string | null
+  thoi_diem_duyet: string | null
+  ly_do_tu_choi: string | null
+  thoi_gian_can: string | null
+  ke_hoach_su_dung: string | null
+  tieu_de: string | null
   created_at: string
 }
 
@@ -22,7 +29,9 @@ export default async function PhieuListPage() {
   const phieu = await selectAll<Row>((from, to) => {
     let q = supabaseAdmin
       .from('vhjscvpp_phieu')
-      .select('id, phong_ban_id, phong_ban_ten, nguoi_de_nghi_ten, thang, tong_tien, created_at')
+      .select(
+        'id, phong_ban_id, phong_ban_ten, nguoi_de_nghi_ten, thang, tong_tien, trang_thai, nguoi_duyet_ten, thoi_diem_duyet, ly_do_tu_choi, thoi_gian_can, ke_hoach_su_dung, tieu_de, created_at',
+      )
       .order('created_at', { ascending: false })
       .range(from, to)
     if (!canAll) q = q.eq('nguoi_de_nghi_id', session.id)

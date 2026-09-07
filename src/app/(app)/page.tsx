@@ -18,16 +18,16 @@ export default async function DashboardPage() {
   if (session.role !== 'admin' && session.role !== 'hcns') redirect('/phieu')
 
   const thang = thangHienTai()
-  const [soSanPham, soPhieu, soPhieuThang] = await Promise.all([
+  const [soSanPham, soPhieuThang, soChoDuyet] = await Promise.all([
     dem('vhjscvpp_san_pham', (q) => q.eq('dang_ban', true)),
-    dem('vhjscvpp_phieu'),
     dem('vhjscvpp_phieu', (q) => q.eq('thang', thang)),
+    dem('vhjscvpp_phieu', (q) => q.eq('trang_thai', 'cho_duyet')),
   ])
 
   const cards = [
-    { label: 'Sản phẩm trong danh mục', value: soSanPham, href: '/dang-ky' },
+    { label: 'Phiếu chờ duyệt', value: soChoDuyet, href: '/phieu', nhan: true },
     { label: `Phiếu tháng ${formatThang(thang)}`, value: soPhieuThang, href: '/phieu' },
-    { label: 'Tổng số phiếu', value: soPhieu, href: '/phieu' },
+    { label: 'Sản phẩm trong danh mục', value: soSanPham, href: '/dang-ky' },
   ]
 
   return (
@@ -38,7 +38,9 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {cards.map((c) => (
           <Link key={c.label} href={c.href} className="card p-5 hover:border-accent transition-colors">
-            <div className="text-3xl font-bold text-accent-600">{c.value.toLocaleString('vi-VN')}</div>
+            <div className={`text-3xl font-bold ${c.nhan && c.value > 0 ? 'text-warn' : 'text-accent-600'}`}>
+              {c.value.toLocaleString('vi-VN')}
+            </div>
             <div className="text-sm text-muted mt-1">{c.label}</div>
           </Link>
         ))}
