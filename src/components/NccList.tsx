@@ -50,12 +50,18 @@ export default function NccList({
 
   const loc = useMemo(() => {
     const k = boDau(q.trim())
-    return ncc.filter((n) => {
+    const ds = ncc.filter((n) => {
       if (nhom && n.nhom_chi_phi !== nhom) return false
       if (tt && n.trang_thai !== tt) return false
       if (loai && (danhGia[n.id]?.xep_loai || '') !== loai) return false
       if (!k) return true
       return boDau(n.ten).includes(k) || boDau(n.loai_chi_phi || '').includes(k) || boDau(n.dia_chi || '').includes(k)
+    })
+    // Sắp theo Nhóm chi phí, rồi theo tên trong từng nhóm (nhóm trống xếp cuối)
+    return ds.sort((a, b) => {
+      const na = a.nhom_chi_phi || '￿'
+      const nb = b.nhom_chi_phi || '￿'
+      return na.localeCompare(nb, 'vi') || a.ten.localeCompare(b.ten, 'vi')
     })
   }, [ncc, q, nhom, tt, loai, danhGia])
 
