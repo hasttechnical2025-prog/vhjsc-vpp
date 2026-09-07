@@ -41,10 +41,12 @@ type Dong = {
   ghi_chu: string | null
 }
 
-export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
+export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string | null): Promise<Buffer> {
   const pr = await getPrinter()
 
   const soDong = rows.length || 1
+  // Đẩy nội dung ô GỘP (Thời gian cần/Kế hoạch) xuống giữa theo số dòng
+  const canGiuaOGop = Math.max(2, Math.round((soDong - 1) * 8))
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const thHeader: any[] = ['TT', 'Tên TTB/VPP', 'Đơn vị tính', 'Số lượng', 'Thời gian cần', 'Kế hoạch sử dụng', 'Ghi chú'].map(
     (t) => ({ text: t, bold: true, fillColor: '#eef2f7', alignment: 'center', fontSize: 9 }),
@@ -61,8 +63,8 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
     ]
     // Thời gian cần + Kế hoạch sử dụng: ô GỘP toàn bảng (chỉ điền ở dòng đầu)
     if (i === 0) {
-      row.push({ text: phieu.thoi_gian_can || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, 8, 0, 0] })
-      row.push({ text: phieu.ke_hoach_su_dung || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, 8, 0, 0] })
+      row.push({ text: phieu.thoi_gian_can || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, canGiuaOGop, 0, 0] })
+      row.push({ text: phieu.ke_hoach_su_dung || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, canGiuaOGop, 0, 0] })
     } else {
       row.push({})
       row.push({})
@@ -83,7 +85,10 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
       // Tiêu đề (giữa) + hộp mã biểu (phải)
       {
         columns: [
-          { width: 118, text: '' },
+          {
+            width: 120,
+            stack: logoDataUri ? [{ image: logoDataUri, width: 62 }] : [{ text: '' }],
+          },
           {
             width: '*',
             stack: [
@@ -93,10 +98,11 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
             ],
           },
           {
-            width: 118,
+            width: 120,
             fontSize: 8,
+            alignment: 'right',
             stack: [
-              { text: 'BM01/QLTS/04-HCNS', alignment: 'center', bold: true },
+              { text: 'BM01/QLTS/04-HCNS', bold: true },
               { text: 'Ngày ban hành: 01/12/2011' },
               { text: 'Lần sửa đổi: Lần 1' },
             ],
@@ -115,6 +121,10 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
           vLineColor: () => '#555',
           hLineWidth: () => 0.7,
           vLineWidth: () => 0.7,
+          paddingLeft: () => 4,
+          paddingRight: () => 4,
+          paddingTop: () => 4,
+          paddingBottom: () => 4,
         },
       },
       {
@@ -126,19 +136,19 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
       },
       {
         columns: [
-          { text: 'BAN GIÁM ĐỐC', alignment: 'center', bold: true, fontSize: 10 },
-          { text: 'PHÒNG HCNS', alignment: 'center', bold: true, fontSize: 10 },
-          { text: 'TRƯỞNG BỘ PHẬN', alignment: 'center', bold: true, fontSize: 10 },
-          { text: 'NGƯỜI ĐỀ NGHỊ', alignment: 'center', bold: true, fontSize: 10 },
+          { width: '*', text: 'BAN GIÁM ĐỐC', alignment: 'center', bold: true, fontSize: 10 },
+          { width: '*', text: 'PHÒNG HCNS', alignment: 'center', bold: true, fontSize: 10 },
+          { width: '*', text: 'TRƯỞNG BỘ PHẬN', alignment: 'center', bold: true, fontSize: 10 },
+          { width: '*', text: 'NGƯỜI ĐỀ NGHỊ', alignment: 'center', bold: true, fontSize: 10 },
         ],
         margin: [0, 8, 0, 0],
       },
       {
         columns: [
-          { text: '', alignment: 'center' },
-          { text: '', alignment: 'center' },
-          { text: phieu.truong_bo_phan || '', alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
-          { text: phieu.nguoi_de_nghi_ten, alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
+          { width: '*', text: '', alignment: 'center' },
+          { width: '*', text: '', alignment: 'center' },
+          { width: '*', text: phieu.truong_bo_phan || '', alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
+          { width: '*', text: phieu.nguoi_de_nghi_ten, alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
         ],
       },
     ],
