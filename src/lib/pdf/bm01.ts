@@ -45,8 +45,8 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
   const pr = await getPrinter()
 
   const soDong = rows.length || 1
-  // Đẩy nội dung ô GỘP (Thời gian cần/Kế hoạch) xuống giữa theo số dòng
-  const canGiuaOGop = Math.max(2, Math.round((soDong - 1) * 8))
+  // Đẩy nội dung ô GỘP (Thời gian cần/Kế hoạch) xuống ~giữa theo số dòng
+  const canGiuaOGop = Math.max(4, Math.round((soDong - 1) * 11))
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const thHeader: any[] = ['TT', 'Tên TTB/VPP', 'Đơn vị tính', 'Số lượng', 'Thời gian cần', 'Kế hoạch sử dụng', 'Ghi chú'].map(
     (t) => ({ text: t, bold: true, fillColor: '#eef2f7', alignment: 'center', fontSize: 9 }),
@@ -86,8 +86,8 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
       {
         columns: [
           {
-            width: 120,
-            stack: logoDataUri ? [{ image: logoDataUri, width: 62 }] : [{ text: '' }],
+            width: 128,
+            stack: logoDataUri ? [{ image: logoDataUri, width: 105 }] : [{ text: '' }],
           },
           {
             width: '*',
@@ -98,7 +98,7 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
             ],
           },
           {
-            width: 120,
+            width: 128,
             fontSize: 8,
             alignment: 'right',
             stack: [
@@ -109,8 +109,13 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
           },
         ],
       },
-      { text: 'Kính gửi:      - Ban Giám đốc;', margin: [0, 14, 0, 0] },
-      { text: '                    - Phòng Hành chính Nhân sự.' },
+      {
+        columns: [
+          { width: 52, text: 'Kính gửi:' },
+          { width: '*', stack: [{ text: '- Ban Giám đốc;' }, { text: '- Phòng Hành chính Nhân sự.' }] },
+        ],
+        margin: [0, 14, 0, 0],
+      },
       { text: [{ text: 'Người đề nghị: ', bold: true }, phieu.nguoi_de_nghi_ten], margin: [0, 8, 0, 0] },
       { text: [{ text: 'Bộ phận: ', bold: true }, phieu.phong_ban_ten || ''] },
       { text: [{ text: 'Đề nghị: ', bold: true }, deNghi], margin: [0, 0, 0, 10] },

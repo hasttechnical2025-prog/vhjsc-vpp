@@ -90,7 +90,9 @@ export default function LapPhieu({
   const [tieuDe, setTieuDe] = useState(initial?.tieu_de ?? tieuDeMacDinh(initial?.thang || thangMacDinh))
   const [tieuDeTuChinh, setTieuDeTuChinh] = useState(!!initial?.tieu_de)
   const [thoiGianCan, setThoiGianCan] = useState(initial?.thoi_gian_can || '')
-  const [keHoachSuDung, setKeHoachSuDung] = useState(initial?.ke_hoach_su_dung || '')
+  const [keHoachSuDung, setKeHoachSuDung] = useState(
+    initial?.ke_hoach_su_dung ?? '1 tháng (hoặc tới khi dùng hết)',
+  )
   const [moTT, setMoTT] = useState(false) // mở/thu gọn khối thông tin chung
 
   // Đổi tháng -> tự cập nhật tháng/năm trong Nội dung đề nghị (nếu người dùng chưa tự sửa)
