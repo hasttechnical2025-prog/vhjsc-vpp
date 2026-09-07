@@ -17,6 +17,8 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
   const [editId, setEditId] = useState<number | null>(null)
   const [ed, setEd] = useState<EditState>({ ten: '', nhom_hang: '', dvt: '', don_gia: '', bien_the: '' })
   const [busy, setBusy] = useState(false)
+  const [doiTenMo, setDoiTenMo] = useState(false)
+  const [tenNhomMoi, setTenNhomMoi] = useState('')
   const [uploadingId, setUploadingId] = useState<number | null>(null)
   const [err, setErr] = useState('')
   const [msg, setMsg] = useState('')
@@ -70,6 +72,24 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
     }
   }
 
+  async function doiTenNhom() {
+    const moi = tenNhomMoi.trim()
+    if (!nhom || !moi || moi === nhom) { setDoiTenMo(false); return }
+    setBusy(true); setErr(''); setMsg('')
+    try {
+      const res = await fetch('/api/admin/san-pham/nhom', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cu: nhom, moi }),
+      })
+      const d = await res.json().catch(() => ({}))
+      if (!res.ok) { setErr(d.error || 'Đổi tên thất bại'); return }
+      setDoiTenMo(false); setNhom(moi); setMsg(`Đã đổi tên nhóm cho ${d.count} mặt hàng`); router.refresh()
+    } finally {
+      setBusy(false)
+    }
+  }
+
   async function thayAnh(id: number, file: File) {
     setUploadingId(id); setErr(''); setMsg('')
     try {
@@ -103,10 +123,36 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
             {nhomList.map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
+        {nhom && !doiTenMo && (
+          <button
+            onClick={() => { setTenNhomMoi(nhom); setDoiTenMo(true); setErr(''); setMsg('') }}
+            className="text-sm text-accent-600 hover:underline pb-1"
+          >
+            ✎ Đổi tên nhóm
+          </button>
+        )}
         <div className="text-sm text-muted pb-1 ml-auto">
           {loc.length.toLocaleString('vi-VN')} mặt hàng{loc.length > GIOI_HAN ? ` · hiện ${GIOI_HAN} đầu, hãy tìm để thu hẹp` : ''}
         </div>
       </div>
+
+      {/* Đổi tên nhóm hàng đang chọn (áp dụng cho mọi mặt hàng trong nhóm) */}
+      {nhom && doiTenMo && (
+        <div className="card p-3 mb-4 bg-accent-50/40 flex flex-wrap items-end gap-2">
+          <div>
+            <div className="text-xs text-muted mb-1">Đổi tên nhóm “{nhom}” thành</div>
+            <input
+              className="border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent w-72"
+              value={tenNhomMoi}
+              onChange={(e) => setTenNhomMoi(e.target.value)}
+              autoFocus
+            />
+          </div>
+          <button onClick={doiTenNhom} disabled={busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60">Lưu</button>
+          <button onClick={() => setDoiTenMo(false)} className="text-muted hover:text-foreground text-sm px-2 py-1.5">Huỷ</button>
+          <span className="text-xs text-muted ml-1">Áp dụng cho tất cả mặt hàng trong nhóm.</span>
+        </div>
+      )}
 
       {(err || msg) && <div className={`text-sm mb-3 ${err ? 'text-danger' : 'text-ok'}`}>{err || msg}</div>}
 
