@@ -21,9 +21,11 @@ export default async function SuaPhieuPage({ params }: { params: Promise<{ id: s
 
   const { data: phieu } = await supabaseAdmin.from('vhjscvpp_phieu').select('*').eq('id', id).maybeSingle()
   if (!phieu) notFound()
-  const allowed =
-    session.role === 'admin' || session.role === 'hcns' || phieu.nguoi_de_nghi_id === session.id
+  const laQuanLy = session.role === 'admin' || session.role === 'hcns'
+  const allowed = laQuanLy || phieu.nguoi_de_nghi_id === session.id
   if (!allowed) redirect('/phieu')
+  // Phiếu đã duyệt: người đề nghị không được sửa
+  if (phieu.trang_thai === 'da_duyet' && !laQuanLy) redirect('/phieu')
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')

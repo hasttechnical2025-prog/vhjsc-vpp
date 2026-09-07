@@ -305,10 +305,16 @@ export default function PhieuList({
                       <a href={`/api/phieu/${p.id}/pdf`} target="_blank" rel="noreferrer" className="border border-border rounded-lg px-4 py-1.5 text-sm hover:border-accent">
                         Xem PDF
                       </a>
-                      <Link href={`/phieu/${p.id}/sua`} className="border border-border rounded-lg px-4 py-1.5 text-sm hover:border-accent">
-                        Sửa
-                      </Link>
-                      <button onClick={() => xoa(p)} className="text-danger text-sm hover:underline ml-1">Xoá</button>
+                      {(canAll || p.trang_thai !== 'da_duyet') ? (
+                        <>
+                          <Link href={`/phieu/${p.id}/sua`} className="border border-border rounded-lg px-4 py-1.5 text-sm hover:border-accent">
+                            Sửa
+                          </Link>
+                          <button onClick={() => xoa(p)} className="text-danger text-sm hover:underline ml-1">Xoá</button>
+                        </>
+                      ) : (
+                        <span className="text-xs text-muted">Phiếu đã duyệt — không thể sửa/xoá</span>
+                      )}
                     </div>
                   )}
                 </div>
