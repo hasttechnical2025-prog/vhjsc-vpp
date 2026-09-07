@@ -38,6 +38,7 @@ type Dong = {
   ten_tay: string | null
   dvt: string | null
   so_luong: number
+  mau: string | null
   ghi_chu: string | null
 }
 
@@ -57,7 +58,7 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const row: any[] = [
       { text: String(i + 1), alignment: 'center', fontSize: 9 },
-      { text: d.ten_hang || d.ten_tay || '', fontSize: 9 },
+      { text: (d.ten_hang || d.ten_tay || '') + (d.mau ? ` (${d.mau})` : ''), fontSize: 9 },
       { text: d.dvt || '', alignment: 'center', fontSize: 9 },
       { text: d.so_luong != null ? String(d.so_luong) : '', alignment: 'center', fontSize: 9 },
     ]

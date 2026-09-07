@@ -58,6 +58,7 @@ export async function POST(req: Request) {
     dvt: d.dvt ?? null,
     don_gia: d.don_gia ?? null,
     so_luong: Number(d.so_luong) || 0,
+    mau: d.mau ?? null,
     ghi_chu: d.ghi_chu ?? null,
     thu_tu: typeof d.thu_tu === 'number' ? d.thu_tu : i,
   }))

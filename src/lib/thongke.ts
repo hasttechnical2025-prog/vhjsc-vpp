@@ -8,6 +8,7 @@ export type FlatRow = {
   nguoi_de_nghi_ten: string
   ma: string
   ten: string
+  mau: string
   nhom: string
   dvt: string
   so_luong: number
@@ -15,7 +16,7 @@ export type FlatRow = {
   thanh_tien: number
 }
 
-export type MuaRow = { ma: string; ten: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }
+export type MuaRow = { ma: string; ten: string; mau: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }
 export type PhongRow = { phong: string; so_phieu: number; tong_tien: number }
 
 export type KetQua = {
@@ -42,6 +43,7 @@ type DongLite = {
   dvt: string | null
   don_gia: number | null
   so_luong: number
+  mau: string | null
 }
 
 const RONG: KetQua = { kpi: { tongTien: 0, soPhieu: 0, soPhong: 0, soMatHang: 0 }, tongHopMua: [], theoPhong: [], flat: [] }
@@ -67,7 +69,7 @@ export async function thongKe(tuISO: string | null, denISO: string | null, phong
   const dong = await selectAll<DongLite>((from, to) =>
     supabaseAdmin
       .from('vhjscvpp_phieu_dong')
-      .select('phieu_id, san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong')
+      .select('phieu_id, san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, mau')
       .in('phieu_id', ids)
       .range(from, to),
   )
@@ -92,6 +94,7 @@ export async function thongKe(tuISO: string | null, denISO: string | null, phong
       nguoi_de_nghi_ten: p.nguoi_de_nghi_ten,
       ma: d.san_pham_id != null ? String(d.san_pham_id) : '',
       ten: d.ten_hang || d.ten_tay || '',
+      mau: d.mau || '',
       nhom: d.san_pham_id != null ? nhomMap.get(d.san_pham_id) || '' : '(Khác)',
       dvt: d.dvt || '',
       so_luong: sl,
@@ -100,11 +103,11 @@ export async function thongKe(tuISO: string | null, denISO: string | null, phong
     }
   })
 
-  // Tổng hợp mua: gộp theo mã hàng (mục khác gộp theo tên)
+  // Tổng hợp mua: gộp theo mã hàng + màu (mục khác gộp theo tên)
   const gMap = new Map<string, MuaRow>()
   for (const r of flat) {
-    const key = r.ma || 'T:' + r.ten.toLowerCase().trim()
-    const g = gMap.get(key) || { ma: r.ma, ten: r.ten, nhom: r.nhom, dvt: r.dvt, tong_sl: 0, don_gia: 0, thanh_tien: 0 }
+    const key = (r.ma || 'T:' + r.ten.toLowerCase().trim()) + '|' + r.mau
+    const g = gMap.get(key) || { ma: r.ma, ten: r.ten, mau: r.mau, nhom: r.nhom, dvt: r.dvt, tong_sl: 0, don_gia: 0, thanh_tien: 0 }
     g.tong_sl += r.so_luong
     g.thanh_tien += r.thanh_tien
     gMap.set(key, g)

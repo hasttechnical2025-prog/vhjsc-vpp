@@ -30,7 +30,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu')
+    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, mau, ghi_chu, thu_tu')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 
@@ -87,6 +87,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     dvt: d.dvt ?? null,
     don_gia: d.don_gia ?? null,
     so_luong: Number(d.so_luong) || 0,
+    mau: d.mau ?? null,
     ghi_chu: d.ghi_chu ?? null,
     thu_tu: typeof d.thu_tu === 'number' ? d.thu_tu : i,
   }))

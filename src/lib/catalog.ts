@@ -15,7 +15,7 @@ export async function getSanPhamDangBan(): Promise<SanPham[]> {
   const data = await selectAll<SanPham>((from, to) =>
     supabaseAdmin
       .from('vhjscvpp_san_pham')
-      .select('id, nhom_hang, ten, xuat_xu, quy_cach, dvt, don_gia, anh_url, dang_ban')
+      .select('id, nhom_hang, ten, xuat_xu, quy_cach, dvt, don_gia, anh_url, dang_ban, bien_the')
       .eq('dang_ban', true)
       .order('id', { ascending: true })
       .range(from, to),

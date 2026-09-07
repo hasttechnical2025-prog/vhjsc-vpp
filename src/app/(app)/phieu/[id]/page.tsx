@@ -12,6 +12,7 @@ type DongRow = {
   dvt: string | null
   don_gia: number | null
   so_luong: number
+  mau: string | null
   ghi_chu: string | null
   thu_tu: number
 }
@@ -30,7 +31,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
 
   const { data: dong } = await supabaseAdmin
     .from('vhjscvpp_phieu_dong')
-    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, ghi_chu, thu_tu')
+    .select('san_pham_id, ten_hang, ten_tay, dvt, don_gia, so_luong, mau, ghi_chu, thu_tu')
     .eq('phieu_id', id)
     .order('thu_tu', { ascending: true })
 
@@ -89,7 +90,7 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
                 <tr key={i}>
                   <td className="border border-border px-2 py-1 text-center">{i + 1}</td>
                   <td className="border border-border px-2 py-1 text-center text-muted">{d.san_pham_id ?? '—'}</td>
-                  <td className="border border-border px-2 py-1">{d.ten_hang || d.ten_tay || ''}</td>
+                  <td className="border border-border px-2 py-1">{(d.ten_hang || d.ten_tay || '') + (d.mau ? ` (${d.mau})` : '')}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.dvt || ''}</td>
                   <td className="border border-border px-2 py-1 text-center">{d.so_luong}</td>
                   <td className="border border-border px-2 py-1">{d.ghi_chu || ''}</td>

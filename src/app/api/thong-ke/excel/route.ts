@@ -19,9 +19,9 @@ export async function GET(req: Request) {
   const wb = XLSX.utils.book_new()
 
   // Sheet 1 — Tổng hợp mua
-  const s1: (string | number)[][] = [['Nhóm hàng', 'Mã hàng', 'Tên TTB/VPP', 'ĐVT', 'Tổng số lượng', 'Đơn giá', 'Thành tiền']]
-  for (const r of kq.tongHopMua) s1.push([r.nhom, r.ma, r.ten, r.dvt, r.tong_sl, r.don_gia, r.thanh_tien])
-  s1.push(['', '', '', '', '', 'TỔNG', kq.kpi.tongTien])
+  const s1: (string | number)[][] = [['Nhóm hàng', 'Mã hàng', 'Tên TTB/VPP', 'Màu', 'ĐVT', 'Tổng số lượng', 'Đơn giá', 'Thành tiền']]
+  for (const r of kq.tongHopMua) s1.push([r.nhom, r.ma, r.ten, r.mau, r.dvt, r.tong_sl, r.don_gia, r.thanh_tien])
+  s1.push(['', '', '', '', '', '', 'TỔNG', kq.kpi.tongTien])
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(s1), 'Tổng hợp mua')
 
   // Sheet 2 — Chi phí theo phòng
@@ -32,10 +32,10 @@ export async function GET(req: Request) {
 
   // Sheet 3 — Dữ liệu thô (để tự pivot)
   const s3: (string | number)[][] = [
-    ['Tháng', 'Phòng ban', 'Người đề nghị', 'Mã hàng', 'Tên TTB/VPP', 'Nhóm hàng', 'ĐVT', 'Số lượng', 'Đơn giá', 'Thành tiền'],
+    ['Tháng', 'Phòng ban', 'Người đề nghị', 'Mã hàng', 'Tên TTB/VPP', 'Màu', 'Nhóm hàng', 'ĐVT', 'Số lượng', 'Đơn giá', 'Thành tiền'],
   ]
   for (const r of kq.flat)
-    s3.push([r.thang, r.phong_ban_ten, r.nguoi_de_nghi_ten, r.ma, r.ten, r.nhom, r.dvt, r.so_luong, r.don_gia, r.thanh_tien])
+    s3.push([r.thang, r.phong_ban_ten, r.nguoi_de_nghi_ten, r.ma, r.ten, r.mau, r.nhom, r.dvt, r.so_luong, r.don_gia, r.thanh_tien])
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(s3), 'Dữ liệu thô')
 
   const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }) as Buffer

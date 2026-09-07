@@ -18,6 +18,7 @@ export type SanPham = {
   don_gia: number | null
   anh_url: string | null
   dang_ban: boolean
+  bien_the: string[] | null
 }
 
 export type TrangThaiPhieu = 'cho_duyet' | 'da_duyet' | 'tu_choi'

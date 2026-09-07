@@ -6,7 +6,7 @@ import DateField from './DateField'
 
 type KetQua = {
   kpi: { tongTien: number; soPhieu: number; soPhong: number; soMatHang: number }
-  tongHopMua: { ma: string; ten: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }[]
+  tongHopMua: { ma: string; ten: string; mau: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }[]
   theoPhong: { phong: string; so_phieu: number; tong_tien: number }[]
 }
 
@@ -135,7 +135,7 @@ export default function ThongKe({ phongBan }: { phongBan: { id: string; ten: str
                     <tr key={i} className="border-t border-border">
                       <td className="px-3 py-1.5 text-muted">{r.nhom}</td>
                       <td className="px-3 py-1.5 text-muted">{r.ma || '—'}</td>
-                      <td className="px-3 py-1.5">{r.ten}</td>
+                      <td className="px-3 py-1.5">{r.ten}{r.mau ? <span className="text-muted"> ({r.mau})</span> : null}</td>
                       <td className="px-3 py-1.5">{r.dvt}</td>
                       <td className="px-3 py-1.5 text-right font-medium">{r.tong_sl.toLocaleString('vi-VN')}</td>
                       <td className="px-3 py-1.5 text-right">{formatTien(r.don_gia)}</td>

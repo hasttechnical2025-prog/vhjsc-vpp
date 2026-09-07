@@ -31,6 +31,7 @@ type Dong = {
   ten_tay: string | null
   dvt: string | null
   so_luong: number
+  mau: string | null
   ghi_chu: string | null
 }
 
@@ -265,7 +266,7 @@ export default function PhieuList({
                           {dong.map((d, i) => (
                             <tr key={i}>
                               <td className="border border-border px-2 py-1 text-center">{i + 1}</td>
-                              <td className="border border-border px-2 py-1">{d.ten_hang || d.ten_tay || ''}</td>
+                              <td className="border border-border px-2 py-1">{(d.ten_hang || d.ten_tay || '') + (d.mau ? ` (${d.mau})` : '')}</td>
                               <td className="border border-border px-2 py-1 text-center">{d.dvt || ''}</td>
                               <td className="border border-border px-2 py-1 text-center">{d.so_luong}</td>
                               <td className="border border-border px-2 py-1">{d.ghi_chu || ''}</td>

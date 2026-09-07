@@ -14,7 +14,9 @@ type Dong = {
   dvt: string | null
   don_gia: number | null
   anh: string | null
-  so_luong: number
+  bien_the: string[] | null // các màu có thể chọn (null = không có biến thể)
+  so_luong: number // dùng khi KHÔNG có biến thể
+  mauSL: Record<string, number> // dùng khi CÓ biến thể: { Xanh: 5, Đỏ: 3 }
   ghi_chu: string
   showGhiChu: boolean
 }
@@ -26,6 +28,7 @@ type InitDong = {
   dvt: string | null
   don_gia: number | null
   so_luong: number
+  mau: string | null
   ghi_chu: string | null
 }
 export type PhieuBanDau = {
@@ -106,19 +109,34 @@ export default function LapPhieu({
   }
   const [dong, setDong] = useState<Dong[]>(() => {
     if (!initial) return []
-    const anhMap = new Map(sanPham.map((s) => [s.id, s.anh_url]))
-    return initial.dong.map((d) => ({
-      key: newKey(),
-      san_pham_id: d.san_pham_id,
-      ten: d.ten_hang || d.ten_tay || '',
-      ten_tay: d.san_pham_id ? null : d.ten_tay || '',
-      dvt: d.dvt,
-      don_gia: d.don_gia,
-      anh: d.san_pham_id ? anhMap.get(d.san_pham_id) ?? null : null,
-      so_luong: d.so_luong,
-      ghi_chu: d.ghi_chu || '',
-      showGhiChu: false,
-    }))
+    const spMap = new Map(sanPham.map((s) => [s.id, s]))
+    const lines: Dong[] = []
+    const bienTheLine = new Map<number, Dong>() // gộp các dòng cùng SP (nhiều màu) về 1
+    for (const d of initial.dong) {
+      const sp = d.san_pham_id != null ? spMap.get(d.san_pham_id) : undefined
+      const bt = sp?.bien_the || null
+      if (d.san_pham_id != null && bt && bt.length && d.mau) {
+        let line = bienTheLine.get(d.san_pham_id)
+        if (!line) {
+          line = {
+            key: newKey(), san_pham_id: d.san_pham_id, ten: d.ten_hang || sp?.ten || '',
+            ten_tay: null, dvt: d.dvt, don_gia: d.don_gia, anh: sp?.anh_url ?? null,
+            bien_the: bt, so_luong: 0, mauSL: {}, ghi_chu: d.ghi_chu || '', showGhiChu: false,
+          }
+          bienTheLine.set(d.san_pham_id, line)
+          lines.push(line)
+        }
+        line.mauSL[d.mau] = (line.mauSL[d.mau] || 0) + d.so_luong
+      } else {
+        lines.push({
+          key: newKey(), san_pham_id: d.san_pham_id, ten: d.ten_hang || d.ten_tay || '',
+          ten_tay: d.san_pham_id ? null : d.ten_tay || '', dvt: d.dvt, don_gia: d.don_gia,
+          anh: d.san_pham_id ? spMap.get(d.san_pham_id)?.anh_url ?? null : null,
+          bien_the: null, so_luong: d.so_luong, mauSL: {}, ghi_chu: d.ghi_chu || '', showGhiChu: false,
+        })
+      }
+    }
+    return lines
   })
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState('')
@@ -148,8 +166,29 @@ export default function LapPhieu({
     if (n <= 0) return xoa(key)
     capNhat(key, { so_luong: n })
   }
+  // Nhập số lượng theo màu (SP có biến thể)
+  function datMau(key: string, mau: string, n: number) {
+    setDong((d) =>
+      d.map((x) => {
+        if (x.key !== key) return x
+        const m = { ...x.mauSL }
+        if (n <= 0) delete m[mau]
+        else m[mau] = n
+        return { ...x, mauSL: m }
+      }),
+    )
+  }
+  const tongSL = (d: Dong) =>
+    d.bien_the && d.bien_the.length ? Object.values(d.mauSL).reduce((a, b) => a + (b || 0), 0) : d.so_luong
 
-  // Thêm / chỉnh số lượng SP catalog ngay từ thẻ bên trái
+  function taoDong(sp: SanPham, n: number): Dong {
+    return {
+      key: newKey(), san_pham_id: sp.id, ten: sp.ten, ten_tay: null, dvt: sp.dvt,
+      don_gia: sp.don_gia, anh: sp.anh_url, bien_the: sp.bien_the || null,
+      so_luong: n, mauSL: {}, ghi_chu: '', showGhiChu: false,
+    }
+  }
+  // SP KHÔNG biến thể: thêm/chỉnh số lượng từ thẻ trái (stepper)
   function datSoLuongSp(sp: SanPham, n: number) {
     const cur = dongTheoSp.get(sp.id)
     if (cur) {
@@ -158,22 +197,15 @@ export default function LapPhieu({
       return
     }
     if (n <= 0) return
-    setMoTT(false) // thêm mặt hàng -> tự thu gọn thông tin chung để rộng chỗ danh sách
-    setDong((d) => [
-      ...d,
-      {
-        key: newKey(),
-        san_pham_id: sp.id,
-        ten: sp.ten,
-        ten_tay: null,
-        dvt: sp.dvt,
-        don_gia: sp.don_gia,
-        anh: sp.anh_url,
-        so_luong: n,
-        ghi_chu: '',
-        showGhiChu: false,
-      },
-    ])
+    setMoTT(false)
+    setDong((d) => [...d, taoDong(sp, n)])
+  }
+  // SP CÓ biến thể: thêm/bỏ (số lượng nhập theo màu ở giỏ)
+  function toggleSpBienThe(sp: SanPham) {
+    const cur = dongTheoSp.get(sp.id)
+    if (cur) return xoa(cur.key)
+    setMoTT(false)
+    setDong((d) => [...d, taoDong(sp, 0)])
   }
 
   function themMucKhac() {
@@ -181,29 +213,47 @@ export default function LapPhieu({
     setDong((d) => [
       ...d,
       {
-        key: newKey(),
-        san_pham_id: null,
-        ten: '',
-        ten_tay: '',
-        dvt: '',
-        don_gia: null,
-        anh: null,
-        so_luong: 1,
-        ghi_chu: '',
-        showGhiChu: false,
+        key: newKey(), san_pham_id: null, ten: '', ten_tay: '', dvt: '', don_gia: null,
+        anh: null, bien_the: null, so_luong: 1, mauSL: {}, ghi_chu: '', showGhiChu: false,
       },
     ])
   }
 
-  const tongTien = dong.reduce((s, d) => s + (d.don_gia || 0) * (d.so_luong || 0), 0)
+  const tongTien = dong.reduce((s, d) => s + (d.don_gia || 0) * tongSL(d), 0)
   const soMatHang = dong.length
 
   async function luuPhieu() {
     setErr('')
-    const hople = dong.filter((d) => (d.san_pham_id ? true : (d.ten_tay || '').trim()))
+    // Dòng hợp lệ: mục khác phải có tên; SP biến thể phải có ít nhất 1 màu > 0
+    const hople = dong.filter((d) => {
+      if (!d.san_pham_id) return !!(d.ten_tay || '').trim()
+      if (d.bien_the && d.bien_the.length) return tongSL(d) > 0
+      return true
+    })
     if (hople.length === 0) {
-      setErr('Chưa có mặt hàng nào trong phiếu')
+      setErr('Chưa có mặt hàng nào (hoặc SP nhiều màu chưa nhập số lượng)')
       return
+    }
+    // Mở rộng dòng biến thể thành nhiều dòng theo màu
+    const dongGui: Record<string, unknown>[] = []
+    let stt = 0
+    for (const d of hople) {
+      if (d.san_pham_id && d.bien_the && d.bien_the.length) {
+        for (const [mau, sl] of Object.entries(d.mauSL)) {
+          if (!sl || sl <= 0) continue
+          dongGui.push({
+            san_pham_id: d.san_pham_id, ten_hang: d.ten, ten_tay: null, dvt: d.dvt,
+            don_gia: d.don_gia, so_luong: sl, mau, ghi_chu: d.ghi_chu, thu_tu: stt++,
+          })
+        }
+      } else {
+        dongGui.push({
+          san_pham_id: d.san_pham_id,
+          ten_hang: d.san_pham_id ? d.ten : (d.ten_tay || '').trim(),
+          ten_tay: d.san_pham_id ? null : (d.ten_tay || '').trim(),
+          dvt: d.dvt, don_gia: d.don_gia, so_luong: d.so_luong, mau: null, ghi_chu: d.ghi_chu, thu_tu: stt++,
+        })
+      }
     }
     setSaving(true)
     try {
@@ -215,16 +265,7 @@ export default function LapPhieu({
           tieu_de: tieuDe,
           thoi_gian_can: thoiGianCan,
           ke_hoach_su_dung: keHoachSuDung,
-          dong: hople.map((d, i) => ({
-            san_pham_id: d.san_pham_id,
-            ten_hang: d.san_pham_id ? d.ten : (d.ten_tay || '').trim(),
-            ten_tay: d.san_pham_id ? null : (d.ten_tay || '').trim(),
-            dvt: d.dvt,
-            don_gia: d.don_gia,
-            so_luong: d.so_luong,
-            ghi_chu: d.ghi_chu,
-            thu_tu: i,
-          })),
+          dong: dongGui,
         }),
       })
       const data = await res.json()
@@ -286,9 +327,17 @@ export default function LapPhieu({
                 <div className="text-xs font-medium leading-snug line-clamp-2 min-h-[2.2em]">{sp.ten}</div>
                 <div className="text-[11px] text-muted mt-0.5">
                   <span className="text-accent-600/70">MH {sp.id}</span> · {sp.quy_cach} · {sp.dvt}
+                  {sp.bien_the && sp.bien_the.length ? <span className="text-warn"> · nhiều màu</span> : null}
                 </div>
                 <div className="text-sm font-semibold text-accent-600 mt-0.5 mb-2">{formatTien(sp.don_gia)}</div>
-                {cur ? (
+                {sp.bien_the && sp.bien_the.length ? (
+                  <button
+                    onClick={() => toggleSpBienThe(sp)}
+                    className={`mt-auto rounded-md py-1 text-xs font-medium ${cur ? 'bg-accent-50 text-accent-600' : 'bg-accent text-white hover:bg-accent-600'}`}
+                  >
+                    {cur ? '✓ Đã thêm' : '+ Thêm (chọn màu)'}
+                  </button>
+                ) : cur ? (
                   <div className="mt-auto flex justify-center">
                     <Stepper value={cur.so_luong} onChange={(n) => datSoLuongSp(sp, n)} />
                   </div>
@@ -457,12 +506,35 @@ export default function LapPhieu({
                     </div>
 
                     {/* Số lượng + thành tiền */}
-                    <div className="flex items-center justify-between mt-1.5 gap-2">
-                      <Stepper value={d.so_luong} onChange={(n) => datSoLuong(d.key, n)} />
-                      <span className="text-sm font-semibold text-foreground">
-                        {d.don_gia ? formatTien(d.don_gia * d.so_luong) + 'đ' : '—'}
-                      </span>
-                    </div>
+                    {d.bien_the && d.bien_the.length ? (
+                      <div className="mt-1.5">
+                        <div className="text-[11px] text-muted mb-1">Số lượng theo màu:</div>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                          {d.bien_the.map((mau) => (
+                            <label key={mau} className="flex items-center gap-1 text-xs">
+                              <span className="text-foreground/80">{mau}</span>
+                              <input
+                                inputMode="numeric"
+                                value={d.mauSL[mau] || ''}
+                                onChange={(e) => datMau(d.key, mau, parseInt(e.target.value.replace(/\D/g, ''), 10) || 0)}
+                                placeholder="0"
+                                className="w-11 border border-border rounded px-1 py-0.5 text-center outline-none focus:border-accent"
+                              />
+                            </label>
+                          ))}
+                          <span className="ml-auto text-sm font-semibold text-foreground">
+                            {d.don_gia ? formatTien(d.don_gia * tongSL(d)) + 'đ' : '—'}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between mt-1.5 gap-2">
+                        <Stepper value={d.so_luong} onChange={(n) => datSoLuong(d.key, n)} />
+                        <span className="text-sm font-semibold text-foreground">
+                          {d.don_gia ? formatTien(d.don_gia * d.so_luong) + 'đ' : '—'}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Ghi chú (mở) */}
                     {d.showGhiChu && (
