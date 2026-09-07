@@ -87,7 +87,8 @@ export async function buildBM01(phieu: Phieu, rows: Dong[], logoDataUri?: string
         columns: [
           {
             width: 128,
-            stack: logoDataUri ? [{ image: logoDataUri, width: 105 }] : [{ text: '' }],
+            // Chiều cao logo ~ bằng khối tiêu đề 3 dòng; rộng tự co theo
+            stack: logoDataUri ? [{ image: logoDataUri, height: 44 }] : [{ text: '' }],
           },
           {
             width: '*',
