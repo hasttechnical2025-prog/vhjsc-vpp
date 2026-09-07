@@ -35,26 +35,12 @@ export default async function AdminPage() {
           )}
           {session.role === 'admin' && (
             <Link
-              href="/admin/san-pham"
-              className="card px-4 py-2 text-sm font-medium hover:border-accent"
-            >
-              Sửa mặt hàng
-            </Link>
-          )}
-          {session.role === 'admin' && (
-            <Link
               href="/admin/cau-hinh"
               className="card px-4 py-2 text-sm font-medium hover:border-accent"
             >
               Cấu hình hiển thị
             </Link>
           )}
-          <Link
-            href="/admin/cap-nhat-gia"
-            className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            Cập nhật giá từ báo giá
-          </Link>
         </div>
       </div>
 
@@ -102,10 +88,10 @@ export default async function AdminPage() {
           </div>
 
           {session.role === 'admin' ? (
-            <Link href="/admin/san-pham" className="card p-4 block hover:border-accent">
+            <Link href="/vpp/san-pham" className="card p-4 block hover:border-accent">
               <div className="font-semibold mb-1">Danh mục sản phẩm</div>
               <div className="text-3xl font-bold text-accent-600">{(soSanPham || 0).toLocaleString('vi-VN')}</div>
-              <div className="text-sm text-muted">sản phẩm · bấm để sửa tên/giá/ảnh</div>
+              <div className="text-sm text-muted">sản phẩm · bấm để sửa tên/giá/ảnh (module VPP)</div>
             </Link>
           ) : (
             <div className="card p-4">

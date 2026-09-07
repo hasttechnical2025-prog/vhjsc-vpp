@@ -273,7 +273,7 @@ export default function LapPhieu({
         setErr(data.error || 'Lưu phiếu thất bại')
         return
       }
-      router.push(`/phieu/${phieuId || data.id}`)
+      router.push(`/vpp/phieu/${phieuId || data.id}`)
       router.refresh()
     } catch {
       setErr('Lỗi kết nối')

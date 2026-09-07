@@ -76,7 +76,7 @@ export async function POST(req: Request) {
   // Thông báo Telegram cho nhóm duyệt (không chặn phản hồi nếu lỗi)
   try {
     const host = req.headers.get('x-forwarded-host') || req.headers.get('host') || ''
-    const link = host ? `https://${host}/phieu` : ''
+    const link = host ? `https://${host}/vpp/phieu` : ''
     const tieuDe = body.tieu_de || `Mua sắm VPP tháng ${formatThang(String(body.thang || '').slice(0, 7))}`
     const html =
       `🆕 <b>Phiếu đăng ký VPP mới</b>\n` +

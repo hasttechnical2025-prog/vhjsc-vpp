@@ -15,7 +15,7 @@ async function dem(table: string, filter?: (q: any) => any) {
 export default async function TongQuanVppPage() {
   const session = await getSession()
   if (!session) redirect('/login')
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/phieu')
+  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/vpp/phieu')
 
   const thang = thangHienTai()
   const [soSanPham, soPhieuThang, soChoDuyet] = await Promise.all([
@@ -25,9 +25,9 @@ export default async function TongQuanVppPage() {
   ])
 
   const cards = [
-    { label: 'Phiếu chờ duyệt', value: soChoDuyet, href: '/phieu', nhan: true },
-    { label: `Phiếu tháng ${formatThang(thang)}`, value: soPhieuThang, href: '/phieu' },
-    { label: 'Sản phẩm trong danh mục', value: soSanPham, href: '/dang-ky' },
+    { label: 'Phiếu chờ duyệt', value: soChoDuyet, href: '/vpp/phieu', nhan: true },
+    { label: `Phiếu tháng ${formatThang(thang)}`, value: soPhieuThang, href: '/vpp/phieu' },
+    { label: 'Sản phẩm trong danh mục', value: soSanPham, href: '/vpp/dang-ky' },
   ]
 
   return (
@@ -47,10 +47,10 @@ export default async function TongQuanVppPage() {
       </div>
 
       <div className="flex gap-3">
-        <Link href="/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-5 py-2.5 font-medium">
+        <Link href="/vpp/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-5 py-2.5 font-medium">
           + Lập phiếu mới
         </Link>
-        <Link href="/phieu" className="card px-5 py-2.5 font-medium hover:border-accent">
+        <Link href="/vpp/phieu" className="card px-5 py-2.5 font-medium hover:border-accent">
           Xem danh sách phiếu
         </Link>
       </div>

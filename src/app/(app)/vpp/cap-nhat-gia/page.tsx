@@ -10,7 +10,7 @@ export default async function CapNhatGiaPage() {
 
   return (
     <>
-      <Link href="/admin" className="text-sm text-accent-600 hover:underline">← Quản trị</Link>
+      <Link href="/vpp" className="text-sm text-accent-600 hover:underline">← Đăng ký VPP</Link>
       <h1 className="text-xl font-bold mt-2 mb-1">Cập nhật giá từ báo giá NCC</h1>
       <p className="text-sm text-muted mb-5">
         Chọn file báo giá (.xlsx) tháng mới. File được đọc ngay trên trình duyệt, chỉ dữ liệu giá được gửi lên —

@@ -318,7 +318,7 @@ export default function PhieuList({
                       </a>
                       {(canAll || p.trang_thai !== 'da_duyet') ? (
                         <>
-                          <Link href={`/phieu/${p.id}/sua`} className="border border-border rounded-lg px-4 py-1.5 text-sm hover:border-accent">
+                          <Link href={`/vpp/phieu/${p.id}/sua`} className="border border-border rounded-lg px-4 py-1.5 text-sm hover:border-accent">
                             Sửa
                           </Link>
                           <button onClick={() => xoa(p)} className="text-danger text-sm hover:underline ml-1">Xoá</button>
@@ -335,7 +335,7 @@ export default function PhieuList({
         {loc.length === 0 && (
           <div className="card px-3 py-10 text-center text-muted">
             {phieu.length === 0 ? (
-              <>Chưa có phiếu nào. <Link href="/dang-ky" className="text-accent-600">Lập phiếu đầu tiên</Link>.</>
+              <>Chưa có phiếu nào. <Link href="/vpp/dang-ky" className="text-accent-600">Lập phiếu đầu tiên</Link>.</>
             ) : (
               'Không có phiếu khớp bộ lọc.'
             )}

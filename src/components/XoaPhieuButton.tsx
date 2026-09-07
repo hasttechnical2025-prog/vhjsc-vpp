@@ -17,7 +17,7 @@ export default function XoaPhieuButton({ id }: { id: string }) {
       setErr(d.error || 'Xoá thất bại')
       return
     }
-    router.push('/phieu')
+    router.push('/vpp/phieu')
     router.refresh()
   }
 

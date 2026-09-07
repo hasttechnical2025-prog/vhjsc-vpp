@@ -23,6 +23,13 @@ export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule
 
   if (!cur) return <div className="flex-1" />
 
+  // Mục đang active = href KHỚP DÀI NHẤT với path (để /vpp/phieu chọn "Danh sách phiếu"
+  // chứ không phải "Tổng quan" /vpp).
+  let activeHref = ''
+  for (const n of cur.nav) {
+    if ((path === n.href || path.startsWith(n.href + '/')) && n.href.length > activeHref.length) activeHref = n.href
+  }
+
   return (
     <nav className="flex items-center gap-1 flex-1 min-w-0 overflow-x-auto">
       {nhieuModule && (
@@ -32,7 +39,7 @@ export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule
       )}
       <span className="px-2 text-sm font-semibold text-foreground/80 shrink-0 border-l border-border ml-1">{cur.ten}</span>
       {cur.nav.map((n) => {
-        const active = path === n.href || path.startsWith(n.href + '/')
+        const active = n.href === activeHref
         return (
           <Link
             key={n.href}

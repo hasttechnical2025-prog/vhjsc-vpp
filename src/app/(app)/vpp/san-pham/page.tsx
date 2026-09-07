@@ -21,7 +21,7 @@ export default async function AdminSanPhamPage() {
 
   return (
     <>
-      <Link href="/admin" className="text-sm text-accent-600 hover:underline">← Quản trị</Link>
+      <Link href="/vpp" className="text-sm text-accent-600 hover:underline">← Đăng ký VPP</Link>
       <h1 className="text-xl font-bold mt-2 mb-1">Sửa mặt hàng</h1>
       <p className="text-sm text-muted mb-5">
         Sửa tên, ĐVT, nhóm hàng, đơn giá, danh sách màu và thay ảnh cho từng mặt hàng. Dùng khi ảnh bị trượt dòng lúc import.

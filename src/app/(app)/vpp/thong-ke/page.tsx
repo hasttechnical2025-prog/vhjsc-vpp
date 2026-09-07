@@ -6,7 +6,7 @@ import ThongKe from '@/components/ThongKe'
 export default async function ThongKePage() {
   const session = await getSession()
   if (!session) redirect('/login')
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/phieu')
+  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/vpp/phieu')
 
   const phongBan = await selectAll<{ id: string; ten: string }>((from, to) =>
     supabaseAdmin.from('vhjscvpp_phong_ban').select('id, ten').order('ten').range(from, to),

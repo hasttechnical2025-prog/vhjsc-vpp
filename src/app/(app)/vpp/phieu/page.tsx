@@ -51,7 +51,7 @@ export default async function PhieuListPage() {
       <RealtimePhieu />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Danh sách phiếu</h1>
-        <Link href="/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium">
+        <Link href="/vpp/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium">
           + Lập phiếu mới
         </Link>
       </div>

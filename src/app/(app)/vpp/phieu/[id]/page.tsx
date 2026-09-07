@@ -40,11 +40,11 @@ export default async function PhieuDetailPage({ params }: { params: Promise<{ id
   return (
     <>
       <div className="flex items-center justify-between gap-3 mb-4">
-        <Link href="/phieu" className="text-sm text-accent-600 hover:underline">← Danh sách phiếu</Link>
+        <Link href="/vpp/phieu" className="text-sm text-accent-600 hover:underline">← Danh sách phiếu</Link>
         <div className="flex items-center gap-2">
           <XoaPhieuButton id={id} />
           <Link
-            href={`/phieu/${id}/sua`}
+            href={`/vpp/phieu/${id}/sua`}
             className="border border-border rounded-lg px-4 py-2 text-sm font-medium hover:border-accent"
           >
             Sửa
