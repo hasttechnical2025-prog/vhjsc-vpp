@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { phatTinPhieuThayDoi } from '@/lib/realtime'
 
 // Quyền trên 1 phiếu: người lập phiếu, hoặc admin/hcns.
 async function layPhieuNeuDuocPhep(id: string, session: { id: string; role: string }) {
@@ -94,6 +95,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const { error: e2 } = await supabaseAdmin.from('vhjscvpp_phieu_dong').insert(rows)
   if (e2) return NextResponse.json({ error: 'Không lưu được dòng phiếu' }, { status: 500 })
 
+  await phatTinPhieuThayDoi()
   return NextResponse.json({ ok: true, id })
 }
 
@@ -111,5 +113,6 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
   const { error } = await supabaseAdmin.from('vhjscvpp_phieu').delete().eq('id', id)
   if (error) return NextResponse.json({ error: 'Xoá thất bại' }, { status: 500 })
+  await phatTinPhieuThayDoi()
   return NextResponse.json({ ok: true })
 }

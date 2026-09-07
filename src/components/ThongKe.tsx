@@ -8,6 +8,23 @@ type KetQua = {
   kpi: { tongTien: number; soPhieu: number; soPhong: number; soMatHang: number }
   tongHopMua: { ma: string; ten: string; mau: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }[]
   theoPhong: { phong: string; so_phieu: number; tong_tien: number }[]
+  theoNhom: { nhom: string; thanh_tien: number; ty_le: number }[]
+  topSanPham: { ten: string; tong_sl: number; thanh_tien: number }[]
+  xuHuong: { thang: string; tong_tien: number }[]
+}
+
+// Thanh ngang: nhãn trái, thanh tỉ lệ theo max, giá trị phải.
+function ThanhNgang({ nhan, giaTri, max, phu }: { nhan: string; giaTri: number; max: number; phu?: string }) {
+  const pct = max > 0 ? Math.max(2, (giaTri / max) * 100) : 0
+  return (
+    <div className="flex items-center gap-2 text-sm">
+      <div className="w-40 shrink-0 truncate" title={nhan}>{nhan}</div>
+      <div className="flex-1 bg-accent-50 rounded h-4 overflow-hidden">
+        <div className="h-full bg-accent rounded" style={{ width: `${pct}%` }} />
+      </div>
+      <div className="w-28 shrink-0 text-right tabular-nums">{formatTien(giaTri)}{phu ? <span className="text-muted"> {phu}</span> : ''}</div>
+    </div>
+  )
 }
 
 function macDinhTu() {
@@ -182,6 +199,65 @@ export default function ThongKe({ phongBan }: { phongBan: { id: string; ten: str
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {data && data.kpi.soPhieu > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          {/* Chi phí theo nhóm hàng (%) */}
+          <div className="card p-4">
+            <div className="font-semibold mb-3">Chi phí theo nhóm hàng</div>
+            <div className="space-y-1.5">
+              {data.theoNhom.map((n) => (
+                <ThanhNgang key={n.nhom} nhan={n.nhom} giaTri={n.thanh_tien} max={data.theoNhom[0]?.thanh_tien || 0} phu={`· ${n.ty_le.toFixed(1)}%`} />
+              ))}
+              {data.theoNhom.length === 0 && <div className="text-sm text-muted py-4 text-center">Không có dữ liệu.</div>}
+            </div>
+          </div>
+
+          {/* So sánh giữa các phòng */}
+          <div className="card p-4">
+            <div className="font-semibold mb-3">So sánh chi phí giữa các phòng</div>
+            <div className="space-y-1.5">
+              {data.theoPhong.map((p) => (
+                <ThanhNgang key={p.phong} nhan={p.phong} giaTri={p.tong_tien} max={data.theoPhong[0]?.tong_tien || 0} phu={`· ${p.so_phieu} phiếu`} />
+              ))}
+              {data.theoPhong.length === 0 && <div className="text-sm text-muted py-4 text-center">Không có dữ liệu.</div>}
+            </div>
+          </div>
+
+          {/* Top sản phẩm mua nhiều */}
+          <div className="card p-4">
+            <div className="font-semibold mb-3">Top 10 sản phẩm (theo thành tiền)</div>
+            <div className="space-y-1.5">
+              {data.topSanPham.map((s, i) => (
+                <ThanhNgang key={i} nhan={`${i + 1}. ${s.ten}`} giaTri={s.thanh_tien} max={data.topSanPham[0]?.thanh_tien || 0} phu={`· SL ${s.tong_sl.toLocaleString('vi-VN')}`} />
+              ))}
+              {data.topSanPham.length === 0 && <div className="text-sm text-muted py-4 text-center">Không có dữ liệu.</div>}
+            </div>
+          </div>
+
+          {/* Xu hướng theo tháng */}
+          <div className="card p-4">
+            <div className="font-semibold mb-3">Xu hướng chi phí theo tháng</div>
+            {data.xuHuong.length > 0 ? (
+              <div className="flex items-end gap-2 h-44 pt-2">
+                {data.xuHuong.map((t) => {
+                  const max = Math.max(...data.xuHuong.map((x) => x.tong_tien)) || 1
+                  const h = Math.max(4, (t.tong_tien / max) * 140)
+                  return (
+                    <div key={t.thang} className="flex-1 flex flex-col items-center justify-end gap-1 min-w-0">
+                      <div className="text-[10px] text-muted tabular-nums whitespace-nowrap">{formatTien(t.tong_tien)}</div>
+                      <div className="w-full bg-accent rounded-t" style={{ height: `${h}px` }} title={`${t.thang}: ${formatTien(t.tong_tien)} đ`} />
+                      <div className="text-[11px] text-muted whitespace-nowrap">{t.thang.slice(5)}/{t.thang.slice(2, 4)}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="text-sm text-muted py-4 text-center">Không có dữ liệu.</div>
+            )}
           </div>
         </div>
       )}

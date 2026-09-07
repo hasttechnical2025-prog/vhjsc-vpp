@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { guiTelegram, escHtml } from '@/lib/telegram'
+import { phatTinPhieuThayDoi } from '@/lib/realtime'
+import { formatThang, formatTien } from '@/lib/format'
 
 export async function POST(req: Request) {
   const session = await requireRole()
@@ -70,5 +73,23 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Không lưu được dòng phiếu' }, { status: 500 })
   }
 
+  // Thông báo Telegram cho nhóm duyệt (không chặn phản hồi nếu lỗi)
+  try {
+    const host = req.headers.get('x-forwarded-host') || req.headers.get('host') || ''
+    const link = host ? `https://${host}/phieu` : ''
+    const tieuDe = body.tieu_de || `Mua sắm VPP tháng ${formatThang(String(body.thang || '').slice(0, 7))}`
+    const html =
+      `🆕 <b>Phiếu đăng ký VPP mới</b>\n` +
+      `• Phòng: <b>${escHtml(phongBanTen || '—')}</b>\n` +
+      `• Người đề nghị: ${escHtml(session.ho_ten)}\n` +
+      `• Nội dung: ${escHtml(tieuDe)}\n` +
+      `• Số mặt hàng: ${rows.length} · Tạm tính: <b>${formatTien(tongTien)} đ</b>` +
+      (link ? `\n👉 <a href="${link}">Mở danh sách phiếu để duyệt</a>` : '')
+    await guiTelegram(html)
+  } catch {
+    /* bỏ qua lỗi thông báo */
+  }
+
+  await phatTinPhieuThayDoi()
   return NextResponse.json({ ok: true, id: phieu.id })
 }

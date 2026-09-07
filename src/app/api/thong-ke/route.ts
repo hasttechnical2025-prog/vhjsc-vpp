@@ -14,5 +14,12 @@ export async function GET(req: Request) {
 
   const kq = await thongKe(tuISO, denISO, pb)
   // Không trả 'flat' (nặng) cho màn hình — chỉ dùng khi xuất Excel
-  return NextResponse.json({ kpi: kq.kpi, tongHopMua: kq.tongHopMua, theoPhong: kq.theoPhong })
+  return NextResponse.json({
+    kpi: kq.kpi,
+    tongHopMua: kq.tongHopMua,
+    theoPhong: kq.theoPhong,
+    theoNhom: kq.theoNhom,
+    topSanPham: kq.topSanPham,
+    xuHuong: kq.xuHuong,
+  })
 }

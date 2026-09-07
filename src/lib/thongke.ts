@@ -18,11 +18,17 @@ export type FlatRow = {
 
 export type MuaRow = { ma: string; ten: string; mau: string; nhom: string; dvt: string; tong_sl: number; don_gia: number; thanh_tien: number }
 export type PhongRow = { phong: string; so_phieu: number; tong_tien: number }
+export type NhomRow = { nhom: string; thanh_tien: number; ty_le: number }
+export type TopRow = { ten: string; tong_sl: number; thanh_tien: number }
+export type ThangRow = { thang: string; tong_tien: number }
 
 export type KetQua = {
   kpi: { tongTien: number; soPhieu: number; soPhong: number; soMatHang: number }
   tongHopMua: MuaRow[]
   theoPhong: PhongRow[]
+  theoNhom: NhomRow[]
+  topSanPham: TopRow[]
+  xuHuong: ThangRow[]
   flat: FlatRow[]
 }
 
@@ -46,7 +52,10 @@ type DongLite = {
   mau: string | null
 }
 
-const RONG: KetQua = { kpi: { tongTien: 0, soPhieu: 0, soPhong: 0, soMatHang: 0 }, tongHopMua: [], theoPhong: [], flat: [] }
+const RONG: KetQua = {
+  kpi: { tongTien: 0, soPhieu: 0, soPhong: 0, soMatHang: 0 },
+  tongHopMua: [], theoPhong: [], theoNhom: [], topSanPham: [], xuHuong: [], flat: [],
+}
 
 export async function thongKe(tuISO: string | null, denISO: string | null, phongBanId: string | null): Promise<KetQua> {
   const phieu = await selectAll<PhieuLite>((from, to) => {
@@ -127,14 +136,36 @@ export async function thongKe(tuISO: string | null, denISO: string | null, phong
   }
   const theoPhong = [...pMap.values()].sort((a, b) => b.tong_tien - a.tong_tien)
 
+  const tongTien = phieu.reduce((s, p) => s + (Number(p.tong_tien) || 0), 0)
+
+  // Chi phí theo nhóm hàng (%)
+  const nMap = new Map<string, number>()
+  for (const r of flat) nMap.set(r.nhom || '(Khác)', (nMap.get(r.nhom || '(Khác)') || 0) + r.thanh_tien)
+  const theoNhom: NhomRow[] = [...nMap.entries()]
+    .map(([nhom, tt]) => ({ nhom, thanh_tien: tt, ty_le: tongTien ? (tt / tongTien) * 100 : 0 }))
+    .sort((a, b) => b.thanh_tien - a.thanh_tien)
+
+  // Top sản phẩm (theo thành tiền) — dùng dữ liệu đã gộp mã+màu
+  const topSanPham: TopRow[] = tongHopMua
+    .map((g) => ({ ten: g.ten + (g.mau ? ` (${g.mau})` : ''), tong_sl: g.tong_sl, thanh_tien: g.thanh_tien }))
+    .sort((a, b) => b.thanh_tien - a.thanh_tien)
+    .slice(0, 10)
+
+  // Xu hướng theo tháng (gộp theo trường 'thang' của phiếu)
+  const tMap = new Map<string, number>()
+  for (const p of phieu) tMap.set(p.thang, (tMap.get(p.thang) || 0) + (Number(p.tong_tien) || 0))
+  const xuHuong: ThangRow[] = [...tMap.entries()]
+    .map(([thang, tong_tien]) => ({ thang, tong_tien }))
+    .sort((a, b) => a.thang.localeCompare(b.thang))
+
   const kpi = {
-    tongTien: phieu.reduce((s, p) => s + (Number(p.tong_tien) || 0), 0),
+    tongTien,
     soPhieu: phieu.length,
     soPhong: new Set(phieu.map((p) => p.phong_ban_ten || '—')).size,
     soMatHang: gMap.size,
   }
 
-  return { kpi, tongHopMua, theoPhong, flat }
+  return { kpi, tongHopMua, theoPhong, theoNhom, topSanPham, xuHuong, flat }
 }
 
 // Chuyển tham số ngày (YYYY-MM-DD) thành mốc thời gian bao trọn ngày theo giờ VN (+07).

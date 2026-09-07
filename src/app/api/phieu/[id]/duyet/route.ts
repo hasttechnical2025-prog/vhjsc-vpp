@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { phatTinPhieuThayDoi } from '@/lib/realtime'
 
 // Duyệt / Từ chối phiếu — chỉ admin & HCNS.
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -25,6 +26,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       })
       .eq('id', id)
     if (error) return NextResponse.json({ error: 'Duyệt thất bại' }, { status: 500 })
+    await phatTinPhieuThayDoi()
     return NextResponse.json({ ok: true })
   }
 
@@ -41,6 +43,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       })
       .eq('id', id)
     if (error) return NextResponse.json({ error: 'Từ chối thất bại' }, { status: 500 })
+    await phatTinPhieuThayDoi()
     return NextResponse.json({ ok: true })
   }
 

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import PhieuList from '@/components/PhieuList'
+import RealtimePhieu from '@/components/RealtimePhieu'
 
 type Row = {
   id: string
@@ -47,6 +48,7 @@ export default async function PhieuListPage() {
 
   return (
     <>
+      <RealtimePhieu />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Danh sách phiếu</h1>
         <Link href="/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-2 text-sm font-medium">
