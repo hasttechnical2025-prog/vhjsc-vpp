@@ -146,12 +146,12 @@ export default function NccList({
           <table className="w-full text-sm">
             <thead className="bg-accent-50 text-accent-600 text-left">
               <tr>
-                <th className="px-3 py-2 font-semibold">Tên NCC</th>
-                <th className="px-3 py-2 font-semibold">Nhóm chi phí</th>
-                <th className="px-3 py-2 font-semibold">Loại chi phí</th>
-                <th className="px-3 py-2 font-semibold">Điện thoại</th>
-                <th className="px-3 py-2 font-semibold">Đánh giá</th>
-                <th className="px-3 py-2 font-semibold">Trạng thái</th>
+                <th className="px-3 py-2 font-semibold w-[28%]">Tên NCC</th>
+                <th className="px-3 py-2 font-semibold w-[12%]">Nhóm chi phí</th>
+                <th className="px-3 py-2 font-semibold w-[26%]">Loại chi phí</th>
+                <th className="px-3 py-2 font-semibold w-[14%]">Điện thoại / ghi chú</th>
+                <th className="px-3 py-2 font-semibold w-[12%]">Đánh giá</th>
+                <th className="px-3 py-2 font-semibold w-[10%]">Trạng thái</th>
               </tr>
             </thead>
             <tbody>
@@ -159,13 +159,13 @@ export default function NccList({
                 const dg = danhGia[n.id]
                 return (
                   <tr key={n.id} className="border-t border-border hover:bg-accent-50/40 cursor-pointer" onClick={() => router.push(`/ncc/${n.id}`)}>
-                    <td className="px-3 py-2">
+                    <td className="px-3 py-2 align-top">
                       <Link href={`/ncc/${n.id}`} className="text-accent-600 hover:underline font-medium" onClick={(e) => e.stopPropagation()}>{n.ten}</Link>
                     </td>
-                    <td className="px-3 py-2 text-muted">{n.nhom_chi_phi || '—'}</td>
-                    <td className="px-3 py-2 max-w-[240px] truncate" title={n.loai_chi_phi || ''}>{n.loai_chi_phi || '—'}</td>
-                    <td className="px-3 py-2 text-muted whitespace-nowrap">{n.so_dien_thoai || '—'}</td>
-                    <td className="px-3 py-2 whitespace-nowrap">
+                    <td className="px-3 py-2 text-muted align-top">{n.nhom_chi_phi || '—'}</td>
+                    <td className="px-3 py-2 align-top">{n.loai_chi_phi || '—'}</td>
+                    <td className="px-3 py-2 text-muted align-top break-words text-xs">{n.so_dien_thoai || '—'}</td>
+                    <td className="px-3 py-2 whitespace-nowrap align-top">
                       {dg?.xep_loai ? (
                         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${MAU_XEP_LOAI[dg.xep_loai as XepLoai]}`}>
                           {dg.xep_loai} · {dg.diem_tong?.toFixed(2)} <span className="opacity-70">({dg.ky})</span>
@@ -174,7 +174,7 @@ export default function NccList({
                         <span className="text-muted text-xs">Chưa đánh giá</span>
                       )}
                     </td>
-                    <td className="px-3 py-2">
+                    <td className="px-3 py-2 align-top whitespace-nowrap">
                       {n.trang_thai === 'dang_dung' ? <span className="text-ok">Đang dùng</span> : <span className="text-muted">Ngừng</span>}
                     </td>
                   </tr>
