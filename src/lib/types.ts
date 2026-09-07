@@ -6,6 +6,7 @@ export type NguoiDungRow = {
   role: 'admin' | 'hcns' | 'nguoi_de_nghi'
   is_active: boolean
   phong_ban_id: string | null
+  bao_ve: boolean
 }
 
 export type SanPham = {

@@ -203,7 +203,7 @@ export default function QuanLyToChuc({
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.ho_ten} onChange={(e) => setEU({ ...eU, ho_ten: e.target.value })} /></td>
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.username} onChange={(e) => setEU({ ...eU, username: e.target.value })} /></td>
                     <td className="py-1.5 pr-2">
-                      <select className={inp} value={eU.role} onChange={(e) => setEU({ ...eU, role: e.target.value as Role })}>
+                      <select className={inp} value={eU.role} disabled={u.bao_ve} onChange={(e) => setEU({ ...eU, role: e.target.value as Role })}>
                         <option value="nguoi_de_nghi">Người đề nghị</option><option value="hcns">HCNS</option><option value="admin">Quản trị</option>
                       </select>
                     </td>
@@ -223,15 +223,29 @@ export default function QuanLyToChuc({
                   </tr>
                 ) : (
                   <tr key={u.id} className="border-t border-border">
-                    <td className="py-1.5">{u.ho_ten}{u.id === selfId && <span className="text-[11px] text-muted"> (bạn)</span>}</td>
+                    <td className="py-1.5">
+                      {u.ho_ten}
+                      {u.bao_ve && <span title="Tài khoản quản trị gốc được bảo vệ" className="ml-1">🔒</span>}
+                      {u.id === selfId && <span className="text-[11px] text-muted"> (bạn)</span>}
+                    </td>
                     <td className="py-1.5">{u.username}</td>
                     <td className="py-1.5">{ROLE_LABEL[u.role]}</td>
                     <td className="py-1.5">{u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '—' : '—'}</td>
                     <td className="py-1.5">{u.is_active ? <span className="text-ok">Hoạt động</span> : <span className="text-muted">Khoá</span>}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
-                      <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline">Sửa</button>
-                      <button onClick={() => toggleActive(u)} className="text-warn hover:underline ml-3">{u.is_active ? 'Khoá' : 'Mở'}</button>
-                      <button onClick={() => xoaU(u)} className="text-danger hover:underline ml-3">Xoá</button>
+                      {u.bao_ve ? (
+                        u.id === selfId ? (
+                          <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline">Sửa</button>
+                        ) : (
+                          <span className="text-muted text-xs">Được bảo vệ</span>
+                        )
+                      ) : (
+                        <>
+                          <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline">Sửa</button>
+                          <button onClick={() => toggleActive(u)} className="text-warn hover:underline ml-3">{u.is_active ? 'Khoá' : 'Mở'}</button>
+                          <button onClick={() => xoaU(u)} className="text-danger hover:underline ml-3">Xoá</button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 )

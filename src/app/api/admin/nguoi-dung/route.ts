@@ -52,10 +52,21 @@ export async function PATCH(req: Request) {
 
   const { data: cur } = await supabaseAdmin
     .from('vhjscvpp_nguoi_dung')
-    .select('id, role, is_active')
+    .select('id, role, is_active, bao_ve')
     .eq('id', b.id)
     .maybeSingle()
   if (!cur) return NextResponse.json({ error: 'Không tìm thấy người dùng' }, { status: 404 })
+
+  // Tài khoản gốc được bảo vệ: chỉ CHÍNH CHỦ mới sửa được (đổi mật khẩu/họ tên…);
+  // và dù là chính chủ cũng không được tự khoá hay tự hạ quyền admin.
+  if (cur.bao_ve) {
+    if (session.id !== cur.id)
+      return NextResponse.json({ error: 'Tài khoản quản trị gốc được bảo vệ — chỉ chính tài khoản này mới sửa được' }, { status: 403 })
+    if (b.is_active === false)
+      return NextResponse.json({ error: 'Không thể khoá tài khoản quản trị gốc' }, { status: 403 })
+    if (b.role != null && b.role !== 'admin')
+      return NextResponse.json({ error: 'Không thể hạ quyền tài khoản quản trị gốc' }, { status: 403 })
+  }
 
   const upd: Record<string, unknown> = {}
   if (b.ho_ten != null) {
@@ -101,8 +112,9 @@ export async function DELETE(req: Request) {
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
 
-  const { data: cur } = await supabaseAdmin.from('vhjscvpp_nguoi_dung').select('id, role').eq('id', b.id).maybeSingle()
+  const { data: cur } = await supabaseAdmin.from('vhjscvpp_nguoi_dung').select('id, role, bao_ve').eq('id', b.id).maybeSingle()
   if (!cur) return NextResponse.json({ error: 'Không tìm thấy' }, { status: 404 })
+  if (cur.bao_ve) return NextResponse.json({ error: 'Tài khoản quản trị gốc được bảo vệ, không thể xoá' }, { status: 403 })
   if (cur.role === 'admin' && (await soAdminConHoatDong(cur.id)) === 0)
     return NextResponse.json({ error: 'Phải còn ít nhất 1 admin đang hoạt động' }, { status: 400 })
 

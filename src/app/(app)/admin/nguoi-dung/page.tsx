@@ -16,7 +16,7 @@ export default async function NguoiDungPage() {
   const users = await selectAll<NguoiDungRow>((from, to) =>
     supabaseAdmin
       .from('vhjscvpp_nguoi_dung')
-      .select('id, ho_ten, username, role, is_active, phong_ban_id')
+      .select('id, ho_ten, username, role, is_active, phong_ban_id, bao_ve')
       .order('created_at')
       .range(from, to),
   )
