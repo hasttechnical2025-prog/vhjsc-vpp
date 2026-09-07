@@ -21,7 +21,8 @@ export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule
     }
   }
 
-  if (!cur) return <div className="flex-1" />
+  // Ở trang chủ hub (không thuộc module nào) -> không hiện thanh menu.
+  if (!cur) return null
 
   // Mục đang active = href KHỚP DÀI NHẤT với path (để /vpp/phieu chọn "Danh sách phiếu"
   // chứ không phải "Tổng quan" /vpp).
@@ -31,27 +32,29 @@ export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule
   }
 
   return (
-    <nav className="flex items-center gap-1 flex-1 min-w-0 overflow-x-auto">
-      {nhieuModule && (
-        <Link href="/" className="px-2 py-1.5 rounded-lg text-sm text-muted hover:text-accent-600 hover:bg-accent-50 shrink-0" title="Về trang dịch vụ">
-          ← Dịch vụ
-        </Link>
-      )}
-      <span className="px-2 text-sm font-semibold text-foreground/80 shrink-0 border-l border-border ml-1">{cur.ten}</span>
-      {cur.nav.map((n) => {
-        const active = n.href === activeHref
-        return (
-          <Link
-            key={n.href}
-            href={n.href}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors shrink-0 ${
-              active ? 'bg-accent text-white' : 'text-foreground/70 hover:text-accent-600 hover:bg-accent-50'
-            }`}
-          >
-            {n.label}
+    <div className="border-t border-border bg-surface">
+      <nav className="max-w-6xl mx-auto px-4 py-1.5 flex items-center gap-1 flex-wrap">
+        {nhieuModule && (
+          <Link href="/" className="px-2 py-1.5 rounded-lg text-sm text-muted hover:text-accent-600 hover:bg-accent-50" title="Về trang dịch vụ">
+            ← Dịch vụ
           </Link>
-        )
-      })}
-    </nav>
+        )}
+        <span className="pl-2 pr-3 mr-1 text-sm font-semibold text-foreground/80 border-r border-border">{cur.ten}</span>
+        {cur.nav.map((n) => {
+          const active = n.href === activeHref
+          return (
+            <Link
+              key={n.href}
+              href={n.href}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                active ? 'bg-accent text-white' : 'text-foreground/70 hover:text-accent-600 hover:bg-accent-50'
+              }`}
+            >
+              {n.label}
+            </Link>
+          )
+        })}
+      </nav>
+    </div>
   )
 }

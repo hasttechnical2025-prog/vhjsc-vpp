@@ -26,20 +26,21 @@ export default async function AppShell({
   return (
     <div className="min-h-screen">
       <header className="bg-surface border-b border-border sticky top-0 z-40">
+        {/* Hàng 1: thương hiệu + người dùng + đăng xuất */}
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-accent-600 shrink-0">
             {cauHinh.logo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={cauHinh.logo_url} alt="Logo" className="h-9 w-auto object-contain" />
             ) : null}
-            <span className="hidden md:inline">{cauHinh.brand_text}</span>
+            <span>{cauHinh.brand_text}</span>
           </Link>
-          <ModuleNav modules={navModules} nhieuModule={modules.length > 1} />
-          <div className="flex items-center gap-3 shrink-0">
-            <span className="text-sm text-muted hidden sm:inline">{tenHienThi}</span>
-            <LogoutButton />
-          </div>
+          <div className="flex-1" />
+          <span className="text-sm text-muted hidden sm:inline">{tenHienThi}</span>
+          <LogoutButton />
         </div>
+        {/* Hàng 2: thanh menu của module đang mở (ẩn khi ở trang chủ hub) */}
+        <ModuleNav modules={navModules} nhieuModule={modules.length > 1} />
       </header>
       <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>
     </div>

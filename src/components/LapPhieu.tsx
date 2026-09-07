@@ -359,8 +359,8 @@ export default function LapPhieu({
       </div>
 
       {/* CỘT PHẢI: giỏ hàng / phiếu */}
-      <div className="lg:sticky lg:top-16 self-start">
-        <div className="card p-4 lg:flex lg:flex-col lg:max-h-[calc(100vh_-_5rem)]">
+      <div className="lg:sticky lg:top-[108px] self-start">
+        <div className="card p-4 lg:flex lg:flex-col lg:max-h-[calc(100vh_-_124px)]">
           <div className="flex items-center justify-between mb-3 shrink-0">
             <span className="font-semibold">Phiếu đề xuất</span>
             <span className="text-sm text-accent-600 font-medium">{soMatHang} mặt hàng</span>
