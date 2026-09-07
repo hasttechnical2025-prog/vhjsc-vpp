@@ -70,6 +70,11 @@ export default function PhieuList({
       ),
     [phieu, thang, pb, tt],
   )
+  // Danh sách tháng đang có phiếu (dropdown lọc — chạy mọi trình duyệt, gồm cả Firefox)
+  const thangCoSan = useMemo(
+    () => Array.from(new Set(phieu.map((p) => p.thang))).sort().reverse(),
+    [phieu],
+  )
 
   async function toggle(p: Row) {
     setErr('')
@@ -161,7 +166,12 @@ export default function PhieuList({
       <div className="flex flex-wrap items-end gap-3 mb-4">
         <div>
           <div className="text-xs text-muted mb-1">Tháng</div>
-          <input type="month" value={thang} onChange={(e) => setThang(e.target.value)} className={inp} />
+          <select value={thang} onChange={(e) => setThang(e.target.value)} className={inp}>
+            <option value="">— Tất cả tháng —</option>
+            {thangCoSan.map((t) => (
+              <option key={t} value={t}>{formatThang(t)}</option>
+            ))}
+          </select>
         </div>
         {canAll && (
           <div>
@@ -312,9 +322,7 @@ export default function PhieuList({
                           </Link>
                           <button onClick={() => xoa(p)} className="text-danger text-sm hover:underline ml-1">Xoá</button>
                         </>
-                      ) : (
-                        <span className="text-xs text-muted">Phiếu đã duyệt — không thể sửa/xoá</span>
-                      )}
+                      ) : null}
                     </div>
                   )}
                 </div>
