@@ -11,7 +11,7 @@ export default async function NguoiDungPage() {
   if (session.role !== 'admin') redirect('/')
 
   const phongBan = await selectAll<PhongBanRow>((from, to) =>
-    supabaseAdmin.from('vhjscvpp_phong_ban').select('id, ten, ma').order('ten').range(from, to),
+    supabaseAdmin.from('vhjscvpp_phong_ban').select('id, ten, ma, truong_bo_phan').order('ten').range(from, to),
   )
   const users = await selectAll<NguoiDungRow>((from, to) =>
     supabaseAdmin

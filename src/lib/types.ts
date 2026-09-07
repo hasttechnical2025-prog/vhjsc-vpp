@@ -1,4 +1,4 @@
-export type PhongBanRow = { id: string; ten: string; ma: string | null }
+export type PhongBanRow = { id: string; ten: string; ma: string | null; truong_bo_phan: string | null }
 export type NguoiDungRow = {
   id: string
   ho_ten: string

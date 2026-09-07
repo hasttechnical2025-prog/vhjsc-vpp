@@ -35,19 +35,23 @@ export default function QuanLyToChuc({
   // ---- Phòng ban ----
   const [pbTen, setPbTen] = useState('')
   const [pbMa, setPbMa] = useState('')
+  const [pbTbp, setPbTbp] = useState('')
   const [editPbId, setEditPbId] = useState<string | null>(null)
   const [ePbTen, setEPbTen] = useState('')
   const [ePbMa, setEPbMa] = useState('')
+  const [ePbTbp, setEPbTbp] = useState('')
 
   async function themPB() {
     if (!pbTen.trim()) return fail('Nhập tên phòng ban')
-    const { ok, data } = await api('POST', '/api/admin/phong-ban', { ten: pbTen, ma: pbMa })
+    const { ok, data } = await api('POST', '/api/admin/phong-ban', { ten: pbTen, ma: pbMa, truong_bo_phan: pbTbp })
     if (!ok) return fail(data.error || 'Lỗi')
-    setPbTen(''); setPbMa(''); done('Đã thêm phòng ban')
+    setPbTen(''); setPbMa(''); setPbTbp(''); done('Đã thêm phòng ban')
   }
-  function batDauSuaPB(p: PhongBanRow) { setEditPbId(p.id); setEPbTen(p.ten); setEPbMa(p.ma || '') }
+  function batDauSuaPB(p: PhongBanRow) {
+    setEditPbId(p.id); setEPbTen(p.ten); setEPbMa(p.ma || ''); setEPbTbp(p.truong_bo_phan || '')
+  }
   async function luuPB(id: string) {
-    const { ok, data } = await api('PATCH', '/api/admin/phong-ban', { id, ten: ePbTen, ma: ePbMa })
+    const { ok, data } = await api('PATCH', '/api/admin/phong-ban', { id, ten: ePbTen, ma: ePbMa, truong_bo_phan: ePbTbp })
     if (!ok) return fail(data.error || 'Lỗi')
     setEditPbId(null); done('Đã cập nhật phòng ban')
   }
@@ -118,7 +122,7 @@ export default function QuanLyToChuc({
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-muted text-left">
-              <tr><th className="py-1">Tên phòng ban</th><th className="py-1 w-28">Mã</th><th className="py-1 w-40 text-right">Thao tác</th></tr>
+              <tr><th className="py-1">Tên phòng ban</th><th className="py-1 w-24">Mã</th><th className="py-1">Trưởng bộ phận</th><th className="py-1 w-32 text-right">Thao tác</th></tr>
             </thead>
             <tbody>
               {phongBan.map((p) => (
@@ -127,6 +131,7 @@ export default function QuanLyToChuc({
                     <>
                       <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={ePbTen} onChange={(e) => setEPbTen(e.target.value)} /></td>
                       <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={ePbMa} onChange={(e) => setEPbMa(e.target.value)} /></td>
+                      <td className="py-1.5 pr-2"><input className={inp + ' w-full'} placeholder="Tên trưởng bộ phận" value={ePbTbp} onChange={(e) => setEPbTbp(e.target.value)} /></td>
                       <td className="py-1.5 text-right whitespace-nowrap">
                         <button onClick={() => luuPB(p.id)} className="text-accent-600 hover:underline">Lưu</button>
                         <button onClick={() => setEditPbId(null)} className="text-muted hover:underline ml-3">Huỷ</button>
@@ -136,6 +141,7 @@ export default function QuanLyToChuc({
                     <>
                       <td className="py-1.5">{p.ten}</td>
                       <td className="py-1.5 text-muted">{p.ma || '—'}</td>
+                      <td className="py-1.5">{p.truong_bo_phan || <span className="text-muted">—</span>}</td>
                       <td className="py-1.5 text-right whitespace-nowrap">
                         <button onClick={() => batDauSuaPB(p)} className="text-accent-600 hover:underline">Sửa</button>
                         <button onClick={() => xoaPB(p)} className="text-danger hover:underline ml-3">Xoá</button>
@@ -149,7 +155,8 @@ export default function QuanLyToChuc({
         </div>
         <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-border">
           <input className={inp} placeholder="Tên phòng ban mới" value={pbTen} onChange={(e) => setPbTen(e.target.value)} />
-          <input className={inp + ' w-28'} placeholder="Mã (VD PKD)" value={pbMa} onChange={(e) => setPbMa(e.target.value)} />
+          <input className={inp + ' w-24'} placeholder="Mã (VD PKD)" value={pbMa} onChange={(e) => setPbMa(e.target.value)} />
+          <input className={inp} placeholder="Trưởng bộ phận (ký PDF)" value={pbTbp} onChange={(e) => setPbTbp(e.target.value)} />
           <button onClick={themPB} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">+ Thêm phòng ban</button>
         </div>
       </div>

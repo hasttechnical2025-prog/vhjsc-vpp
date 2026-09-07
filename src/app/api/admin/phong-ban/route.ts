@@ -11,7 +11,11 @@ export async function POST(req: Request) {
   if (!ten) return NextResponse.json({ error: 'Tên phòng ban không được để trống' }, { status: 400 })
   const { data, error } = await supabaseAdmin
     .from('vhjscvpp_phong_ban')
-    .insert({ ten, ma: (b?.ma ?? '').toString().trim() || null })
+    .insert({
+      ten,
+      ma: (b?.ma ?? '').toString().trim() || null,
+      truong_bo_phan: (b?.truong_bo_phan ?? '').toString().trim() || null,
+    })
     .select('id')
     .single()
   if (error) return NextResponse.json({ error: 'Tạo thất bại' }, { status: 500 })
@@ -27,7 +31,11 @@ export async function PATCH(req: Request) {
   if (!ten) return NextResponse.json({ error: 'Tên phòng ban không được để trống' }, { status: 400 })
   const { error } = await supabaseAdmin
     .from('vhjscvpp_phong_ban')
-    .update({ ten, ma: (b?.ma ?? '').toString().trim() || null })
+    .update({
+      ten,
+      ma: (b?.ma ?? '').toString().trim() || null,
+      truong_bo_phan: (b?.truong_bo_phan ?? '').toString().trim() || null,
+    })
     .eq('id', b.id)
   if (error) return NextResponse.json({ error: 'Cập nhật thất bại' }, { status: 500 })
   return NextResponse.json({ ok: true })

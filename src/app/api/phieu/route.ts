@@ -11,15 +11,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Phiếu rỗng' }, { status: 400 })
   }
 
-  // Tên phòng ban (snapshot)
+  // Tên phòng ban + trưởng bộ phận (snapshot)
   let phongBanTen = ''
+  let truongBoPhan: string | null = null
   if (session.phong_ban_id) {
     const { data } = await supabaseAdmin
       .from('vhjscvpp_phong_ban')
-      .select('ten')
+      .select('ten, truong_bo_phan')
       .eq('id', session.phong_ban_id)
       .maybeSingle()
     phongBanTen = data?.ten || ''
+    truongBoPhan = data?.truong_bo_phan || null
   }
 
   const tongTien = body.dong.reduce(
@@ -32,6 +34,7 @@ export async function POST(req: Request) {
     .insert({
       phong_ban_id: session.phong_ban_id,
       phong_ban_ten: phongBanTen,
+      truong_bo_phan: truongBoPhan,
       nguoi_de_nghi_id: session.id,
       nguoi_de_nghi_ten: session.ho_ten,
       thang: String(body.thang || '').slice(0, 7),

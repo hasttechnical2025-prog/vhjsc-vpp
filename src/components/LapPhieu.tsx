@@ -85,7 +85,7 @@ export default function LapPhieu({
   const laSua = !!phieuId
   const thangMacDinh = thangHienTai()
   const tieuDeMacDinh = (t: string) =>
-    `Mua sắm văn phòng phẩm tháng ${formatThang(t)}${phongBanTen ? ` cho ${phongBanTen}` : ''}`
+    `Mua sắm văn phòng phẩm, tài sản, thiết bị tháng ${formatThang(t)}${phongBanTen ? ` cho ${phongBanTen}` : ''}`
   const [thang, setThang] = useState(initial?.thang || thangMacDinh)
   const [tieuDe, setTieuDe] = useState(initial?.tieu_de ?? tieuDeMacDinh(initial?.thang || thangMacDinh))
   const [tieuDeTuChinh, setTieuDeTuChinh] = useState(!!initial?.tieu_de)

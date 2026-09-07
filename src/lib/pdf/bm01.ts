@@ -26,10 +26,12 @@ async function getPrinter(): Promise<PdfPrinter> {
 type Phieu = {
   nguoi_de_nghi_ten: string
   phong_ban_ten: string
+  truong_bo_phan: string | null
   thang: string
   tieu_de: string | null
   thoi_gian_can: string | null
   ke_hoach_su_dung: string | null
+  created_at?: string | null
 }
 type Dong = {
   ten_hang: string | null
@@ -42,61 +44,86 @@ type Dong = {
 export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
   const pr = await getPrinter()
 
-  const header = ['TT', 'Tên TTB/VPP', 'ĐVT', 'Số lượng', 'Ghi chú'].map(
-    (t) => ({ text: t, bold: true, fillColor: '#eef2f7', alignment: 'center' as const, fontSize: 9 }),
+  const soDong = rows.length || 1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const thHeader: any[] = ['TT', 'Tên TTB/VPP', 'Đơn vị tính', 'Số lượng', 'Thời gian cần', 'Kế hoạch sử dụng', 'Ghi chú'].map(
+    (t) => ({ text: t, bold: true, fillColor: '#eef2f7', alignment: 'center', fontSize: 9 }),
   )
-  const body = rows.map((d, i) => [
-    { text: String(i + 1), alignment: 'center' as const, fontSize: 9 },
-    { text: d.ten_hang || d.ten_tay || '', fontSize: 9 },
-    { text: d.dvt || '', alignment: 'center' as const, fontSize: 9 },
-    { text: d.so_luong != null ? String(d.so_luong) : '', alignment: 'center' as const, fontSize: 9 },
-    { text: d.ghi_chu || '', fontSize: 9 },
-  ])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const body: any[] = [thHeader]
+  rows.forEach((d, i) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const row: any[] = [
+      { text: String(i + 1), alignment: 'center', fontSize: 9 },
+      { text: d.ten_hang || d.ten_tay || '', fontSize: 9 },
+      { text: d.dvt || '', alignment: 'center', fontSize: 9 },
+      { text: d.so_luong != null ? String(d.so_luong) : '', alignment: 'center', fontSize: 9 },
+    ]
+    // Thời gian cần + Kế hoạch sử dụng: ô GỘP toàn bảng (chỉ điền ở dòng đầu)
+    if (i === 0) {
+      row.push({ text: phieu.thoi_gian_can || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, 8, 0, 0] })
+      row.push({ text: phieu.ke_hoach_su_dung || '', alignment: 'center', fontSize: 9, rowSpan: soDong, margin: [0, 8, 0, 0] })
+    } else {
+      row.push({})
+      row.push({})
+    }
+    row.push({ text: d.ghi_chu || '', fontSize: 9 })
+    body.push(row)
+  })
 
-  const now = new Date()
-  const dia = `Hà Nội, ngày ${String(now.getDate()).padStart(2, '0')} tháng ${String(now.getMonth() + 1).padStart(2, '0')} năm ${now.getFullYear()}`
+  const ngay = phieu.created_at ? new Date(phieu.created_at) : new Date()
+  const dia = `Hà Nội, ngày ${String(ngay.getDate()).padStart(2, '0')} tháng ${String(ngay.getMonth() + 1).padStart(2, '0')} năm ${ngay.getFullYear()}`
+  const deNghi = phieu.tieu_de || `Mua sắm văn phòng phẩm, tài sản, thiết bị tháng ${formatThang(phieu.thang)}`
 
   const doc: TDocumentDefinitions = {
     pageSize: 'A4',
-    pageMargins: [40, 40, 40, 40],
-    defaultStyle: { font: 'Roboto', fontSize: 10 },
+    pageMargins: [40, 36, 40, 40],
+    defaultStyle: { font: 'Roboto', fontSize: 11 },
     content: [
+      // Tiêu đề (giữa) + hộp mã biểu (phải)
       {
         columns: [
-          { text: 'CÔNG TY CỔ PHẦN VHJSC', bold: true, fontSize: 10 },
-          { text: 'BM01/QLTS/04-HCNS', alignment: 'right', fontSize: 9 },
+          { width: 118, text: '' },
+          {
+            width: '*',
+            stack: [
+              { text: 'ĐỀ XUẤT MUA VĂN PHÒNG PHẨM,', bold: true, alignment: 'center', fontSize: 12 },
+              { text: 'TRANG THIẾT BỊ,', bold: true, alignment: 'center', fontSize: 12 },
+              { text: 'TÀI SẢN VĂN PHÒNG', bold: true, alignment: 'center', fontSize: 12 },
+            ],
+          },
+          {
+            width: 118,
+            fontSize: 8,
+            stack: [
+              { text: 'BM01/QLTS/04-HCNS', alignment: 'center', bold: true },
+              { text: 'Ngày ban hành: 01/12/2011' },
+              { text: 'Lần sửa đổi: Lần 1' },
+            ],
+          },
         ],
       },
+      { text: 'Kính gửi:      - Ban Giám đốc;', margin: [0, 14, 0, 0] },
+      { text: '                    - Phòng Hành chính Nhân sự.' },
+      { text: [{ text: 'Người đề nghị: ', bold: true }, phieu.nguoi_de_nghi_ten], margin: [0, 8, 0, 0] },
+      { text: [{ text: 'Bộ phận: ', bold: true }, phieu.phong_ban_ten || ''] },
+      { text: [{ text: 'Đề nghị: ', bold: true }, deNghi], margin: [0, 0, 0, 10] },
       {
-        text: 'ĐỀ XUẤT MUA VĂN PHÒNG PHẨM, TRANG THIẾT BỊ, TÀI SẢN VĂN PHÒNG',
-        bold: true,
-        alignment: 'center',
-        fontSize: 13,
-        margin: [0, 14, 0, 4],
-      },
-      { text: 'Kính gửi:  - Ban Giám đốc;', margin: [0, 8, 0, 0], fontSize: 10 },
-      { text: '                - Phòng Hành chính Nhân sự.', fontSize: 10 },
-      { text: `Người đề nghị: ${phieu.nguoi_de_nghi_ten}`, margin: [0, 6, 0, 0], fontSize: 10 },
-      { text: `Bộ phận: ${phieu.phong_ban_ten || ''}`, fontSize: 10 },
-      {
-        text: `Đề nghị: ${phieu.tieu_de || `Mua sắm văn phòng phẩm tháng ${formatThang(phieu.thang)}`}`,
-        margin: [0, 0, 0, 2],
-        fontSize: 10,
-      },
-      { text: `Thời gian cần: ${phieu.thoi_gian_can || ''}`, fontSize: 10 },
-      { text: `Kế hoạch sử dụng: ${phieu.ke_hoach_su_dung || ''}`, margin: [0, 0, 0, 10], fontSize: 10 },
-      {
-        table: {
-          headerRows: 1,
-          widths: [24, '*', 50, 55, 110],
-          body: [header, ...body],
-        },
+        table: { headerRows: 1, widths: [22, '*', 45, 42, 52, 66, 58], body },
         layout: {
-          hLineColor: () => '#999',
-          vLineColor: () => '#999',
+          hLineColor: () => '#555',
+          vLineColor: () => '#555',
+          hLineWidth: () => 0.7,
+          vLineWidth: () => 0.7,
         },
       },
-      { text: dia, alignment: 'right', italics: true, margin: [0, 16, 0, 0], fontSize: 10 },
+      {
+        columns: [
+          { width: '*', text: '' },
+          { width: 230, text: dia, alignment: 'center', italics: true },
+        ],
+        margin: [0, 14, 0, 0],
+      },
       {
         columns: [
           { text: 'BAN GIÁM ĐỐC', alignment: 'center', bold: true, fontSize: 10 },
@@ -104,14 +131,14 @@ export async function buildBM01(phieu: Phieu, rows: Dong[]): Promise<Buffer> {
           { text: 'TRƯỞNG BỘ PHẬN', alignment: 'center', bold: true, fontSize: 10 },
           { text: 'NGƯỜI ĐỀ NGHỊ', alignment: 'center', bold: true, fontSize: 10 },
         ],
-        margin: [0, 10, 0, 0],
+        margin: [0, 8, 0, 0],
       },
       {
         columns: [
           { text: '', alignment: 'center' },
           { text: '', alignment: 'center' },
-          { text: '', alignment: 'center' },
-          { text: phieu.nguoi_de_nghi_ten, alignment: 'center', margin: [0, 40, 0, 0], fontSize: 10 },
+          { text: phieu.truong_bo_phan || '', alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
+          { text: phieu.nguoi_de_nghi_ten, alignment: 'center', margin: [0, 46, 0, 0], fontSize: 10 },
         ],
       },
     ],
