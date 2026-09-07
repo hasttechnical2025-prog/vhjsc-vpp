@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import VersionWatcher from '@/components/VersionWatcher'
 
 export const metadata: Metadata = {
   title: 'VHJSC · Đăng ký Văn phòng phẩm',
@@ -14,7 +15,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body>
+        {children}
+        <VersionWatcher current={process.env.VERCEL_GIT_COMMIT_SHA || 'dev'} />
+      </body>
     </html>
   )
 }
