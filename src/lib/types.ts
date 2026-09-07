@@ -1,4 +1,42 @@
 export type PhongBanRow = { id: string; ten: string; ma: string | null; truong_bo_phan: string | null }
+
+export type NccRow = {
+  id: string
+  ten: string
+  ma_so_thue: string | null
+  dia_chi: string | null
+  so_dien_thoai: string | null
+  email: string | null
+  nguoi_lien_he: string | null
+  nhom_chi_phi: string | null
+  loai_chi_phi: string | null
+  co_hoa_don: string | null
+  tan_suat_thanh_toan: string | null
+  ngay_den_han: string | null
+  hop_dong_mo_ta: string | null
+  hop_dong_het_han: string | null
+  trang_thai: string
+  ghi_chu: string | null
+}
+
+export type NccDanhGiaRow = {
+  id: string
+  ncc_id: string
+  ky: string
+  diem_chat_luong: number | null
+  diem_gia: number | null
+  diem_tien_do: number | null
+  diem_ho_tro: number | null
+  diem_chung_tu: number | null
+  diem_tong: number | null
+  xep_loai: string | null
+  nhan_xet: string | null
+  de_xuat: string | null
+  nguoi_cham_ten: string | null
+  created_at: string
+}
+
+export type NccTepRow = { id: string; ncc_id: string; ten_tep: string; url: string; created_at: string }
 export type NguoiDungRow = {
   id: string
   ho_ten: string
