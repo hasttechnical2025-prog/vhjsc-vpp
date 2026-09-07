@@ -5,7 +5,7 @@ export type CauHinh = {
   logo_url: string | null
 }
 
-const MAC_DINH: CauHinh = { brand_text: 'VHJSC · VPP', logo_url: null }
+const MAC_DINH: CauHinh = { brand_text: 'Dịch vụ Hành chính - VHJSC', logo_url: null }
 
 // Nhớ tạm trong bộ nhớ tiến trình (cấu hình gần như không đổi) -> khỏi query DB
 // mỗi lần điều hướng. TTL ngắn để thay đổi của admin xuất hiện sớm.

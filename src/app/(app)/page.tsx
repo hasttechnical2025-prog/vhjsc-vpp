@@ -1,58 +1,32 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session'
-import { supabaseAdmin } from '@/lib/supabase-admin'
-import { formatThang, thangHienTai } from '@/lib/format'
+import { moduleChoVaiTro } from '@/lib/modules'
 
-async function dem(table: string, filter?: (q: any) => any) {
-  let q = supabaseAdmin.from(table).select('*', { count: 'exact', head: true })
-  if (filter) q = filter(q)
-  const { count } = await q
-  return count || 0
-}
-
-export default async function DashboardPage() {
+// Trang chủ = HUB dịch vụ: các thẻ module mà user được phép dùng.
+export default async function HubPage() {
   const session = await getSession()
   if (!session) redirect('/login')
-  // Tổng quan (toàn công ty) chỉ dành cho admin và HCNS; phòng ban vào thẳng phiếu của mình
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/phieu')
 
-  const thang = thangHienTai()
-  const [soSanPham, soPhieuThang, soChoDuyet] = await Promise.all([
-    dem('vhjscvpp_san_pham', (q) => q.eq('dang_ban', true)),
-    dem('vhjscvpp_phieu', (q) => q.eq('thang', thang)),
-    dem('vhjscvpp_phieu', (q) => q.eq('trang_thai', 'cho_duyet')),
-  ])
-
-  const cards = [
-    { label: 'Phiếu chờ duyệt', value: soChoDuyet, href: '/phieu', nhan: true },
-    { label: `Phiếu tháng ${formatThang(thang)}`, value: soPhieuThang, href: '/phieu' },
-    { label: 'Sản phẩm trong danh mục', value: soSanPham, href: '/dang-ky' },
-  ]
+  const modules = moduleChoVaiTro(session.role)
+  // Người dùng chỉ có đúng 1 module -> vào thẳng module đó (bỏ qua hub).
+  if (modules.length === 1) redirect(modules[0].home)
 
   return (
     <>
       <h1 className="text-xl font-bold mb-1">Xin chào, {session.phong_ban_ten || session.ho_ten}</h1>
-      <p className="text-sm text-muted mb-6">Lập phiếu đề xuất mua văn phòng phẩm theo mẫu BM01/QLTS/04-HCNS.</p>
+      <p className="text-sm text-muted mb-6">Chọn một dịch vụ hành chính để bắt đầu.</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        {cards.map((c) => (
-          <Link key={c.label} href={c.href} className="card p-5 hover:border-accent transition-colors">
-            <div className={`text-3xl font-bold ${c.nhan && c.value > 0 ? 'text-warn' : 'text-accent-600'}`}>
-              {c.value.toLocaleString('vi-VN')}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {modules.map((m) => (
+          <Link key={m.key} href={m.home} className="card p-5 hover:border-accent transition-colors flex gap-4 items-start">
+            <div className="text-3xl leading-none shrink-0" aria-hidden>{m.icon}</div>
+            <div className="min-w-0">
+              <div className="font-semibold text-accent-600">{m.ten}</div>
+              <div className="text-sm text-muted mt-1">{m.mo_ta}</div>
             </div>
-            <div className="text-sm text-muted mt-1">{c.label}</div>
           </Link>
         ))}
-      </div>
-
-      <div className="flex gap-3">
-        <Link href="/dang-ky" className="bg-accent hover:bg-accent-600 text-white rounded-lg px-5 py-2.5 font-medium">
-          + Lập phiếu mới
-        </Link>
-        <Link href="/phieu" className="card px-5 py-2.5 font-medium hover:border-accent">
-          Xem danh sách phiếu
-        </Link>
       </div>
     </>
   )
