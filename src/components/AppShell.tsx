@@ -8,6 +8,7 @@ const NAV: { href: string; label: string; roles?: Role[] }[] = [
   { href: '/', label: 'Tổng quan', roles: ['admin', 'hcns'] },
   { href: '/dang-ky', label: 'Lập phiếu' },
   { href: '/phieu', label: 'Danh sách phiếu' },
+  { href: '/thong-ke', label: 'Thống kê', roles: ['admin', 'hcns'] },
   { href: '/admin', label: 'Quản trị', roles: ['admin', 'hcns'] },
 ]
 
