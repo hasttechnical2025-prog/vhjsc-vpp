@@ -3,6 +3,7 @@ import type { Role } from '@/lib/session'
 // Sổ đăng ký MODULE dịch vụ. Thêm module mới = thêm 1 mục ở đây + code route của nó,
 // KHÔNG phải sửa lại khung app (AppShell/hub tự đọc danh sách này).
 export type ModuleNavItem = { href: string; label: string; roles?: Role[] }
+export type ModuleVaiTro = { key: string; ten: string } // vai trò per-module (cho phân quyền cá nhân)
 export type AppModule = {
   key: string
   ten: string
@@ -12,6 +13,7 @@ export type AppModule = {
   prefixes: string[] // các path prefix thuộc module (để nhận diện module đang mở)
   roles?: Role[] // vai trò thấy module trên hub (bỏ trống = mọi vai trò)
   nav: ModuleNavItem[] // menu con của module
+  vaiTro?: ModuleVaiTro[] // bộ vai trò để cấp quyền cá nhân (super-admin có tất cả)
 }
 
 export const MODULES: AppModule[] = [
@@ -30,6 +32,11 @@ export const MODULES: AppModule[] = [
       { href: '/vpp/cap-nhat-gia', label: 'Cập nhật giá', roles: ['admin'] },
       { href: '/vpp/thong-ke', label: 'Báo cáo', roles: ['admin', 'hcns'] },
     ],
+    vaiTro: [
+      { key: 'nguoi_de_nghi', ten: 'Người đề nghị' },
+      { key: 'duyet', ten: 'Người duyệt' },
+      { key: 'quan_ly', ten: 'Quản lý VPP' },
+    ],
   },
   {
     key: 'ncc',
@@ -40,6 +47,10 @@ export const MODULES: AppModule[] = [
     prefixes: ['/ncc'],
     roles: ['admin', 'hcns'],
     nav: [{ href: '/ncc', label: 'Danh sách NCC' }],
+    vaiTro: [
+      { key: 'xem', ten: 'Xem' },
+      { key: 'quan_ly', ten: 'Quản lý' },
+    ],
   },
   {
     key: 'quantri',

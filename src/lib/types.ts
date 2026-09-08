@@ -49,6 +49,8 @@ export type NguoiDungRow = {
   is_active: boolean
   phong_ban_id: string | null
   bao_ve: boolean
+  email: string | null
+  sieu_admin: boolean
 }
 
 export type SanPham = {

@@ -1,12 +1,14 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 import ConfirmDialog from './ConfirmDialog'
+import NhapUser from './NhapUser'
 
 type Role = 'admin' | 'hcns' | 'nguoi_de_nghi'
 const ROLE_LABEL: Record<Role, string> = { admin: 'Quản trị', hcns: 'HCNS', nguoi_de_nghi: 'Người đề nghị' }
+type ModuleVaiTro = { key: string; ten: string; vaiTro: { key: string; ten: string }[] }
 
 async function api(method: string, url: string, body: unknown) {
   const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -18,10 +20,14 @@ export default function QuanLyToChuc({
   phongBan,
   users,
   selfId,
+  quyen,
+  moduleVaiTro,
 }: {
   phongBan: PhongBanRow[]
   users: NguoiDungRow[]
   selfId: string
+  quyen: Record<string, Record<string, string>>
+  moduleVaiTro: ModuleVaiTro[]
 }) {
   const router = useRouter()
   const [err, setErr] = useState('')
@@ -115,6 +121,19 @@ export default function QuanLyToChuc({
     })
   }
 
+  // ---- Phân quyền cá nhân ----
+  const [quyenUId, setQuyenUId] = useState<string | null>(null)
+  const [qSieu, setQSieu] = useState(false)
+  const [qMod, setQMod] = useState<Record<string, string>>({})
+  function moQuyen(u: NguoiDungRow) {
+    setQuyenUId(u.id); setQSieu(u.sieu_admin); setQMod({ ...(quyen[u.id] || {}) })
+  }
+  async function luuQuyen(id: string) {
+    const { ok, data } = await api('POST', '/api/admin/nguoi-dung/quyen', { id, sieu_admin: qSieu, quyen: qMod })
+    if (!ok) return fail(data.error || 'Lỗi')
+    setQuyenUId(null); done('Đã cập nhật quyền')
+  }
+
   const inp = 'border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent'
 
   return (
@@ -170,11 +189,14 @@ export default function QuanLyToChuc({
 
       {/* NGƯỜI DÙNG */}
       <div className="card p-4">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-start justify-between mb-3 gap-2">
           <span className="font-semibold">Người dùng ({users.length})</span>
-          <button onClick={() => { setShowAdd(!showAdd); setNu(empty) }} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">
-            {showAdd ? 'Đóng' : '+ Thêm người dùng'}
-          </button>
+          <div className="flex items-start gap-2">
+            <NhapUser />
+            <button onClick={() => { setShowAdd(!showAdd); setNu(empty) }} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">
+              {showAdd ? 'Đóng' : '+ Thêm người dùng'}
+            </button>
+          </div>
         </div>
 
         {showAdd && (
@@ -229,32 +251,65 @@ export default function QuanLyToChuc({
                     </td>
                   </tr>
                 ) : (
-                  <tr key={u.id} className="border-t border-border">
+                  <Fragment key={u.id}>
+                  <tr className="border-t border-border">
                     <td className="py-1.5">
                       {u.ho_ten}
+                      {u.sieu_admin && <span title="Super-admin (mọi module)" className="ml-1 text-[10px] px-1 rounded bg-accent text-white align-middle">SA</span>}
                       {u.bao_ve && <span title="Tài khoản quản trị gốc được bảo vệ" className="ml-1">🔒</span>}
                       {u.id === selfId && <span className="text-[11px] text-muted"> (bạn)</span>}
                     </td>
-                    <td className="py-1.5">{u.username}</td>
+                    <td className="py-1.5">
+                      <div>{u.username}</div>
+                      {u.email && <div className="text-[11px] text-muted">{u.email}</div>}
+                    </td>
                     <td className="py-1.5">{ROLE_LABEL[u.role]}</td>
                     <td className="py-1.5">{u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '—' : '—'}</td>
                     <td className="py-1.5">{u.is_active ? <span className="text-ok">Hoạt động</span> : <span className="text-muted">Khoá</span>}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
+                      <button onClick={() => (quyenUId === u.id ? setQuyenUId(null) : moQuyen(u))} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Quyền</button>
                       {u.bao_ve ? (
                         u.id === selfId ? (
-                          <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline">Sửa</button>
+                          <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline ml-3">Sửa</button>
                         ) : (
-                          <span className="text-muted text-xs">Được bảo vệ</span>
+                          <span className="text-muted text-xs ml-3">Được bảo vệ</span>
                         )
                       ) : (
                         <>
-                          <button onClick={() => batDauSuaU(u)} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Sửa</button>
+                          <button onClick={() => batDauSuaU(u)} disabled={!!busy} className="text-accent-600 hover:underline ml-3 disabled:opacity-60">Sửa</button>
                           <button onClick={() => chay('toggle-' + u.id, () => toggleActive(u))} disabled={!!busy} className="text-warn hover:underline ml-3 disabled:opacity-60">{busy === 'toggle-' + u.id ? '…' : u.is_active ? 'Khoá' : 'Mở'}</button>
                           <button onClick={() => xoaU(u)} disabled={!!busy} className="text-danger hover:underline ml-3 disabled:opacity-60">Xoá</button>
                         </>
                       )}
                     </td>
                   </tr>
+                  {quyenUId === u.id && (
+                    <tr className="bg-accent-50/30 border-t border-border">
+                      <td colSpan={6} className="py-3 px-2">
+                        <div className="flex flex-wrap items-center gap-4">
+                          <label className="flex items-center gap-1.5 text-sm font-medium">
+                            <input type="checkbox" checked={qSieu} onChange={(e) => setQSieu(e.target.checked)} />
+                            Super-admin <span className="text-xs text-muted">(toàn quyền mọi module)</span>
+                          </label>
+                          {!qSieu && moduleVaiTro.map((m) => (
+                            <label key={m.key} className="text-sm flex items-center gap-1.5">
+                              <span className="text-muted">{m.ten}:</span>
+                              <select className={inp} value={qMod[m.key] || ''} onChange={(e) => setQMod((q) => ({ ...q, [m.key]: e.target.value }))}>
+                                <option value="">— Không —</option>
+                                {m.vaiTro.map((v) => <option key={v.key} value={v.key}>{v.ten}</option>)}
+                              </select>
+                            </label>
+                          ))}
+                          <div className="ml-auto flex items-center gap-2">
+                            <button onClick={() => chay('luuQuyen', () => luuQuyen(u.id))} disabled={!!busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60">{busy === 'luuQuyen' ? 'Đang lưu…' : 'Lưu quyền'}</button>
+                            <button onClick={() => setQuyenUId(null)} className="text-muted hover:text-foreground text-sm">Huỷ</button>
+                          </div>
+                        </div>
+                        {qSieu && <div className="text-xs text-muted mt-2">Super-admin thấy & làm mọi thứ ở tất cả module — không cần cấp vai trò từng module.</div>}
+                      </td>
+                    </tr>
+                  )}
+                  </Fragment>
                 )
               ))}
             </tbody>
