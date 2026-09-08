@@ -1,28 +1,36 @@
-# PROJECT_STATUS — VHJSC Đăng ký VPP
+# PROJECT_STATUS — Dịch vụ Hành chính VHJSC
 
-Cập nhật: 2026-09-04
+Cập nhật: 2026-09-08
 
-## Hiện trạng: SCAFFOLD XONG, chờ key Supabase để seed + chạy thật
+## Hiện trạng: ĐANG CHẠY (beta nội bộ), triển khai Vercel
+App đã dựng đầy đủ và deploy. Đã chuyển thành **hub đa module**. VPP còn giai đoạn thử nghiệm/test nội bộ.
 
-Đã dựng khung app đầy đủ, `next build` sạch, xuất PDF tiếng Việt đã kiểm chứng.
-Chưa chạy được luồng có dữ liệu vì `.env.local` chưa có key thật.
+- Code: `D:\Claude Code\VHJSC VPP App` (đã rời Google Drive + sang ổ mới sau sự cố ổ hỏng 2026-09-08).
+- Repo: `hasttechnical2025-prog/vhjsc-vpp` (branch `main`) → Vercel. Supabase `https://bkdupkjrafaprvdseued.supabase.co`, bucket `vhjscvpp-images`, prefix bảng `vhjscvpp_`.
+- `.env.local`: URL sẵn; **user cần dán lại** `NEXT_PUBLIC_SUPABASE_ANON_KEY` + `SUPABASE_SERVICE_ROLE_KEY` (chỉ cần khi chạy script). Build dùng `SESSION_SECRET=build-dummy`.
 
-## Đã có
-- Next.js 16 App Router + Tailwind 4 (chỉ light, accent xanh).
-- Auth cookie httpOnly + scrypt (`src/lib/session.ts`, `src/lib/password.ts`). Role: `admin | hcns | nguoi_de_nghi`.
-- Migration `supabase/migrations/0001_init.sql`: 5 bảng (vhjscvpp_phong_ban, vhjscvpp_nguoi_dung, vhjscvpp_san_pham, vhjscvpp_phieu, vhjscvpp_phieu_dong) + RLS.
-- Seed `scripts/seed.mjs`: bucket ảnh + upload 451 ảnh + import 634 SP + phòng ban PKD + tài khoản admin/pkd.
-- UI: `/login`, `/` (KPI), `/dang-ky` (catalog có ảnh + mục khác), `/phieu`, `/phieu/[id]`, `/admin`.
-- Xuất PDF BM01: `src/lib/pdf/bm01.ts` (pdfmake, font Roboto in-memory) qua `/api/phieu/[id]/pdf`.
-- Dữ liệu nguồn: `seed-data/` (CSV commit; ảnh gitignore).
+## Kiến trúc
+- **Hub + module registry** `src/lib/modules.ts`: `vpp` (`/vpp`), `ncc` (`/ncc`), `quantri` (`/admin`). Trang chủ `/` = thẻ chọn module; header 2 hàng sticky, `ModuleNav.tsx` menu theo module. Thêm module = thêm mục trong registry + route riêng.
+- Route VPP ở `/vpp/*`; API ở `/api/*`; `next.config.ts` redirect đường cũ → `/vpp/*`.
+- Auth cookie `vpp_session` + scrypt (`src/lib/session.ts`, `password.ts`). Role `admin|hcns|nguoi_de_nghi`; tài khoản admin có cờ `bao_ve`.
 
-## Việc tiếp theo
-1. Tạo project Supabase, chạy migration, điền `.env.local`, `npm run seed`.
-2. Kết nối GitHub repo `hasttechnical2025-prog/vhjsc-vpp` với Vercel; set env (4 biến) trên Vercel.
-3. Bổ sung: quản trị người dùng/phòng ban CRUD; bật/tắt & sửa giá sản phẩm; sửa/xoá phiếu; lọc danh sách phiếu theo tháng/phòng ban.
-4. Cân nhắc: logo VHJSC thật trên PDF; nhiều phòng ban; nhập giá mới hàng tháng.
+## Module & chức năng đã có
+- **Đăng ký VPP**: lập phiếu (giỏ hàng, biến thể màu theo SL từng màu, auto-scroll tới mặt hàng vừa thêm) · duyệt/từ chối (accordion) · khoá phiếu đã duyệt · xuất **PDF BM01** (pdfmake) · cập nhật giá từ xlsx (đối chiếu) · sửa mặt hàng + thay ảnh + đổi tên nhóm (admin) · thống kê + xuất Excel (theo phòng/nhóm %/top SP/xu hướng).
+- **Nhà cung cấp (NCC)**: 43 NCC, hồ sơ + đánh giá theo kỳ (5 tiêu chí trọng số → A/B/C, lịch sử) + đính kèm tệp + banner/cron nhắc hạn hợp đồng (Telegram).
+- **Quản trị**: CRUD người dùng/phòng ban (admin gốc được bảo vệ) + cấu hình logo/brand.
+- **Nền tảng**: Telegram thông báo phiếu mới (cần env) · Realtime (Supabase broadcast) · banner phiên bản mới.
+
+## Migration: đã chạy tới 0009 (`supabase/migrations/`)
+DDL do user chạy trên Supabase SQL Editor. Bảng: phong_ban, nguoi_dung, san_pham (cột tên = `ten`), phieu, phieu_dong, cauhinh, ncc/ncc_danh_gia/ncc_tep.
+
+## Việc treo / cân nhắc
+1. User dán lại `.env.local` keys (nếu cần chạy script service_role).
+2. Cấu hình Telegram env (`TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`) trên Vercel để bật thông báo/nhắc hạn.
+3. Đặt Vercel function region = Supabase region (sin1) giảm trễ.
+4. NCC phase 2: theo dõi chi tiêu theo NCC + nhắc đến hạn thanh toán tự động.
+5. Module mới (Đăng ký Công tác, Xe…) — chờ user chốt ý tưởng.
 
 ## Gotcha
-- Thư mục nằm trong **Google Drive** → `node_modules`/`.next` bị Drive đồng bộ (chậm, cảnh báo "slow filesystem"). Nên tạm dừng sync khi dev hoặc chuyển ra ổ local.
-- Ảnh SP để trên Supabase Storage (public); `next.config.ts` đã whitelist `*.supabase.co`.
-- Preview trong Claude bám project của phiên hiện tại; chạy dev thủ công `npx next dev -p <port>` nếu cần xem.
+- Sau khi di chuyển route phải `rm -rf .next` rồi build (type cache đường cũ).
+- Ảnh trên Supabase Storage (public); `next.config.ts` whitelist `*.supabase.co`.
+- Danh sách dài → `selectAll()`. KHÔNG popup trình duyệt (dùng `ConfirmDialog`).
