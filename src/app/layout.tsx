@@ -3,8 +3,8 @@ import './globals.css'
 import VersionWatcher from '@/components/VersionWatcher'
 
 export const metadata: Metadata = {
-  title: 'VHJSC · Đăng ký Văn phòng phẩm',
-  description: 'Lập phiếu đề xuất mua văn phòng phẩm theo phòng ban',
+  title: 'VHJSC - Dịch vụ Hành chính',
+  description: 'Cổng dịch vụ hành chính VHJSC: đăng ký VPP, nhà cung cấp…',
 }
 
 export const viewport: Viewport = {
