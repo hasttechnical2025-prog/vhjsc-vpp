@@ -144,7 +144,7 @@ export default function NccList({
         </div>
         <div className="ml-auto flex items-center gap-2">
           <button onClick={kiemTraMst} disabled={kiemBusy || soCoMst === 0} title={soCoMst === 0 ? 'Chưa NCC nào có MST' : `Tra tình trạng ${soCoMst} NCC có MST (VietQR)`} className="border border-border rounded-lg px-4 py-1.5 text-sm font-medium hover:border-accent disabled:opacity-50">
-            {kiemBusy ? 'Đang kiểm tra…' : `Kiểm tra MST (${soCoMst})`}
+            {kiemBusy ? 'Đang kiểm tra…' : `Kiểm tra TTHĐ (${soCoMst})`}
           </button>
           <Link href="/ncc/nhap" className="border border-border rounded-lg px-4 py-1.5 text-sm font-medium hover:border-accent">
             ⬆ Nhập Excel

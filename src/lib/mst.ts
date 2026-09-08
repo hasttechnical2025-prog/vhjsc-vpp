@@ -3,11 +3,19 @@
 // KHÔNG phải cổng Nhà nước). Trả trạng thái + tên + địa chỉ chuẩn.
 export type KetQuaMst = { ok: boolean; trang_thai?: string; ten?: string; dia_chi?: string; loi?: string }
 
+// Trích MST hợp lệ từ chuỗi (có thể lẫn tên công ty): 10 số, kèm đuôi chi nhánh
+// "-NNN" nếu có. VietQR CẦN giữ dấu gạch cho MST chi nhánh (VD 0302391670-031).
+export function chuanHoaMst(mst: string | null | undefined): string | null {
+  const m = String(mst ?? '').replace(/\s+/g, '').match(/(\d{10})(?:-(\d{3}))?/)
+  if (!m) return null
+  return m[2] ? `${m[1]}-${m[2]}` : m[1]
+}
+
 export async function traCuuMst(mst: string | null | undefined): Promise<KetQuaMst> {
-  const so = String(mst ?? '').replace(/\D/g, '')
-  if (!so || so.length < 10) return { ok: false, loi: 'MST không hợp lệ' }
+  const so = chuanHoaMst(mst)
+  if (!so) return { ok: false, loi: 'MST không hợp lệ' }
   try {
-    const r = await fetch(`https://api.vietqr.io/v2/business/${so}`, {
+    const r = await fetch(`https://api.vietqr.io/v2/business/${encodeURIComponent(so)}`, {
       headers: { Accept: 'application/json', 'User-Agent': 'Mozilla/5.0 VHJSC' },
     })
     if (!r.ok) return { ok: false, loi: `HTTP ${r.status}` }

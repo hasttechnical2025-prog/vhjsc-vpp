@@ -170,8 +170,8 @@ export default function NccDetail({ ncc, danhGia, tep }: { ncc: NccRow; danhGia:
                   {ncc.mst_trang_thai}
                 </span>
               )}
-              <button onClick={traCuuMstNcc} disabled={mstBusy} className="text-xs text-accent-600 hover:underline disabled:opacity-60" title="Tra tình trạng hoạt động theo MST (VietQR)">
-                {mstBusy ? 'Đang tra…' : 'Tra cứu MST'}
+              <button onClick={traCuuMstNcc} disabled={mstBusy} className="text-xs text-accent-600 hover:underline disabled:opacity-60" title="Tra tình trạng hoạt động (TTHĐ) theo MST — VietQR">
+                {mstBusy ? 'Đang tra…' : 'Tra cứu TTHĐ'}
               </button>
             </div>
           </div>
