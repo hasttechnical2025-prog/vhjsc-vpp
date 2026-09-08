@@ -7,7 +7,7 @@ export type NavModule = { key: string; ten: string; home: string; prefixes: stri
 
 // Menu theo MODULE đang mở: nhận diện module qua pathname (prefix khớp dài nhất),
 // hiện menu con của module đó + nút "← Dịch vụ" quay ra hub.
-export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule[]; nhieuModule: boolean }) {
+export default function ModuleNav({ modules }: { modules: NavModule[] }) {
   const path = usePathname()
 
   let cur: NavModule | null = null
@@ -34,11 +34,9 @@ export default function ModuleNav({ modules, nhieuModule }: { modules: NavModule
   return (
     <div className="border-t border-border bg-surface">
       <nav className="max-w-6xl mx-auto px-4 py-1.5 flex items-center gap-1 flex-wrap">
-        {nhieuModule && (
-          <Link href="/" className="px-2 py-1.5 rounded-lg text-sm text-muted hover:text-accent-600 hover:bg-accent-50" title="Về trang dịch vụ">
-            ← Dịch vụ
-          </Link>
-        )}
+        <Link href="/" className="px-2 py-1.5 rounded-lg text-sm text-muted hover:text-accent-600 hover:bg-accent-50" title="Về trang dịch vụ">
+          ← Dịch vụ
+        </Link>
         <span className="pl-2 pr-3 mr-1 text-sm font-semibold text-foreground/80 border-r border-border">{cur.ten}</span>
         {cur.nav.map((n) => {
           const active = n.href === activeHref

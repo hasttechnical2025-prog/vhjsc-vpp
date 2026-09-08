@@ -40,7 +40,7 @@ export default async function AppShell({
           <LogoutButton />
         </div>
         {/* Hàng 2: thanh menu của module đang mở (ẩn khi ở trang chủ hub) */}
-        <ModuleNav modules={navModules} nhieuModule={modules.length > 1} />
+        <ModuleNav modules={navModules} />
       </header>
       <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>
     </div>

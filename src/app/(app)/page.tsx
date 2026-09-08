@@ -8,9 +8,9 @@ export default async function HubPage() {
   const session = await getSession()
   if (!session) redirect('/login')
 
+  // Mọi vai trò đều vào Home (hub) — kể cả khi hiện chỉ có 1 module — để nhất quán
+  // và sẵn sàng cho các module bổ sung sau này.
   const modules = moduleChoVaiTro(session.role)
-  // Người dùng chỉ có đúng 1 module -> vào thẳng module đó (bỏ qua hub).
-  if (modules.length === 1) redirect(modules[0].home)
 
   return (
     <>
