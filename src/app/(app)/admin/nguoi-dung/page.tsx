@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import QuanLyToChuc from '@/components/QuanLyToChuc'
-import { getNccNhom } from '@/lib/ncc-nhom'
 import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 
 export default async function NguoiDungPage() {
@@ -27,7 +26,7 @@ export default async function NguoiDungPage() {
       <Link href="/admin" className="text-sm text-accent-600 hover:underline">← Quản trị</Link>
       <h1 className="text-xl font-bold mt-2 mb-1">Người dùng & Phòng ban</h1>
       <p className="text-sm text-muted mb-5">Tạo tài khoản đăng nhập cho từng phòng ban và quản lý phân quyền.</p>
-      <QuanLyToChuc phongBan={phongBan} users={users} selfId={session.id} nccNhom={await getNccNhom()} />
+      <QuanLyToChuc phongBan={phongBan} users={users} selfId={session.id} />
     </>
   )
 }
