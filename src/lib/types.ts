@@ -17,6 +17,8 @@ export type NccRow = {
   hop_dong_het_han: string | null
   trang_thai: string
   ghi_chu: string | null
+  mst_trang_thai: string | null
+  mst_kiem_tra_luc: string | null
 }
 
 export type NccDanhGiaRow = {

@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { NccRow, NccDanhGiaRow, NccTepRow } from '@/lib/types'
 import { TIEU_CHI, tinhDiemTong, xepLoai, NHAN_XEP_LOAI, NHAN_DE_XUAT, MAU_XEP_LOAI, type XepLoai } from '@/lib/ncc'
+import { phanLoaiMst, MAU_MST } from '@/lib/mst'
 import { formatDate, isoToDmy, dmyToIso } from '@/lib/format'
 import DateField from './DateField'
 import ConfirmDialog from './ConfirmDialog'
@@ -38,8 +39,31 @@ export default function NccDetail({ ncc, danhGia, tep }: { ncc: NccRow; danhGia:
   const [sua, setSua] = useState(false)
   const [ho, setHo] = useState<HoSo>(tuNcc(ncc))
 
+  // ---- Tra cứu MST (VietQR) ----
+  const [mstBusy, setMstBusy] = useState(false)
+  const [mstDiaChi, setMstDiaChi] = useState<string | null>(null) // địa chỉ chuẩn để đề nghị điền
+
   function fail(e: string) { setMsg(''); setErr(e) }
   function done(m: string) { setErr(''); setMsg(m); router.refresh() }
+
+  async function traCuuMstNcc() {
+    if (!ncc.ma_so_thue) return fail('NCC chưa có MST — hãy điền MST rồi lưu trước')
+    setMstBusy(true); setErr(''); setMsg(''); setMstDiaChi(null)
+    try {
+      const r = await fetch(`/api/ncc/${ncc.id}/tra-cuu`, { method: 'POST' })
+      const d = await r.json().catch(() => ({}))
+      if (!r.ok) { fail(d.error || 'Tra cứu thất bại'); return }
+      setMsg(`Tình trạng MST: ${d.trang_thai}`)
+      if (d.dia_chi && !ncc.dia_chi) setMstDiaChi(d.dia_chi)
+      router.refresh()
+    } finally { setMstBusy(false) }
+  }
+
+  async function dienDiaChi() {
+    if (!mstDiaChi) return
+    const r = await fetch('/api/ncc', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: ncc.id, dia_chi: mstDiaChi }) })
+    if (r.ok) { setMstDiaChi(null); done('Đã điền địa chỉ từ MST') }
+  }
 
   async function luuHoSo() {
     if (!ho.ten.trim()) return fail('Tên không được để trống')
@@ -138,7 +162,24 @@ export default function NccDetail({ ncc, danhGia, tep }: { ncc: NccRow; danhGia:
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
         {/* HỒ SƠ */}
         <div className="card p-4">
-          <div className="font-semibold mb-3">Hồ sơ nhà cung cấp</div>
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <span className="font-semibold">Hồ sơ nhà cung cấp</span>
+            <div className="flex items-center gap-2">
+              {ncc.mst_trang_thai && (
+                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${MAU_MST[phanLoaiMst(ncc.mst_trang_thai)]}`} title={ncc.mst_kiem_tra_luc ? `Kiểm tra ${formatDate(ncc.mst_kiem_tra_luc)}` : ''}>
+                  {ncc.mst_trang_thai}
+                </span>
+              )}
+              <button onClick={traCuuMstNcc} disabled={mstBusy} className="text-xs text-accent-600 hover:underline disabled:opacity-60" title="Tra tình trạng hoạt động theo MST (VietQR)">
+                {mstBusy ? 'Đang tra…' : 'Tra cứu MST'}
+              </button>
+            </div>
+          </div>
+          {mstDiaChi && (
+            <div className="text-xs bg-accent-50/60 rounded p-2 mb-3">
+              Địa chỉ theo MST: {mstDiaChi} <button onClick={dienDiaChi} className="text-accent-600 hover:underline ml-1">— điền vào hồ sơ</button>
+            </div>
+          )}
           {sua ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <label className={lb}>Tên NCC *<input className={inp} value={ho.ten} onChange={(e) => setHo({ ...ho, ten: e.target.value })} /></label>

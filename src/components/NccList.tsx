@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { NccRow } from '@/lib/types'
 import { MAU_XEP_LOAI, type XepLoai } from '@/lib/ncc'
+import { phanLoaiMst, MAU_MST } from '@/lib/mst'
 import { formatDate } from '@/lib/format'
 
 export type DanhGiaMoiNhat = { ky: string; xep_loai: string | null; diem_tong: number | null }
@@ -37,6 +38,21 @@ export default function NccList({
   const empty = { ten: '', nhom_chi_phi: '', loai_chi_phi: '', so_dien_thoai: '', email: '' }
   const [nu, setNu] = useState(empty)
   const [busy, setBusy] = useState(false)
+  const [kiemBusy, setKiemBusy] = useState(false)
+  const [kiemKq, setKiemKq] = useState('')
+
+  const soCoMst = useMemo(() => ncc.filter((n) => n.ma_so_thue).length, [ncc])
+
+  async function kiemTraMst() {
+    setErr(''); setKiemKq(''); setKiemBusy(true)
+    try {
+      const r = await fetch('/api/ncc/tra-cuu-tat-ca', { method: 'POST' })
+      const d = await r.json().catch(() => ({}))
+      if (!r.ok) { setErr(d.error || 'Kiểm tra thất bại'); return }
+      setKiemKq(`Đã kiểm ${d.da_kiem} NCC: đang hoạt động ${d.hoat_dong} · ngừng ${d.ngung} · tạm nghỉ ${d.tam_nghi} · khác ${d.khac} · lỗi ${d.loi}.`)
+      router.refresh()
+    } finally { setKiemBusy(false) }
+  }
 
   const sapHetHan = useMemo(
     () =>
@@ -127,6 +143,9 @@ export default function NccList({
           </select>
         </div>
         <div className="ml-auto flex items-center gap-2">
+          <button onClick={kiemTraMst} disabled={kiemBusy || soCoMst === 0} title={soCoMst === 0 ? 'Chưa NCC nào có MST' : `Tra tình trạng ${soCoMst} NCC có MST (VietQR)`} className="border border-border rounded-lg px-4 py-1.5 text-sm font-medium hover:border-accent disabled:opacity-50">
+            {kiemBusy ? 'Đang kiểm tra…' : `Kiểm tra MST (${soCoMst})`}
+          </button>
           <Link href="/ncc/nhap" className="border border-border rounded-lg px-4 py-1.5 text-sm font-medium hover:border-accent">
             ⬆ Nhập Excel
           </Link>
@@ -137,6 +156,7 @@ export default function NccList({
       </div>
 
       {err && <div className="text-sm text-danger mb-3">{err}</div>}
+      {kiemKq && <div className="text-sm text-ok mb-3 card p-2">{kiemKq}</div>}
 
       {them && (
         <div className="card p-3 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2 bg-accent-50/40">
@@ -186,7 +206,12 @@ export default function NccList({
                       )}
                     </td>
                     <td className="px-3 py-2 align-top whitespace-nowrap">
-                      {n.trang_thai === 'dang_dung' ? <span className="text-ok">Đang dùng</span> : <span className="text-muted">Ngừng</span>}
+                      <div>{n.trang_thai === 'dang_dung' ? <span className="text-ok">Đang dùng</span> : <span className="text-muted">Ngừng</span>}</div>
+                      {n.mst_trang_thai && (
+                        <div className={`mt-1 inline-block px-1.5 py-0.5 rounded text-[11px] font-medium ${MAU_MST[phanLoaiMst(n.mst_trang_thai)]}`} title={`MST: ${n.mst_trang_thai}`}>
+                          {phanLoaiMst(n.mst_trang_thai) === 'hoat_dong' ? 'MST: hoạt động' : phanLoaiMst(n.mst_trang_thai) === 'ngung' ? 'MST: ngừng' : phanLoaiMst(n.mst_trang_thai) === 'tam_nghi' ? 'MST: tạm nghỉ' : 'MST: ?'}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 )
