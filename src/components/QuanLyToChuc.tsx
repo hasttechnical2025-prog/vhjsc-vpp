@@ -26,11 +26,18 @@ export default function QuanLyToChuc({
   const router = useRouter()
   const [err, setErr] = useState('')
   const [msg, setMsg] = useState('')
+  const [busy, setBusy] = useState<string | null>(null) // khoá hành động đang chạy
   const [xacNhan, setXacNhan] = useState<{ message: string; onOk: () => void } | null>(null)
   const pbMap = useMemo(() => new Map(phongBan.map((p) => [p.id, p.ten])), [phongBan])
 
   function done(m: string) { setErr(''); setMsg(m); router.refresh() }
   function fail(e: string) { setMsg(''); setErr(e) }
+  // Chạy 1 hành động có hiển thị trạng thái bận (disable nút + đổi nhãn "Đang…").
+  async function chay(key: string, fn: () => Promise<void>) {
+    if (busy) return
+    setBusy(key)
+    try { await fn() } finally { setBusy(null) }
+  }
 
   // ---- Phòng ban ----
   const [pbTen, setPbTen] = useState('')
@@ -58,11 +65,11 @@ export default function QuanLyToChuc({
   function xoaPB(p: PhongBanRow) {
     setXacNhan({
       message: `Xoá phòng ban "${p.ten}"? Tài khoản/phiếu thuộc phòng này sẽ được gỡ liên kết (không mất).`,
-      onOk: async () => {
+      onOk: () => chay('xoaPB', async () => {
         const { ok, data } = await api('DELETE', '/api/admin/phong-ban', { id: p.id })
         if (!ok) return fail(data.error || 'Lỗi')
         done('Đã xoá phòng ban')
-      },
+      }),
     })
   }
 
@@ -100,11 +107,11 @@ export default function QuanLyToChuc({
   function xoaU(u: NguoiDungRow) {
     setXacNhan({
       message: `Xoá người dùng "${u.ho_ten}" (${u.username})?`,
-      onOk: async () => {
+      onOk: () => chay('xoaU', async () => {
         const { ok, data } = await api('DELETE', '/api/admin/nguoi-dung', { id: u.id })
         if (!ok) return fail(data.error || 'Lỗi')
         done('Đã xoá người dùng')
-      },
+      }),
     })
   }
 
@@ -133,8 +140,8 @@ export default function QuanLyToChuc({
                       <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={ePbMa} onChange={(e) => setEPbMa(e.target.value)} /></td>
                       <td className="py-1.5 pr-2"><input className={inp + ' w-full'} placeholder="Tên trưởng bộ phận" value={ePbTbp} onChange={(e) => setEPbTbp(e.target.value)} /></td>
                       <td className="py-1.5 text-right whitespace-nowrap">
-                        <button onClick={() => luuPB(p.id)} className="text-accent-600 hover:underline">Lưu</button>
-                        <button onClick={() => setEditPbId(null)} className="text-muted hover:underline ml-3">Huỷ</button>
+                        <button onClick={() => chay('luuPB', () => luuPB(p.id))} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">{busy === 'luuPB' ? 'Đang lưu…' : 'Lưu'}</button>
+                        <button onClick={() => setEditPbId(null)} disabled={!!busy} className="text-muted hover:underline ml-3 disabled:opacity-60">Huỷ</button>
                       </td>
                     </>
                   ) : (
@@ -143,8 +150,8 @@ export default function QuanLyToChuc({
                       <td className="py-1.5 text-muted">{p.ma || '—'}</td>
                       <td className="py-1.5">{p.truong_bo_phan || <span className="text-muted">—</span>}</td>
                       <td className="py-1.5 text-right whitespace-nowrap">
-                        <button onClick={() => batDauSuaPB(p)} className="text-accent-600 hover:underline">Sửa</button>
-                        <button onClick={() => xoaPB(p)} className="text-danger hover:underline ml-3">Xoá</button>
+                        <button onClick={() => batDauSuaPB(p)} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Sửa</button>
+                        <button onClick={() => xoaPB(p)} disabled={!!busy} className="text-danger hover:underline ml-3 disabled:opacity-60">Xoá</button>
                       </td>
                     </>
                   )}
@@ -157,7 +164,7 @@ export default function QuanLyToChuc({
           <input className={inp} placeholder="Tên phòng ban mới" value={pbTen} onChange={(e) => setPbTen(e.target.value)} />
           <input className={inp + ' w-24'} placeholder="Mã (VD PKD)" value={pbMa} onChange={(e) => setPbMa(e.target.value)} />
           <input className={inp} placeholder="Trưởng bộ phận (ký PDF)" value={pbTbp} onChange={(e) => setPbTbp(e.target.value)} />
-          <button onClick={themPB} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">+ Thêm phòng ban</button>
+          <button onClick={() => chay('themPB', themPB)} disabled={!!busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60">{busy === 'themPB' ? 'Đang lưu…' : '+ Thêm phòng ban'}</button>
         </div>
       </div>
 
@@ -184,7 +191,7 @@ export default function QuanLyToChuc({
               <option value="">— Không thuộc phòng —</option>
               {phongBan.map((p) => <option key={p.id} value={p.id}>{p.ten}</option>)}
             </select>
-            <div><button onClick={themUser} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium w-full sm:w-auto">Tạo người dùng</button></div>
+            <div><button onClick={() => chay('themUser', themUser)} disabled={!!busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium w-full sm:w-auto disabled:opacity-60">{busy === 'themUser' ? 'Đang tạo…' : 'Tạo người dùng'}</button></div>
           </div>
         )}
 
@@ -217,8 +224,8 @@ export default function QuanLyToChuc({
                       <input className={inp + ' w-full'} placeholder="Đặt lại MK (trống=giữ)" value={eU.password} onChange={(e) => setEU({ ...eU, password: e.target.value })} />
                     </td>
                     <td className="py-1.5 text-right whitespace-nowrap">
-                      <button onClick={() => luuU(u.id)} className="text-accent-600 hover:underline">Lưu</button>
-                      <button onClick={() => setEditUId(null)} className="text-muted hover:underline ml-3">Huỷ</button>
+                      <button onClick={() => chay('luuU', () => luuU(u.id))} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">{busy === 'luuU' ? 'Đang lưu…' : 'Lưu'}</button>
+                      <button onClick={() => setEditUId(null)} disabled={!!busy} className="text-muted hover:underline ml-3 disabled:opacity-60">Huỷ</button>
                     </td>
                   </tr>
                 ) : (
@@ -241,9 +248,9 @@ export default function QuanLyToChuc({
                         )
                       ) : (
                         <>
-                          <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline">Sửa</button>
-                          <button onClick={() => toggleActive(u)} className="text-warn hover:underline ml-3">{u.is_active ? 'Khoá' : 'Mở'}</button>
-                          <button onClick={() => xoaU(u)} className="text-danger hover:underline ml-3">Xoá</button>
+                          <button onClick={() => batDauSuaU(u)} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Sửa</button>
+                          <button onClick={() => chay('toggle-' + u.id, () => toggleActive(u))} disabled={!!busy} className="text-warn hover:underline ml-3 disabled:opacity-60">{busy === 'toggle-' + u.id ? '…' : u.is_active ? 'Khoá' : 'Mở'}</button>
+                          <button onClick={() => xoaU(u)} disabled={!!busy} className="text-danger hover:underline ml-3 disabled:opacity-60">Xoá</button>
                         </>
                       )}
                     </td>
