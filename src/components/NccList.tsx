@@ -126,9 +126,14 @@ export default function NccList({
             <option value="ngung">Ngừng</option>
           </select>
         </div>
-        <button onClick={() => { setThem(!them); setNu(empty); setErr('') }} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium ml-auto">
-          {them ? 'Đóng' : '+ Thêm NCC'}
-        </button>
+        <div className="ml-auto flex items-center gap-2">
+          <Link href="/ncc/nhap" className="border border-border rounded-lg px-4 py-1.5 text-sm font-medium hover:border-accent">
+            ⬆ Nhập Excel
+          </Link>
+          <button onClick={() => { setThem(!them); setNu(empty); setErr('') }} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">
+            {them ? 'Đóng' : '+ Thêm NCC'}
+          </button>
+        </div>
       </div>
 
       {err && <div className="text-sm text-danger mb-3">{err}</div>}
