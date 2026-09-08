@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { formatTien, formatThang, thangHienTai } from '@/lib/format'
 import type { SanPham } from '@/lib/types'
@@ -140,6 +140,18 @@ export default function LapPhieu({
   })
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState('')
+
+  // Tự cuộn danh sách phiếu tới mặt hàng vừa thêm (chỉ khi SỐ dòng tăng — thêm mới,
+  // không cuộn khi chỉ chỉnh số lượng). Bỏ qua lần dựng lại ban đầu.
+  const listRef = useRef<HTMLDivElement>(null)
+  const soDongTruoc = useRef(dong.length)
+  useEffect(() => {
+    if (dong.length > soDongTruoc.current) {
+      const el = listRef.current
+      if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
+    }
+    soDongTruoc.current = dong.length
+  }, [dong.length])
 
   const nhomList = useMemo(() => Array.from(new Set(sanPham.map((s) => s.nhom_hang))), [sanPham])
   const [nhom, setNhom] = useState<string>(nhomList[0] || '')
@@ -431,7 +443,7 @@ export default function LapPhieu({
           </div>
 
           {/* Danh sách mặt hàng — cuộn trong; trên desktop chiếm hết chỗ còn lại để nút Lưu luôn hiện */}
-          <div className="overflow-auto -mx-1 px-1 max-h-[44vh] lg:max-h-none lg:flex-1 lg:min-h-0">
+          <div ref={listRef} className="overflow-auto -mx-1 px-1 max-h-[44vh] lg:max-h-none lg:flex-1 lg:min-h-0">
             {dong.length === 0 && (
               <div className="text-sm text-muted text-center py-6">Chưa có mặt hàng nào. Chọn từ danh mục bên trái.</div>
             )}
