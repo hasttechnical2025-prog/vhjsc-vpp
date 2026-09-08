@@ -56,22 +56,52 @@ function chuanHoaDon(v: unknown): string | null {
   return null
 }
 
+// Nhãn cột (đã bỏ dấu) -> field: khớp CHÍNH XÁC trước, sau đó khớp CHỨA.
+function mapHeader(label: string): Field | undefined {
+  if (!label) return undefined
+  if (HEADER_MAP[label]) return HEADER_MAP[label]
+  for (const [k, f] of Object.entries(HEADER_MAP)) if (k.length >= 4 && label.includes(k)) return f
+  return undefined
+}
+
+// Đọc file: tự DÒ dòng header (dòng chứa "Tên NCC"), GHÉP với dòng tiêu đề gộp phía
+// trên (VD "Thông tin NCC"). Đọc được cả file "Thống kê nhà cung cấp" (header nhiều
+// dòng) lẫn file mẫu phẳng. Bỏ qua sheet không có cột Tên.
 async function bocFile(file: File): Promise<FileRow[]> {
   const XLSX = await import('xlsx')
   const wb = XLSX.read(await file.arrayBuffer(), { type: 'array', cellDates: true })
   const out: FileRow[] = []
   for (const name of wb.SheetNames) {
-    const objs = XLSX.utils.sheet_to_json<Record<string, unknown>>(wb.Sheets[name], { defval: '', raw: true })
-    for (const o of objs) {
-      const row: FileRow = {}
-      for (const [k, v] of Object.entries(o)) {
-        const f = HEADER_MAP[boDau(k)]
+    const aoa = XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[name], { header: 1, defval: '', raw: true })
+    // tìm dòng header chứa cột "Tên NCC"/"Tên"
+    let h = -1
+    for (let i = 0; i < Math.min(aoa.length, 12); i++) {
+      if ((aoa[i] || []).some((c) => ['ten ncc', 'ten nha cung cap', 'ten'].includes(boDau(String(c))))) { h = i; break }
+    }
+    if (h < 0) continue
+    const above = h > 0 ? aoa[h - 1] || [] : []
+    const ncols = Math.max(aoa[h].length, above.length)
+    const colField: (Field | undefined)[] = []
+    for (let c = 0; c < ncols; c++) {
+      const label = boDau(String(aoa[h][c] ?? '')) || boDau(String(above[c] ?? ''))
+      colField[c] = mapHeader(label)
+    }
+    let nhomCur = ''
+    for (let r = h + 1; r < aoa.length; r++) {
+      const row = aoa[r] || []
+      const rec: FileRow = {}
+      for (let c = 0; c < ncols; c++) {
+        const f = colField[c]
+        const v = row[c]
         if (!f || v == null || String(v).trim() === '') continue
-        if (f === 'hop_dong_het_han') row[f] = toIso(v)
-        else if (f === 'co_hoa_don') row[f] = chuanHoaDon(v)
-        else row[f] = String(v).trim()
+        if (f === 'hop_dong_het_han') rec[f] = toIso(v)
+        else if (f === 'co_hoa_don') rec[f] = chuanHoaDon(v)
+        else rec[f] = String(v).replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim()
       }
-      if (row.ten) out.push(row)
+      // Nhóm chi phí thường là ô gộp -> kế thừa xuống dòng dưới nếu trống
+      if (rec.nhom_chi_phi) nhomCur = String(rec.nhom_chi_phi)
+      else if (nhomCur) rec.nhom_chi_phi = nhomCur
+      if (rec.ten) out.push(rec)
     }
   }
   return out
