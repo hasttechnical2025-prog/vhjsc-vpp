@@ -24,6 +24,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
   const [msg, setMsg] = useState('')
   // Ghi đè ảnh mới sau khi upload (không cần refresh cả trang để thấy)
   const [anhMoi, setAnhMoi] = useState<Record<number, string>>({})
+  const [anhXoa, setAnhXoa] = useState<Set<number>>(new Set())
   const fileRefs = useRef<Record<number, HTMLInputElement | null>>({})
 
   const GIOI_HAN = 80
@@ -106,6 +107,24 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
     }
   }
 
+  async function xoaAnh(id: number) {
+    setUploadingId(id); setErr(''); setMsg('')
+    try {
+      const res = await fetch('/api/admin/san-pham/anh', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      })
+      const d = await res.json().catch(() => ({}))
+      if (!res.ok) { setErr(d.error || 'Xoá ảnh thất bại'); return }
+      setAnhMoi((m) => { const n = { ...m }; delete n[id]; return n })
+      setAnhXoa((s) => new Set(s).add(id))
+      setMsg('Đã xoá ảnh (hiển thị “Không ảnh”)')
+    } finally {
+      setUploadingId(null)
+    }
+  }
+
   const inp = 'border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent w-full'
 
   return (
@@ -160,7 +179,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
 
       <div className="space-y-2">
         {hienThi.map((s) => {
-          const anh = anhMoi[s.id] || s.anh_url
+          const anh = anhXoa.has(s.id) ? null : (anhMoi[s.id] || s.anh_url)
           const dangSua = editId === s.id
           return (
             <div key={s.id} className={`card p-3 ${dangSua ? 'border-accent' : ''}`}>
@@ -189,6 +208,15 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
                   >
                     {uploadingId === s.id ? 'Đang tải…' : 'Thay ảnh'}
                   </button>
+                  {anh && (
+                    <button
+                      onClick={() => xoaAnh(s.id)}
+                      disabled={uploadingId === s.id}
+                      className="w-full text-xs text-danger hover:underline disabled:opacity-60"
+                    >
+                      Xoá ảnh
+                    </button>
+                  )}
                 </div>
 
                 {/* Nội dung */}

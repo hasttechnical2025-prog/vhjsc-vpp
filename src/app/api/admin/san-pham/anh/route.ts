@@ -36,3 +36,17 @@ export async function POST(req: Request) {
   xoaCacheSanPham()
   return NextResponse.json({ ok: true, url })
 }
+
+// Xoá ảnh 1 mặt hàng (chỉ admin) -> anh_url = null, hiển thị "Không ảnh".
+// Giữ file trong bucket (vô hại) để đơn giản; chỉ gỡ liên kết.
+export async function DELETE(req: Request) {
+  const session = await requireRole('admin')
+  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const b = await req.json().catch(() => null)
+  const id = Number(b?.id)
+  if (!id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
+  const { error } = await supabaseAdmin.from('vhjscvpp_san_pham').update({ anh_url: null }).eq('id', id)
+  if (error) return NextResponse.json({ error: 'Xoá ảnh thất bại' }, { status: 500 })
+  xoaCacheSanPham()
+  return NextResponse.json({ ok: true })
+}
