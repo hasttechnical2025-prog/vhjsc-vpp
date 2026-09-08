@@ -272,7 +272,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
 
       <ConfirmDialog
         open={!!xacNhanXoaAnh}
-        message={xacNhanXoaAnh ? `Xoá ảnh của “${xacNhanXoaAnh.ten}”? Mặt hàng sẽ hiển thị “Không ảnh”. Có thể thêm lại bằng “Thay”.` : ''}
+        message={xacNhanXoaAnh ? `Xoá ảnh của “${xacNhanXoaAnh.ten}”? File ảnh sẽ bị xoá khỏi kho; mặt hàng hiển thị “Không ảnh”. Có thể tải ảnh khác bằng “Thay”.` : ''}
         onConfirm={() => { const id = xacNhanXoaAnh?.id; setXacNhanXoaAnh(null); if (id) xoaAnh(id) }}
         onClose={() => setXacNhanXoaAnh(null)}
       />
