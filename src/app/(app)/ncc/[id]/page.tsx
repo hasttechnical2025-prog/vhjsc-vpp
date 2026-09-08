@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getSession } from '@/lib/session'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { NccRow, NccDanhGiaRow, NccTepRow } from '@/lib/types'
+import { getNccNhom } from '@/lib/ncc-nhom'
 import NccDetail from '@/components/NccDetail'
 
 export default async function NccDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -32,6 +33,7 @@ export default async function NccDetailPage({ params }: { params: Promise<{ id: 
         ncc={ncc as NccRow}
         danhGia={(danhGia || []) as NccDanhGiaRow[]}
         tep={(tep || []) as NccTepRow[]}
+        nhomCP={(await getNccNhom()).map((n) => n.ten)}
       />
     </>
   )

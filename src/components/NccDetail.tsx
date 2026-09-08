@@ -28,7 +28,7 @@ function tuNcc(n: NccRow): HoSo {
   }
 }
 
-export default function NccDetail({ ncc, danhGia, tep }: { ncc: NccRow; danhGia: NccDanhGiaRow[]; tep: NccTepRow[] }) {
+export default function NccDetail({ ncc, danhGia, tep, nhomCP }: { ncc: NccRow; danhGia: NccDanhGiaRow[]; tep: NccTepRow[]; nhomCP: string[] }) {
   const router = useRouter()
   const [err, setErr] = useState('')
   const [msg, setMsg] = useState('')
@@ -188,7 +188,13 @@ export default function NccDetail({ ncc, danhGia, tep }: { ncc: NccRow; danhGia:
               <label className={lb}>Điện thoại<input className={inp} value={ho.so_dien_thoai} onChange={(e) => setHo({ ...ho, so_dien_thoai: e.target.value })} /></label>
               <label className={lb}>Email<input className={inp} value={ho.email} onChange={(e) => setHo({ ...ho, email: e.target.value })} /></label>
               <label className={lb}>Người liên hệ<input className={inp} value={ho.nguoi_lien_he} onChange={(e) => setHo({ ...ho, nguoi_lien_he: e.target.value })} /></label>
-              <label className={lb}>Nhóm chi phí<input className={inp} value={ho.nhom_chi_phi} onChange={(e) => setHo({ ...ho, nhom_chi_phi: e.target.value })} /></label>
+              <label className={lb}>Nhóm chi phí
+                <select className={inp} value={ho.nhom_chi_phi} onChange={(e) => setHo({ ...ho, nhom_chi_phi: e.target.value })}>
+                  <option value="">— Chọn nhóm —</option>
+                  {nhomCP.map((n) => <option key={n} value={n}>{n}</option>)}
+                  {ho.nhom_chi_phi && !nhomCP.includes(ho.nhom_chi_phi) && <option value={ho.nhom_chi_phi}>{ho.nhom_chi_phi} (cũ)</option>}
+                </select>
+              </label>
               <label className={lb + ' sm:col-span-2'}>Loại chi phí / dịch vụ<input className={inp} value={ho.loai_chi_phi} onChange={(e) => setHo({ ...ho, loai_chi_phi: e.target.value })} /></label>
               <label className={lb}>Hóa đơn
                 <select className={inp} value={ho.co_hoa_don} onChange={(e) => setHo({ ...ho, co_hoa_don: e.target.value })}>

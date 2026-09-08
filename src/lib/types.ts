@@ -39,6 +39,8 @@ export type NccDanhGiaRow = {
 }
 
 export type NccTepRow = { id: string; ncc_id: string; ten_tep: string; url: string; created_at: string }
+
+export type NccNhomRow = { id: string; ten: string; thu_tu: number }
 export type NguoiDungRow = {
   id: string
   ho_ten: string

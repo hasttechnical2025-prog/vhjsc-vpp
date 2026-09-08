@@ -23,10 +23,12 @@ export default function NccList({
   ncc,
   danhGia,
   nhomList,
+  nhomCP,
 }: {
   ncc: NccRow[]
   danhGia: Record<string, DanhGiaMoiNhat>
   nhomList: string[]
+  nhomCP: string[]
 }) {
   const router = useRouter()
   const [q, setQ] = useState('')
@@ -73,13 +75,11 @@ export default function NccList({
       if (!k) return true
       return boDau(n.ten).includes(k) || boDau(n.loai_chi_phi || '').includes(k) || boDau(n.dia_chi || '').includes(k)
     })
-    // Sắp theo Nhóm chi phí, rồi theo tên trong từng nhóm (nhóm trống xếp cuối)
-    return ds.sort((a, b) => {
-      const na = a.nhom_chi_phi || '￿'
-      const nb = b.nhom_chi_phi || '￿'
-      return na.localeCompare(nb, 'vi') || a.ten.localeCompare(b.ten, 'vi')
-    })
-  }, [ncc, q, nhom, tt, loai, danhGia])
+    // Sắp theo THỨ TỰ danh mục Nhóm chi phí (nhóm không có trong danh mục xếp cuối),
+    // rồi theo tên trong từng nhóm.
+    const hang = (t: string | null) => { const i = nhomCP.indexOf(t || ''); return i < 0 ? 9999 : i }
+    return ds.sort((a, b) => hang(a.nhom_chi_phi) - hang(b.nhom_chi_phi) || a.ten.localeCompare(b.ten, 'vi'))
+  }, [ncc, q, nhom, tt, loai, danhGia, nhomCP])
 
   async function themNcc() {
     if (!nu.ten.trim()) return setErr('Nhập tên nhà cung cấp')
@@ -161,12 +161,14 @@ export default function NccList({
       {them && (
         <div className="card p-3 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2 bg-accent-50/40">
           <input className={inp} placeholder="Tên nhà cung cấp *" value={nu.ten} onChange={(e) => setNu({ ...nu, ten: e.target.value })} />
-          <input className={inp} list="dl-nhom-cp" placeholder="Nhóm chi phí" value={nu.nhom_chi_phi} onChange={(e) => setNu({ ...nu, nhom_chi_phi: e.target.value })} />
+          <select className={inp} value={nu.nhom_chi_phi} onChange={(e) => setNu({ ...nu, nhom_chi_phi: e.target.value })}>
+            <option value="">— Nhóm chi phí —</option>
+            {nhomCP.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
           <input className={inp} placeholder="Loại chi phí / dịch vụ cung cấp" value={nu.loai_chi_phi} onChange={(e) => setNu({ ...nu, loai_chi_phi: e.target.value })} />
           <input className={inp} placeholder="Số điện thoại" value={nu.so_dien_thoai} onChange={(e) => setNu({ ...nu, so_dien_thoai: e.target.value })} />
           <input className={inp} placeholder="Email" value={nu.email} onChange={(e) => setNu({ ...nu, email: e.target.value })} />
           <div><button onClick={themNcc} disabled={busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60">Tạo & mở hồ sơ</button></div>
-          <datalist id="dl-nhom-cp">{nhomList.map((n) => <option key={n} value={n} />)}</datalist>
         </div>
       )}
 
