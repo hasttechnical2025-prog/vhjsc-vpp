@@ -201,22 +201,24 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
                     className="hidden"
                     onChange={(e) => { const f = e.target.files?.[0]; if (f) thayAnh(s.id, f); e.target.value = '' }}
                   />
-                  <button
-                    onClick={() => fileRefs.current[s.id]?.click()}
-                    disabled={uploadingId === s.id}
-                    className="mt-1 w-full text-xs text-accent-600 hover:underline disabled:opacity-60"
-                  >
-                    {uploadingId === s.id ? 'Đang tải…' : 'Thay ảnh'}
-                  </button>
-                  {anh && (
+                  <div className="mt-1 flex items-center justify-center gap-2">
                     <button
-                      onClick={() => xoaAnh(s.id)}
+                      onClick={() => fileRefs.current[s.id]?.click()}
                       disabled={uploadingId === s.id}
-                      className="w-full text-xs text-danger hover:underline disabled:opacity-60"
+                      className="text-xs text-accent-600 hover:underline disabled:opacity-60"
                     >
-                      Xoá ảnh
+                      {uploadingId === s.id ? '…' : 'Thay'}
                     </button>
-                  )}
+                    {anh && (
+                      <button
+                        onClick={() => xoaAnh(s.id)}
+                        disabled={uploadingId === s.id}
+                        className="text-xs text-danger hover:underline disabled:opacity-60"
+                      >
+                        Xoá
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Nội dung */}
