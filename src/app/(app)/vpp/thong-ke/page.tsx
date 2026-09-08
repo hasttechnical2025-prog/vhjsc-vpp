@@ -14,7 +14,7 @@ export default async function ThongKePage() {
 
   return (
     <>
-      <h1 className="text-xl font-bold mb-1">Thống kê</h1>
+      <h1 className="text-xl font-bold mb-1">Báo cáo</h1>
       <p className="text-sm text-muted mb-5">Tổng hợp trên phiếu đã duyệt, theo khoảng ngày lập và phòng ban.</p>
       <ThongKe phongBan={phongBan} />
     </>

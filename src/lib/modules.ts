@@ -26,9 +26,9 @@ export const MODULES: AppModule[] = [
       { href: '/vpp', label: 'Tổng quan', roles: ['admin', 'hcns'] },
       { href: '/vpp/dang-ky', label: 'Lập phiếu' },
       { href: '/vpp/phieu', label: 'Danh sách phiếu' },
-      { href: '/vpp/thong-ke', label: 'Thống kê', roles: ['admin', 'hcns'] },
       { href: '/vpp/san-pham', label: 'Sửa mặt hàng', roles: ['admin'] },
       { href: '/vpp/cap-nhat-gia', label: 'Cập nhật giá', roles: ['admin'] },
+      { href: '/vpp/thong-ke', label: 'Báo cáo', roles: ['admin', 'hcns'] },
     ],
   },
   {
