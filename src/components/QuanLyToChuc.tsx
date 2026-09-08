@@ -117,21 +117,27 @@ export default function QuanLyToChuc({
     })
   }
 
-  // ---- Nhóm chi phí NCC ----
+  // ---- Nhóm chi phí NCC (state cục bộ để thao tác tức thì) ----
+  const [dsNhom, setDsNhom] = useState<NccNhomRow[]>(nccNhom)
   const [nhomTen, setNhomTen] = useState('')
   const [editNhomId, setEditNhomId] = useState<string | null>(null)
   const [eNhomTen, setENhomTen] = useState('')
+  function bao(m: string) { setErr(''); setMsg(m) } // báo thành công KHÔNG tải lại trang
 
   async function themNhom() {
     if (!nhomTen.trim()) return fail('Nhập tên nhóm chi phí')
-    const { ok, data } = await api('POST', '/api/admin/ncc-nhom', { ten: nhomTen })
+    const { ok, data } = await api('POST', '/api/admin/ncc-nhom', { ten: nhomTen.trim() })
     if (!ok) return fail(data.error || 'Lỗi')
-    setNhomTen(''); done('Đã thêm nhóm chi phí')
+    if (data.nhom) setDsNhom((d) => [...d, data.nhom])
+    setNhomTen(''); bao('Đã thêm nhóm chi phí')
   }
   async function luuNhom(id: string) {
-    const { ok, data } = await api('PATCH', '/api/admin/ncc-nhom', { id, ten: eNhomTen })
+    const ten = eNhomTen.trim()
+    if (!ten) return fail('Tên nhóm không được trống')
+    const { ok, data } = await api('PATCH', '/api/admin/ncc-nhom', { id, ten })
     if (!ok) return fail(data.error || 'Lỗi')
-    setEditNhomId(null); done('Đã đổi tên nhóm')
+    setDsNhom((d) => d.map((x) => (x.id === id ? { ...x, ten } : x)))
+    setEditNhomId(null); bao('Đã đổi tên nhóm')
   }
   function xoaNhom(n: NccNhomRow) {
     setXacNhan({
@@ -139,18 +145,19 @@ export default function QuanLyToChuc({
       onOk: () => chay('xoaNhom', async () => {
         const { ok, data } = await api('DELETE', '/api/admin/ncc-nhom', { id: n.id })
         if (!ok) return fail(data.error || 'Lỗi')
-        done('Đã xoá nhóm chi phí')
+        setDsNhom((d) => d.filter((x) => x.id !== n.id)); bao('Đã xoá nhóm chi phí')
       }),
     })
   }
   async function dichChuyen(idx: number, huong: -1 | 1) {
     const j = idx + huong
-    if (j < 0 || j >= nccNhom.length) return
-    const ids = nccNhom.map((n) => n.id)
-    ;[ids[idx], ids[j]] = [ids[j], ids[idx]]
-    const { ok, data } = await api('PATCH', '/api/admin/ncc-nhom', { ids })
-    if (!ok) return fail(data.error || 'Lỗi')
-    done('Đã đổi thứ tự')
+    if (j < 0 || j >= dsNhom.length) return
+    const moi = dsNhom.slice()
+    ;[moi[idx], moi[j]] = [moi[j], moi[idx]]
+    setDsNhom(moi) // đổi ngay trên giao diện
+    const { ok, data } = await api('PATCH', '/api/admin/ncc-nhom', { ids: moi.map((n) => n.id) })
+    if (!ok) { setDsNhom(dsNhom); return fail(data.error || 'Lỗi') } // lỗi thì trả về như cũ
+    bao('Đã đổi thứ tự')
   }
 
   const inp = 'border border-border rounded px-2 py-1 text-sm outline-none focus:border-accent'
@@ -305,7 +312,7 @@ export default function QuanLyToChuc({
         <div className="font-semibold mb-1">Nhóm chi phí (Nhà cung cấp)</div>
         <div className="text-xs text-muted mb-3">Danh mục dùng cho ô “Nhóm chi phí” khi tạo/sửa NCC. Thứ tự ở đây cũng là thứ tự sắp xếp danh sách NCC.</div>
         <div className="space-y-1.5">
-          {nccNhom.map((n, i) => (
+          {dsNhom.map((n, i) => (
             <div key={n.id} className="flex items-center gap-2 text-sm">
               <span className="w-6 text-muted text-xs text-right">{i + 1}.</span>
               {editNhomId === n.id ? (
@@ -318,14 +325,14 @@ export default function QuanLyToChuc({
                 <>
                   <span className="flex-1">{n.ten}</span>
                   <button onClick={() => chay('nhomLen' + i, () => dichChuyen(i, -1))} disabled={!!busy || i === 0} className="text-muted hover:text-accent-600 disabled:opacity-30" title="Lên">▲</button>
-                  <button onClick={() => chay('nhomXuong' + i, () => dichChuyen(i, 1))} disabled={!!busy || i === nccNhom.length - 1} className="text-muted hover:text-accent-600 disabled:opacity-30" title="Xuống">▼</button>
+                  <button onClick={() => chay('nhomXuong' + i, () => dichChuyen(i, 1))} disabled={!!busy || i === dsNhom.length - 1} className="text-muted hover:text-accent-600 disabled:opacity-30" title="Xuống">▼</button>
                   <button onClick={() => { setEditNhomId(n.id); setENhomTen(n.ten) }} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60 ml-1">Sửa</button>
                   <button onClick={() => xoaNhom(n)} disabled={!!busy} className="text-danger hover:underline disabled:opacity-60">Xoá</button>
                 </>
               )}
             </div>
           ))}
-          {nccNhom.length === 0 && <div className="text-sm text-muted">Chưa có nhóm nào. Thêm bên dưới.</div>}
+          {dsNhom.length === 0 && <div className="text-sm text-muted">Chưa có nhóm nào. Thêm bên dưới.</div>}
         </div>
         <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
           <input className={inp + ' flex-1'} placeholder="Tên nhóm chi phí mới" value={nhomTen} onChange={(e) => setNhomTen(e.target.value)} />

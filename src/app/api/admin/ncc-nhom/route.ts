@@ -12,9 +12,13 @@ export async function POST(req: Request) {
   const ten = String(b?.ten ?? '').trim()
   if (!ten) return NextResponse.json({ error: 'Nhập tên nhóm chi phí' }, { status: 400 })
   const { data: max } = await supabaseAdmin.from('vhjscvpp_ncc_nhom').select('thu_tu').order('thu_tu', { ascending: false }).limit(1).maybeSingle()
-  const { error } = await supabaseAdmin.from('vhjscvpp_ncc_nhom').insert({ ten, thu_tu: (max?.thu_tu ?? 0) + 1 })
+  const { data, error } = await supabaseAdmin
+    .from('vhjscvpp_ncc_nhom')
+    .insert({ ten, thu_tu: (max?.thu_tu ?? 0) + 1 })
+    .select('id, ten, thu_tu')
+    .single()
   if (error) return NextResponse.json({ error: /duplicate/i.test(error.message) ? 'Nhóm đã tồn tại' : 'Thêm thất bại' }, { status: 400 })
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true, nhom: data })
 }
 
 // Đổi tên 1 nhóm (kèm cập nhật các NCC đang dùng tên cũ) HOẶC sắp xếp lại (ids[]).
