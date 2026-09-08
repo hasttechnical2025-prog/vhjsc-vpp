@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { SanPham } from '@/lib/types'
 import { formatTien } from '@/lib/format'
+import ConfirmDialog from './ConfirmDialog'
 
 const boDau = (s: string) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase()
@@ -25,6 +26,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
   // Ghi đè ảnh mới sau khi upload (không cần refresh cả trang để thấy)
   const [anhMoi, setAnhMoi] = useState<Record<number, string>>({})
   const [anhXoa, setAnhXoa] = useState<Set<number>>(new Set())
+  const [xacNhanXoaAnh, setXacNhanXoaAnh] = useState<{ id: number; ten: string } | null>(null)
   const fileRefs = useRef<Record<number, HTMLInputElement | null>>({})
 
   const GIOI_HAN = 80
@@ -101,6 +103,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
       const d = await res.json().catch(() => ({}))
       if (!res.ok) { setErr(d.error || 'Đổi ảnh thất bại'); return }
       setAnhMoi((m) => ({ ...m, [id]: d.url }))
+      setAnhXoa((s) => { const n = new Set(s); n.delete(id); return n }) // gỡ cờ "đã xoá" để ảnh mới hiện
       setMsg('Đã đổi ảnh')
     } finally {
       setUploadingId(null)
@@ -211,7 +214,7 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
                     </button>
                     {anh && (
                       <button
-                        onClick={() => xoaAnh(s.id)}
+                        onClick={() => setXacNhanXoaAnh({ id: s.id, ten: s.ten })}
                         disabled={uploadingId === s.id}
                         className="text-xs text-danger hover:underline disabled:opacity-60"
                       >
@@ -266,6 +269,13 @@ export default function QuanLySanPham({ sanPham, nhomList }: { sanPham: SanPham[
 
         {loc.length === 0 && <div className="card px-3 py-10 text-center text-muted">Không tìm thấy mặt hàng khớp.</div>}
       </div>
+
+      <ConfirmDialog
+        open={!!xacNhanXoaAnh}
+        message={xacNhanXoaAnh ? `Xoá ảnh của “${xacNhanXoaAnh.ten}”? Mặt hàng sẽ hiển thị “Không ảnh”. Có thể thêm lại bằng “Thay”.` : ''}
+        onConfirm={() => { const id = xacNhanXoaAnh?.id; setXacNhanXoaAnh(null); if (id) xoaAnh(id) }}
+        onClose={() => setXacNhanXoaAnh(null)}
+      />
     </div>
   )
 }
