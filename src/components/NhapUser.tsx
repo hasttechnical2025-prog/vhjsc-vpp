@@ -3,19 +3,21 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-// Đọc file .xlsx (Họ tên · Email · Phòng ban), gửi lên import. Header linh hoạt.
-type Field = 'ho_ten' | 'email' | 'phong_ban'
+// Đọc file .xlsx (Họ tên · Email · Phòng ban · Chức vụ), gửi lên import. Header linh hoạt.
+type Field = 'ho_ten' | 'email' | 'phong_ban' | 'chuc_vu'
+type Rec = { ho_ten?: string; email?: string; phong_ban?: string; chuc_vu?: string }
 const boDau = (s: string) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().replace(/\s+/g, ' ').trim()
 const HMAP: Record<string, Field> = {}
 ;['ho ten', 'ten', 'ho va ten', 'ten nhan vien', 'ho ten nhan vien'].forEach((k) => (HMAP[k] = 'ho_ten'))
 ;['email', 'thu dien tu', 'e-mail', 'dia chi email', 'dia chi e-mail', 'email lam viec'].forEach((k) => (HMAP[k] = 'email'))
 ;['phong ban', 'phong', 'bo phan', 'don vi', 'phong ban quan ly', 'phong/ban', 'phong ban/bo phan'].forEach((k) => (HMAP[k] = 'phong_ban'))
+;['chuc vu', 'chuc danh', 'vi tri', 'chuc vu/vi tri'].forEach((k) => (HMAP[k] = 'chuc_vu'))
 
 async function bocFile(file: File) {
   const XLSX = await import('xlsx')
   const wb = XLSX.read(await file.arrayBuffer(), { type: 'array' })
-  const out: { ho_ten?: string; email?: string; phong_ban?: string }[] = []
+  const out: Rec[] = []
   for (const name of wb.SheetNames) {
     const aoa = XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[name], { header: 1, defval: '' })
     let h = -1
@@ -26,7 +28,7 @@ async function bocFile(file: File) {
     const col: (Field | undefined)[] = (aoa[h] as unknown[]).map((c) => HMAP[boDau(String(c))])
     for (let r = h + 1; r < aoa.length; r++) {
       const row = aoa[r] || []
-      const rec: { ho_ten?: string; email?: string; phong_ban?: string } = {}
+      const rec: Rec = {}
       for (let c = 0; c < col.length; c++) if (col[c]) rec[col[c]!] = String(row[c] ?? '').trim()
       if (rec.email) out.push(rec)
     }
@@ -54,6 +56,7 @@ export default function NhapUser() {
       if (!res.ok) { setErr(d.error || 'Import thất bại'); return }
       let m = `Đã thêm ${d.them} · cập nhật ${d.capNhat} · bỏ qua (super-admin) ${d.boQua} · lỗi ${d.loi}.`
       if (d.phongMoiTao?.length) m += ` ✚ Tạo mới ${d.phongMoiTao.length} phòng ban: ${d.phongMoiTao.join(', ')}.`
+      if (d.truongDaDien) m += ` 👤 Điền trưởng bộ phận: ${d.truongDaDien} phòng.`
       if (d.trongPhong) m += ` ⚠ ${d.trongPhong} người chưa có phòng ban (cần gán tay).`
       setKq(m); router.refresh()
     } catch { setErr('Lỗi đọc file hoặc kết nối') } finally { setBusy(false); e.target.value = '' }
