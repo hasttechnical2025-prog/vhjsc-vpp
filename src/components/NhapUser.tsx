@@ -9,8 +9,8 @@ const boDau = (s: string) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().replace(/\s+/g, ' ').trim()
 const HMAP: Record<string, Field> = {}
 ;['ho ten', 'ten', 'ho va ten', 'ten nhan vien', 'ho ten nhan vien'].forEach((k) => (HMAP[k] = 'ho_ten'))
-;['email', 'thu dien tu', 'e-mail'].forEach((k) => (HMAP[k] = 'email'))
-;['phong ban', 'phong', 'bo phan', 'don vi'].forEach((k) => (HMAP[k] = 'phong_ban'))
+;['email', 'thu dien tu', 'e-mail', 'dia chi email', 'dia chi e-mail', 'email lam viec'].forEach((k) => (HMAP[k] = 'email'))
+;['phong ban', 'phong', 'bo phan', 'don vi', 'phong ban quan ly', 'phong/ban', 'phong ban/bo phan'].forEach((k) => (HMAP[k] = 'phong_ban'))
 
 async function bocFile(file: File) {
   const XLSX = await import('xlsx')
@@ -53,7 +53,8 @@ export default function NhapUser() {
       const d = await res.json()
       if (!res.ok) { setErr(d.error || 'Import thất bại'); return }
       let m = `Đã thêm ${d.them} · cập nhật ${d.capNhat} · bỏ qua (super-admin) ${d.boQua} · lỗi ${d.loi}.`
-      if (d.khongKhopPhong?.length) m += ` ⚠ Phòng ban chưa khớp: ${d.khongKhopPhong.join(', ')} (user vẫn tạo, để trống phòng).`
+      if (d.phongMoiTao?.length) m += ` ✚ Tạo mới ${d.phongMoiTao.length} phòng ban: ${d.phongMoiTao.join(', ')}.`
+      if (d.trongPhong) m += ` ⚠ ${d.trongPhong} người chưa có phòng ban (cần gán tay).`
       setKq(m); router.refresh()
     } catch { setErr('Lỗi đọc file hoặc kết nối') } finally { setBusy(false); e.target.value = '' }
   }
