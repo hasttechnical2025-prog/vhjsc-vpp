@@ -10,6 +10,12 @@ type Role = 'admin' | 'hcns' | 'nguoi_de_nghi'
 const ROLE_LABEL: Record<Role, string> = { admin: 'Quản trị', hcns: 'HCNS', nguoi_de_nghi: 'Người đề nghị' }
 type ModuleVaiTro = { key: string; ten: string; vaiTro: { key: string; ten: string }[] }
 
+const boDauTxt = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase()
+// Thứ tự sắp xếp theo vai trò: Quản trị (gồm super-admin) → HCNS → Người đề nghị.
+const hangVaiTro = (u: NguoiDungRow) => (u.sieu_admin || u.role === 'admin' ? 0 : u.role === 'hcns' ? 1 : 2)
+const tenRieng = (ht: string) => ht.trim().split(/\s+/).pop() || ht
+
 async function api(method: string, url: string, body: unknown) {
   const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
   const data = await res.json().catch(() => ({}))
@@ -87,6 +93,28 @@ export default function QuanLyToChuc({
   const [eU, setEU] = useState<{ ho_ten: string; username: string; role: Role; phong_ban_id: string; password: string }>({
     ho_ten: '', username: '', role: 'nguoi_de_nghi', phong_ban_id: '', password: '',
   })
+
+  // ---- Lọc & sắp xếp danh sách người dùng ----
+  const [q, setQ] = useState('')
+  const [fRole, setFRole] = useState('')
+  const [fPb, setFPb] = useState('')
+  const dsUser = useMemo(() => {
+    const qn = boDauTxt(q.trim())
+    const loc = users.filter((u) => {
+      if (fRole) { const r = u.sieu_admin ? 'admin' : u.role; if (r !== fRole) return false }
+      if (fPb === '__none') { if (u.phong_ban_id) return false } else if (fPb) { if (u.phong_ban_id !== fPb) return false }
+      if (qn) {
+        const pb = u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '' : ''
+        if (!boDauTxt(`${u.ho_ten} ${u.username} ${u.email || ''} ${pb}`).includes(qn)) return false
+      }
+      return true
+    })
+    return loc.sort((a, b) =>
+      hangVaiTro(a) - hangVaiTro(b) ||
+      tenRieng(a.ho_ten).localeCompare(tenRieng(b.ho_ten), 'vi') ||
+      a.ho_ten.localeCompare(b.ho_ten, 'vi'),
+    )
+  }, [users, q, fRole, fPb, pbMap])
 
   async function themUser() {
     if (!nu.ho_ten.trim() || !nu.username.trim() || !nu.password) return fail('Nhập họ tên, tài khoản, mật khẩu')
@@ -190,7 +218,7 @@ export default function QuanLyToChuc({
       {/* NGƯỜI DÙNG */}
       <div className="card p-4">
         <div className="flex items-start justify-between mb-3 gap-2">
-          <span className="font-semibold">Người dùng ({users.length})</span>
+          <span className="font-semibold">Người dùng ({dsUser.length !== users.length ? `${dsUser.length}/${users.length}` : users.length})</span>
           <div className="flex items-start gap-2">
             <NhapUser />
             <button onClick={() => { setShowAdd(!showAdd); setNu(empty) }} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium">
@@ -217,6 +245,24 @@ export default function QuanLyToChuc({
           </div>
         )}
 
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <input className={inp + ' flex-1 min-w-[180px]'} placeholder="Tìm tên, tài khoản, email, phòng ban…" value={q} onChange={(e) => setQ(e.target.value)} />
+          <select className={inp} value={fRole} onChange={(e) => setFRole(e.target.value)}>
+            <option value="">Tất cả vai trò</option>
+            <option value="admin">Quản trị</option>
+            <option value="hcns">HCNS</option>
+            <option value="nguoi_de_nghi">Người đề nghị</option>
+          </select>
+          <select className={inp} value={fPb} onChange={(e) => setFPb(e.target.value)}>
+            <option value="">Tất cả phòng ban</option>
+            {phongBan.map((p) => <option key={p.id} value={p.id}>{p.ten}</option>)}
+            <option value="__none">— Chưa có phòng —</option>
+          </select>
+          {(q || fRole || fPb) && (
+            <button onClick={() => { setQ(''); setFRole(''); setFPb('') }} className="text-sm text-muted hover:text-accent-600">Xoá lọc</button>
+          )}
+        </div>
+
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-muted text-left">
@@ -226,7 +272,7 @@ export default function QuanLyToChuc({
               </tr>
             </thead>
             <tbody>
-              {users.map((u) => (
+              {dsUser.map((u) => (
                 editUId === u.id ? (
                   <tr key={u.id} className="border-t border-border bg-accent-50/40">
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.ho_ten} onChange={(e) => setEU({ ...eU, ho_ten: e.target.value })} /></td>
@@ -263,7 +309,7 @@ export default function QuanLyToChuc({
                       <div>{u.username}</div>
                       {u.email && <div className="text-[11px] text-muted">{u.email}</div>}
                     </td>
-                    <td className="py-1.5">{ROLE_LABEL[u.role]}</td>
+                    <td className="py-1.5">{u.sieu_admin ? 'Quản trị' : ROLE_LABEL[u.role]}</td>
                     <td className="py-1.5">{u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '—' : '—'}</td>
                     <td className="py-1.5">{u.is_active ? <span className="text-ok">Hoạt động</span> : <span className="text-muted">Khoá</span>}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
@@ -312,6 +358,9 @@ export default function QuanLyToChuc({
                   </Fragment>
                 )
               ))}
+              {dsUser.length === 0 && (
+                <tr><td colSpan={6} className="py-4 text-center text-muted">Không có người dùng khớp bộ lọc.</td></tr>
+              )}
             </tbody>
           </table>
         </div>
