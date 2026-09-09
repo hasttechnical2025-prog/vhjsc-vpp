@@ -1,28 +1,28 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap, type Phien } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { phatTinPhieuThayDoi } from '@/lib/realtime'
 
-// Quyền trên 1 phiếu: người lập phiếu, hoặc admin/hcns.
-async function layPhieuNeuDuocPhep(id: string, session: { id: string; role: string }) {
+// Quyền trên 1 phiếu: người lập phiếu, hoặc người duyệt/quản lý VPP.
+async function layPhieuNeuDuocPhep(id: string, session: Phien) {
   const { data } = await supabaseAdmin
     .from('vhjscvpp_phieu')
     .select('id, nguoi_de_nghi_id, trang_thai')
     .eq('id', id)
     .maybeSingle()
   if (!data) return { phieu: null, allowed: false }
-  const allowed = session.role === 'admin' || session.role === 'hcns' || data.nguoi_de_nghi_id === session.id
+  const allowed = cap(session, 'vpp.duyet') || data.nguoi_de_nghi_id === session.id
   return { phieu: data, allowed }
 }
 
-// Phiếu ĐÃ DUYỆT thì khoá sửa/xoá với người đề nghị (admin/HCNS vẫn được — coi như can thiệp).
-function biKhoaDaDuyet(trangThai: string, role: string): boolean {
-  return trangThai === 'da_duyet' && role !== 'admin' && role !== 'hcns'
+// Phiếu ĐÃ DUYỆT thì khoá sửa/xoá với người đề nghị (người duyệt/quản lý vẫn được — can thiệp).
+function biKhoaDaDuyet(trangThai: string, laQuanLy: boolean): boolean {
+  return trangThai === 'da_duyet' && !laQuanLy
 }
 
 // Lấy chi tiết phiếu + các dòng (cho accordion xem nhanh)
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole()
+  const session = await layPhien()
   if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
   const { id } = await params
   const { phieu, allowed } = await layPhieuNeuDuocPhep(id, session)
@@ -40,14 +40,14 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
 // Sửa phiếu: cập nhật thông tin chung + thay toàn bộ dòng
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole()
+  const session = await layPhien()
   if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
   const { id } = await params
 
   const { phieu, allowed } = await layPhieuNeuDuocPhep(id, session)
   if (!phieu) return NextResponse.json({ error: 'Không tìm thấy phiếu' }, { status: 404 })
   if (!allowed) return NextResponse.json({ error: 'Không có quyền sửa phiếu này' }, { status: 403 })
-  if (biKhoaDaDuyet(phieu.trang_thai, session.role))
+  if (biKhoaDaDuyet(phieu.trang_thai, cap(session, 'vpp.duyet')))
     return NextResponse.json({ error: 'Phiếu đã duyệt, không thể sửa' }, { status: 409 })
 
   const body = await req.json().catch(() => null)
@@ -101,14 +101,14 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
 // Xoá phiếu (cascade xoá dòng)
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole()
+  const session = await layPhien()
   if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
   const { id } = await params
 
   const { phieu, allowed } = await layPhieuNeuDuocPhep(id, session)
   if (!phieu) return NextResponse.json({ error: 'Không tìm thấy phiếu' }, { status: 404 })
   if (!allowed) return NextResponse.json({ error: 'Không có quyền xoá phiếu này' }, { status: 403 })
-  if (biKhoaDaDuyet(phieu.trang_thai, session.role))
+  if (biKhoaDaDuyet(phieu.trang_thai, cap(session, 'vpp.duyet')))
     return NextResponse.json({ error: 'Phiếu đã duyệt, không thể xoá' }, { status: 409 })
 
   const { error } = await supabaseAdmin.from('vhjscvpp_phieu').delete().eq('id', id)

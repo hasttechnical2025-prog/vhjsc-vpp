@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 // Quản lý hồ sơ nhà cung cấp — chỉ admin & HCNS.
@@ -20,8 +20,8 @@ function locTruong(b: Record<string, unknown>): Record<string, unknown> {
 }
 
 export async function POST(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   const ten = String(b?.ten ?? '').trim()
   if (!ten) return NextResponse.json({ error: 'Nhập tên nhà cung cấp' }, { status: 400 })
@@ -34,8 +34,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
   const rec = locTruong(b)
@@ -49,8 +49,8 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
   const { error } = await supabaseAdmin.from('vhjscvpp_ncc').delete().eq('id', b.id)

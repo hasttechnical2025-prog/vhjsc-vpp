@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { guiTelegram, escHtml } from '@/lib/telegram'
 import { phatTinPhieuThayDoi } from '@/lib/realtime'
 import { formatThang, formatTien } from '@/lib/format'
 
 export async function POST(req: Request) {
-  const session = await requireRole()
+  const session = await layPhien()
   if (!session) return NextResponse.json({ error: 'Chưa đăng nhập' }, { status: 401 })
+  if (!cap(session, 'vpp.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const body = await req.json().catch(() => null)
   if (!body || !Array.isArray(body.dong) || body.dong.length === 0) {

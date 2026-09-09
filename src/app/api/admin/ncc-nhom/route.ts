@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 // Quản lý danh mục Nhóm chi phí NCC (chỉ admin). Có thứ tự để sắp xếp danh sách NCC.
 export const runtime = 'nodejs'
 
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   const ten = String(b?.ten ?? '').trim()
   if (!ten) return NextResponse.json({ error: 'Nhập tên nhóm chi phí' }, { status: 400 })
@@ -23,8 +23,8 @@ export async function POST(req: Request) {
 
 // Đổi tên 1 nhóm (kèm cập nhật các NCC đang dùng tên cũ) HOẶC sắp xếp lại (ids[]).
 export async function PATCH(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
 
   if (Array.isArray(b?.ids)) {
@@ -48,8 +48,8 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   const id = String(b?.id ?? '')
   if (!id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })

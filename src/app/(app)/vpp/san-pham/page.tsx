@@ -1,14 +1,14 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import type { SanPham } from '@/lib/types'
 import QuanLySanPham from '@/components/QuanLySanPham'
 
 export default async function AdminSanPhamPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin') redirect('/')
+  if (!cap(session, 'vpp.quan_ly')) redirect('/')
 
   const sanPham = await selectAll<SanPham>((from, to) =>
     supabaseAdmin

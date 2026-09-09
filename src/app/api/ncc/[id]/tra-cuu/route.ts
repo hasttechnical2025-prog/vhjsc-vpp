@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { traCuuMst } from '@/lib/mst'
 
@@ -8,8 +8,8 @@ export const runtime = 'nodejs'
 // Tra cứu tình trạng MST của 1 NCC, lưu kết quả + thời điểm. Trả kèm tên/địa chỉ
 // chuẩn để giao diện đề nghị điền (không tự ghi đè).
 export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const { id } = await params
 
   const { data: ncc } = await supabaseAdmin.from('vhjscvpp_ncc').select('id, ma_so_thue').eq('id', id).maybeSingle()

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { xoaCacheSanPham } from '@/lib/catalog'
 
@@ -7,8 +7,8 @@ export const runtime = 'nodejs'
 
 // Đổi tên 1 nhóm hàng (category) cho TẤT CẢ sản phẩm trong nhóm. Chỉ admin.
 export async function PATCH(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const b = await req.json().catch(() => null)
   const cu = String(b?.cu ?? '').trim()

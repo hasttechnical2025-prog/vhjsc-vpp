@@ -2,8 +2,8 @@ import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import { MODULES } from '@/lib/modules'
 
 // Quyền per-cá-nhân × per-module. Super-admin (sieu_admin) có tất cả.
-// LƯU Ý: giai đoạn này chỉ để nhập/cấp quyền + hiển thị; việc CHẶN theo quyền
-// sẽ chuyển dần ở bước sau (hiện app vẫn gate theo cột `role` cũ).
+// Việc CHẶN quyền do src/lib/guard.ts thực thi (layPhien + cap); các hàm ở đây
+// dùng cho màn hình Quản trị (đọc/hiển thị grant của user).
 
 export type QuyenUser = Record<string, string> // module -> vai_tro
 

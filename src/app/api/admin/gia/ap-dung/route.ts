@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { xoaCacheSanPham } from '@/lib/catalog'
 
@@ -17,8 +17,8 @@ type ThemMoi = {
 }
 
 export async function POST(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const body = await req.json().catch(() => null)
   const capNhat: CapNhat[] = Array.isArray(body?.capNhatGia) ? body.capNhatGia : []

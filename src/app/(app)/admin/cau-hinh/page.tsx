@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { getCauHinh } from '@/lib/config'
 import CauHinhForm from '@/components/CauHinhForm'
 
 export default async function CauHinhPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin') redirect('/')
+  if (!cap(session, 'quantri')) redirect('/')
 
   const cauHinh = await getCauHinh()
 

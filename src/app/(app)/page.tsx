@@ -1,16 +1,15 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
-import { moduleChoVaiTro } from '@/lib/modules'
+import { layPhien, moduleChoQuyen } from '@/lib/guard'
 
 // Trang chủ = HUB dịch vụ: các thẻ module mà user được phép dùng.
 export default async function HubPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
 
-  // Mọi vai trò đều vào Home (hub) — kể cả khi hiện chỉ có 1 module — để nhất quán
+  // Mọi user đều vào Home (hub) — kể cả khi hiện chỉ có 1 module — để nhất quán
   // và sẵn sàng cho các module bổ sung sau này.
-  const modules = moduleChoVaiTro(session.role)
+  const modules = moduleChoQuyen(session)
 
   return (
     <>

@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import QuanLyToChuc from '@/components/QuanLyToChuc'
 import { getQuyenTatCa, moduleCoVaiTro } from '@/lib/quyen'
 import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 
 export default async function NguoiDungPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin') redirect('/')
+  if (!cap(session, 'quantri')) redirect('/')
 
   const phongBan = await selectAll<PhongBanRow>((from, to) =>
     supabaseAdmin.from('vhjscvpp_phong_ban').select('id, ten, ma, truong_bo_phan').order('ten').range(from, to),

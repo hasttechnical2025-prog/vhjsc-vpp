@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { NCC_FIELDS } from '@/app/api/ncc/doi-chieu/route'
 
@@ -17,8 +17,8 @@ const chuan = (r: Record<string, unknown>) => {
 
 // Thêm NCC mới + BỔ SUNG (chỉ điền ô đang trống) cho NCC trùng đã chọn.
 export async function POST(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const body = await req.json().catch(() => null)
   const them: Record<string, unknown>[] = Array.isArray(body?.them) ? body.them : []
   const capNhat: { id: string; row: Record<string, unknown> }[] = Array.isArray(body?.capNhat) ? body.capNhat : []

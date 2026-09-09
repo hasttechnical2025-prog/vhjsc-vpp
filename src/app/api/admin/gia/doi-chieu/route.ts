@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import { chuanHoaTen, khoaNhom } from '@/lib/match'
 
@@ -18,8 +18,8 @@ type FileRow = {
 type Sp = { id: number; nhom_hang: string; ten: string; don_gia: number | null; dang_ban: boolean }
 
 export async function POST(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const body = await req.json().catch(() => null)
   const rows: FileRow[] = Array.isArray(body?.rows) ? body.rows : []

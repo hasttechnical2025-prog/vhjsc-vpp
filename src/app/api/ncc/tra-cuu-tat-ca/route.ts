@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import { traCuuMst, phanLoaiMst } from '@/lib/mst'
 
@@ -10,8 +10,8 @@ const nghi = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 // Kiểm tra tình trạng MST cho MỌI NCC đang dùng có MST (tuần tự, có nghỉ nhẹ).
 export async function POST() {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const list = await selectAll<{ id: string; ma_so_thue: string | null }>((from, to) =>
     supabaseAdmin.from('vhjscvpp_ncc').select('id, ma_so_thue').not('ma_so_thue', 'is', null).range(from, to),

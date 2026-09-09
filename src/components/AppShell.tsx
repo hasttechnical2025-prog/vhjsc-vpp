@@ -2,26 +2,25 @@ import Link from 'next/link'
 import LogoutButton from './LogoutButton'
 import ModuleNav from './ModuleNav'
 import { getCauHinh } from '@/lib/config'
-import type { Role } from '@/lib/session'
-import { moduleChoVaiTro, navChoVaiTro } from '@/lib/modules'
+import { moduleChoQuyen, navChoQuyen, type Phien } from '@/lib/guard'
 
 export default async function AppShell({
-  user,
+  phien,
   children,
 }: {
-  user: { ho_ten: string; role: Role; phong_ban_ten?: string | null }
+  phien: Phien
   children: React.ReactNode
 }) {
   const cauHinh = await getCauHinh()
-  const modules = moduleChoVaiTro(user.role)
+  const modules = moduleChoQuyen(phien)
   const navModules = modules.map((m) => ({
     key: m.key,
     ten: m.ten,
     home: m.home,
     prefixes: m.prefixes,
-    nav: navChoVaiTro(m, user.role).map((n) => ({ href: n.href, label: n.label })),
+    nav: navChoQuyen(m, phien).map((n) => ({ href: n.href, label: n.label })),
   }))
-  const tenHienThi = user.phong_ban_ten || user.ho_ten
+  const tenHienThi = phien.phong_ban_ten || phien.ho_ten
 
   return (
     <div className="min-h-screen">

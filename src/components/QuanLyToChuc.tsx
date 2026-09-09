@@ -313,7 +313,9 @@ export default function QuanLyToChuc({
                     <td className="py-1.5">{u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '—' : '—'}</td>
                     <td className="py-1.5">{u.is_active ? <span className="text-ok">Hoạt động</span> : <span className="text-muted">Khoá</span>}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
-                      <button onClick={() => (quyenUId === u.id ? setQuyenUId(null) : moQuyen(u))} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Quyền</button>
+                      {!u.bao_ve && (
+                        <button onClick={() => (quyenUId === u.id ? setQuyenUId(null) : moQuyen(u))} disabled={!!busy} className="text-accent-600 hover:underline disabled:opacity-60">Quyền</button>
+                      )}
                       {u.bao_ve ? (
                         u.id === selfId ? (
                           <button onClick={() => batDauSuaU(u)} className="text-accent-600 hover:underline ml-3">Sửa</button>

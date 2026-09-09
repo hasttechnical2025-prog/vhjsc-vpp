@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { xoaCacheCauHinh } from '@/lib/config'
 
@@ -9,8 +9,8 @@ const BUCKET = 'vhjscvpp-images'
 
 // Upload logo công ty -> Supabase Storage -> lưu URL vào cấu hình. Chỉ admin.
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const form = await req.formData().catch(() => null)
   const file = form?.get('file')
@@ -40,8 +40,8 @@ export async function POST(req: Request) {
 
 // Xoá logo (về mặc định không logo)
 export async function DELETE() {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   await supabaseAdmin.from('vhjscvpp_cauhinh').delete().eq('key', 'logo_url')
   xoaCacheCauHinh()
   return NextResponse.json({ ok: true })

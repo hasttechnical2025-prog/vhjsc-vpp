@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { getNccNhom } from '@/lib/ncc-nhom'
 import QuanLyDanhMuc from '@/components/QuanLyDanhMuc'
 
 export default async function DanhMucPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin') redirect('/')
+  if (!cap(session, 'quantri')) redirect('/')
 
   const nccNhom = await getNccNhom()
 

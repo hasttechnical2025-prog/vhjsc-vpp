@@ -1,8 +1,8 @@
-import type { Role } from '@/lib/session'
-
 // Sổ đăng ký MODULE dịch vụ. Thêm module mới = thêm 1 mục ở đây + code route của nó,
 // KHÔNG phải sửa lại khung app (AppShell/hub tự đọc danh sách này).
-export type ModuleNavItem = { href: string; label: string; roles?: Role[] }
+// Gate quyền theo "capability" (xem src/lib/guard.ts): `capVao` = khả năng cần để
+// vào module; `can` trên mỗi mục nav = khả năng cần để thấy mục đó.
+export type ModuleNavItem = { href: string; label: string; can?: string }
 export type ModuleVaiTro = { key: string; ten: string } // vai trò per-module (cho phân quyền cá nhân)
 export type AppModule = {
   key: string
@@ -11,7 +11,7 @@ export type AppModule = {
   mo_ta: string
   home: string // đường vào module
   prefixes: string[] // các path prefix thuộc module (để nhận diện module đang mở)
-  roles?: Role[] // vai trò thấy module trên hub (bỏ trống = mọi vai trò)
+  capVao?: string // khả năng cần để thấy/vào module (bỏ trống = mọi user đăng nhập)
   nav: ModuleNavItem[] // menu con của module
   vaiTro?: ModuleVaiTro[] // bộ vai trò để cấp quyền cá nhân (super-admin có tất cả)
 }
@@ -24,13 +24,14 @@ export const MODULES: AppModule[] = [
     mo_ta: 'Đề xuất mua văn phòng phẩm, thiết bị theo mẫu BM01/QLTS/04-HCNS.',
     home: '/vpp',
     prefixes: ['/vpp'],
+    capVao: 'vpp.vao',
     nav: [
-      { href: '/vpp', label: 'Tổng quan', roles: ['admin', 'hcns'] },
+      { href: '/vpp', label: 'Tổng quan', can: 'vpp.duyet' },
       { href: '/vpp/dang-ky', label: 'Lập phiếu' },
       { href: '/vpp/phieu', label: 'Danh sách phiếu' },
-      { href: '/vpp/san-pham', label: 'Sửa mặt hàng', roles: ['admin'] },
-      { href: '/vpp/cap-nhat-gia', label: 'Cập nhật giá', roles: ['admin'] },
-      { href: '/vpp/thong-ke', label: 'Báo cáo', roles: ['admin', 'hcns'] },
+      { href: '/vpp/san-pham', label: 'Sửa mặt hàng', can: 'vpp.quan_ly' },
+      { href: '/vpp/cap-nhat-gia', label: 'Cập nhật giá', can: 'vpp.quan_ly' },
+      { href: '/vpp/thong-ke', label: 'Báo cáo', can: 'vpp.duyet' },
     ],
     vaiTro: [
       { key: 'nguoi_de_nghi', ten: 'Người đề nghị' },
@@ -45,7 +46,7 @@ export const MODULES: AppModule[] = [
     mo_ta: 'Hồ sơ nhà cung cấp tập trung + đánh giá theo kỳ, nhắc hạn hợp đồng.',
     home: '/ncc',
     prefixes: ['/ncc'],
-    roles: ['admin', 'hcns'],
+    capVao: 'ncc.vao',
     nav: [{ href: '/ncc', label: 'Danh sách NCC' }],
     vaiTro: [
       { key: 'xem', ten: 'Xem' },
@@ -59,24 +60,15 @@ export const MODULES: AppModule[] = [
     mo_ta: 'Người dùng, phòng ban, danh mục và cấu hình thương hiệu.',
     home: '/admin/nguoi-dung',
     prefixes: ['/admin'],
-    roles: ['admin'],
+    capVao: 'quantri',
     nav: [
       { href: '/admin/nguoi-dung', label: 'Người dùng & Phòng ban' },
       { href: '/admin/danh-muc', label: 'Danh mục' },
       { href: '/admin/cau-hinh', label: 'Cấu hình hiển thị' },
     ],
+    vaiTro: [{ key: 'quan_tri', ten: 'Quản trị' }],
   },
 ]
-
-// Module mà user (theo vai trò) được thấy trên hub.
-export function moduleChoVaiTro(role: Role): AppModule[] {
-  return MODULES.filter((m) => !m.roles || m.roles.includes(role))
-}
-
-// Lọc menu con theo vai trò.
-export function navChoVaiTro(m: AppModule, role: Role): ModuleNavItem[] {
-  return m.nav.filter((n) => !n.roles || n.roles.includes(role))
-}
 
 // Module đang mở theo pathname: chọn prefix KHỚP DÀI NHẤT (để /admin/san-pham
 // thuộc VPP chứ không nhầm sang /admin của Quản trị).

@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { xoaCacheCauHinh } from '@/lib/config'
 
 // Lưu chữ thương hiệu (thay cho "VHJSC · VPP"). Chỉ admin.
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const body = await req.json().catch(() => null)
   const brand = (body?.brand_text ?? '').toString().trim()

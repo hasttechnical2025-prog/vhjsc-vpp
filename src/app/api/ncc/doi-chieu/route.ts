@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import type { NccRow } from '@/lib/types'
 
@@ -22,8 +22,8 @@ const nameKey = (s: unknown) =>
 const rong = (v: unknown) => v == null || String(v).trim() === ''
 
 export async function POST(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const body = await req.json().catch(() => null)
   const rows: FileRow[] = Array.isArray(body?.rows) ? body.rows : []
   if (rows.length === 0) return NextResponse.json({ error: 'File không có dòng NCC nào' }, { status: 400 })

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { xoaCacheSanPham } from '@/lib/catalog'
 
@@ -37,8 +37,8 @@ async function xoaFileNeuMoCoi(oldUrl: string | null, exceptId: number): Promise
 // Thay ảnh 1 mặt hàng (chỉ admin): upload ảnh mới, cập nhật anh_url, XOÁ ảnh cũ
 // khỏi kho để không tích luỹ file thừa.
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
 
   const form = await req.formData().catch(() => null)
   const file = form?.get('file')
@@ -73,8 +73,8 @@ export async function POST(req: Request) {
 // Xoá ảnh 1 mặt hàng (chỉ admin) -> anh_url = null (hiển thị "Không ảnh") + xoá
 // file khỏi kho để không tích luỹ.
 export async function DELETE(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   const id = Number(b?.id)
   if (!id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })

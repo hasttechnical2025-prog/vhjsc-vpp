@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
@@ -7,8 +7,8 @@ const BUCKET = 'vhjscvpp-images'
 
 // Đính kèm tệp hợp đồng/hồ sơ NCC (PDF/ảnh) — chỉ admin & HCNS.
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const { id } = await params
 
   const form = await req.formData().catch(() => null)
@@ -36,8 +36,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   await params
   const b = await req.json().catch(() => null)
   if (!b?.tep_id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })

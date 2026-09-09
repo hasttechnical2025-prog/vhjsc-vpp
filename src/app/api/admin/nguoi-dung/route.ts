@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { hashPassword } from '@/lib/password'
 
@@ -18,8 +18,8 @@ async function soAdminConHoatDong(excludeId?: string): Promise<number> {
 
 // Tạo người dùng
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   const ho_ten = (b?.ho_ten ?? '').toString().trim()
   const username = (b?.username ?? '').toString().trim().toLowerCase()
@@ -45,8 +45,8 @@ export async function POST(req: Request) {
 
 // Sửa người dùng (họ tên, vai trò, phòng ban, trạng thái, đặt lại mật khẩu)
 export async function PATCH(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
 
@@ -107,8 +107,8 @@ export async function PATCH(req: Request) {
 
 // Xoá người dùng
 export async function DELETE(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const b = await req.json().catch(() => null)
   if (!b?.id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })
 

@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { tinhDiemTong, xepLoai, TIEU_CHI } from '@/lib/ncc'
 
 // Thêm 1 bản đánh giá NCC theo kỳ — chỉ admin & HCNS.
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.vao')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const { id } = await params
   const b = await req.json().catch(() => null)
   const ky = String(b?.ky ?? '').trim()
@@ -36,8 +36,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'ncc.quan_ly')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   await params
   const b = await req.json().catch(() => null)
   if (!b?.danh_gia_id) return NextResponse.json({ error: 'Thiếu id' }, { status: 400 })

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { guiTelegram, escHtml } from '@/lib/telegram'
 import { formatDate } from '@/lib/format'
@@ -40,8 +40,8 @@ export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET
   const authOk = secret ? req.headers.get('authorization') === `Bearer ${secret}` : false
   if (!laCron && !authOk) {
-    const session = await getSession()
-    if (!session || (session.role !== 'admin' && session.role !== 'hcns'))
+    const session = await layPhien()
+    if (!session || !cap(session, 'ncc.vao'))
       return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   }
   const so = await chay()

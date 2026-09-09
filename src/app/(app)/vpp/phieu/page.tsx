@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import PhieuList from '@/components/PhieuList'
 import RealtimePhieu from '@/components/RealtimePhieu'
@@ -23,10 +23,10 @@ type Row = {
 }
 
 export default async function PhieuListPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
 
-  const canAll = session.role === 'admin' || session.role === 'hcns'
+  const canAll = cap(session, 'vpp.duyet')
   const phieu = await selectAll<Row>((from, to) => {
     let q = supabaseAdmin
       .from('vhjscvpp_phieu')

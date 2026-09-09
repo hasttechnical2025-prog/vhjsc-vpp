@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
@@ -54,8 +54,8 @@ type Row = { ho_ten?: string; email?: string; phong_ban?: string; chuc_vu?: stri
 // sinh mã viết tắt + dò TRƯỞNG bộ phận theo chức vụ. KHÔNG đụng super-admin/bảo vệ,
 // KHÔNG ghi đè trưởng bộ phận đã có.
 export async function POST(req: Request) {
-  const session = await requireRole('admin')
-  if (!session) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'quantri')) return NextResponse.json({ error: 'Không có quyền' }, { status: 403 })
   const body = await req.json().catch(() => null)
   const rows: Row[] = Array.isArray(body?.rows) ? body.rows : []
   if (rows.length === 0) return NextResponse.json({ error: 'File không có dòng nào' }, { status: 400 })

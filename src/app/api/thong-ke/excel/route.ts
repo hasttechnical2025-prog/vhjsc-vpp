@@ -1,4 +1,4 @@
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { thongKe, bienNgay } from '@/lib/thongke'
 import * as XLSX from 'xlsx'
 
@@ -6,8 +6,8 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return new Response('Không có quyền', { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.duyet')) return new Response('Không có quyền', { status: 403 })
 
   const url = new URL(req.url)
   const tu = url.searchParams.get('tu')

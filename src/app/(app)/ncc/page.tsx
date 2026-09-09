@@ -1,14 +1,14 @@
 import { redirect } from 'next/navigation'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin, selectAll } from '@/lib/supabase-admin'
 import type { NccRow } from '@/lib/types'
 import { getNccNhom } from '@/lib/ncc-nhom'
 import NccList, { type DanhGiaMoiNhat } from '@/components/NccList'
 
 export default async function NccPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/')
+  if (!cap(session, 'ncc.vao')) redirect('/')
 
   const ncc = await selectAll<NccRow>((from, to) =>
     supabaseAdmin.from('vhjscvpp_ncc').select('*').order('ten').range(from, to),

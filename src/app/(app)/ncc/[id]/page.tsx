@@ -1,15 +1,15 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { NccRow, NccDanhGiaRow, NccTepRow } from '@/lib/types'
 import { getNccNhom } from '@/lib/ncc-nhom'
 import NccDetail from '@/components/NccDetail'
 
 export default async function NccDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/')
+  if (!cap(session, 'ncc.vao')) redirect('/')
   const { id } = await params
 
   const { data: ncc } = await supabaseAdmin.from('vhjscvpp_ncc').select('*').eq('id', id).maybeSingle()

@@ -1,6 +1,5 @@
 import crypto from 'crypto'
 import { cookies } from 'next/headers'
-import { supabaseAdmin } from '@/lib/supabase-admin'
 
 // Phiên đăng nhập dùng cookie httpOnly có ký HMAC-SHA256.
 // Token: base64url(payload).signature — client không tự sửa được vai trò.
@@ -73,18 +72,4 @@ export async function getSession(): Promise<SessionPayload | null> {
   const token = store.get(COOKIE_NAME)?.value
   if (!token) return null
   return verifySessionToken(token)
-}
-
-// Đọc lại DB mỗi lần: tắt is_active là chặn được ngay cả khi gọi API trực tiếp.
-export async function requireRole(...roles: Role[]): Promise<SessionPayload | null> {
-  const session = await getSession()
-  if (!session) return null
-  if (roles.length > 0 && !roles.includes(session.role)) return null
-  const { data } = await supabaseAdmin
-    .from('vhjscvpp_nguoi_dung')
-    .select('role, is_active')
-    .eq('id', session.id)
-    .single()
-  if (!data || data.role !== session.role || data.is_active === false) return null
-  return session
 }

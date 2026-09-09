@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { requireRole } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { phatTinPhieuThayDoi } from '@/lib/realtime'
 
 // Duyệt / Từ chối phiếu — chỉ admin & HCNS.
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const session = await requireRole('admin', 'hcns')
-  if (!session) return NextResponse.json({ error: 'Không có quyền duyệt' }, { status: 403 })
+  const session = await layPhien()
+  if (!session || !cap(session, 'vpp.duyet')) return NextResponse.json({ error: 'Không có quyền duyệt' }, { status: 403 })
   const { id } = await params
 
   const body = await req.json().catch(() => null)

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { formatThang, thangHienTai } from '@/lib/format'
 
@@ -13,9 +13,9 @@ async function dem(table: string, filter?: (q: any) => any) {
 }
 
 export default async function TongQuanVppPage() {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
-  if (session.role !== 'admin' && session.role !== 'hcns') redirect('/vpp/phieu')
+  if (!cap(session, 'vpp.duyet')) redirect('/vpp/phieu')
 
   const thang = thangHienTai()
   const [soSanPham, soPhieuThang, soChoDuyet] = await Promise.all([

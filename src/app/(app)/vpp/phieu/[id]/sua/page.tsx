@@ -1,5 +1,5 @@
 import { redirect, notFound } from 'next/navigation'
-import { getSession } from '@/lib/session'
+import { layPhien, cap } from '@/lib/guard'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import LapPhieu, { type PhieuBanDau } from '@/components/LapPhieu'
 import { getSanPhamDangBan } from '@/lib/catalog'
@@ -16,13 +16,13 @@ type DongDb = {
 }
 
 export default async function SuaPhieuPage({ params }: { params: Promise<{ id: string }> }) {
-  const session = await getSession()
+  const session = await layPhien()
   if (!session) redirect('/login')
   const { id } = await params
 
   const { data: phieu } = await supabaseAdmin.from('vhjscvpp_phieu').select('*').eq('id', id).maybeSingle()
   if (!phieu) notFound()
-  const laQuanLy = session.role === 'admin' || session.role === 'hcns'
+  const laQuanLy = cap(session, 'vpp.duyet')
   const allowed = laQuanLy || phieu.nguoi_de_nghi_id === session.id
   if (!allowed) redirect('/vpp/phieu')
   // Phiếu đã duyệt: người đề nghị không được sửa
