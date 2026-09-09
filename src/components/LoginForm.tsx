@@ -66,7 +66,7 @@ export default function LoginForm({ logoUrl, brandText }: { logoUrl: string | nu
         </button>
 
         <button onClick={() => setMoDuPhong((v) => !v)} className="w-full text-xs text-muted hover:text-accent-600 mt-3">
-          {moDuPhong ? 'Ẩn đăng nhập bằng tài khoản' : 'Đăng nhập bằng tài khoản (dự phòng)'}
+          {moDuPhong ? 'Ẩn đăng nhập bằng tài khoản' : 'Đăng nhập bằng tài khoản'}
         </button>
 
         {moDuPhong && (
