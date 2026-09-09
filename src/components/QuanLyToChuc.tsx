@@ -6,15 +6,19 @@ import type { PhongBanRow, NguoiDungRow } from '@/lib/types'
 import ConfirmDialog from './ConfirmDialog'
 import NhapUser from './NhapUser'
 
-type Role = 'admin' | 'hcns' | 'nguoi_de_nghi'
-const ROLE_LABEL: Record<Role, string> = { admin: 'Quản trị', hcns: 'HCNS', nguoi_de_nghi: 'Người đề nghị' }
 type ModuleVaiTro = { key: string; ten: string; vaiTro: { key: string; ten: string }[] }
+type QuyenUser = Record<string, string> // module -> vai_tro
 
 const boDauTxt = (s: string) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase()
-// Thứ tự sắp xếp theo vai trò: Quản trị (gồm super-admin) → HCNS → Người đề nghị.
-const hangVaiTro = (u: NguoiDungRow) => (u.sieu_admin || u.role === 'admin' ? 0 : u.role === 'hcns' ? 1 : 2)
 const tenRieng = (ht: string) => ht.trim().split(/\s+/).pop() || ht
+const SHORT_MODULE: Record<string, string> = { vpp: 'VPP', ncc: 'NCC', quantri: 'Quản trị' }
+// Thứ hạng theo QUYỀN thật: Quản trị (super-admin/quantri) → có quyền duyệt/quản lý → chỉ đề nghị.
+const hangTheoQuyen = (sieuAdmin: boolean, q: QuyenUser | undefined) => {
+  if (sieuAdmin || q?.quantri) return 0
+  if (q?.vpp === 'duyet' || q?.vpp === 'quan_ly' || q?.ncc) return 1
+  return 2
+}
 
 async function api(method: string, url: string, body: unknown) {
   const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -86,13 +90,20 @@ export default function QuanLyToChuc({
   }
 
   // ---- Người dùng ----
-  const empty = { ho_ten: '', username: '', password: '', role: 'nguoi_de_nghi' as Role, phong_ban_id: '' }
+  const empty = { ho_ten: '', username: '', password: '', phong_ban_id: '' }
   const [showAdd, setShowAdd] = useState(false)
   const [nu, setNu] = useState(empty)
   const [editUId, setEditUId] = useState<string | null>(null)
-  const [eU, setEU] = useState<{ ho_ten: string; username: string; role: Role; phong_ban_id: string; password: string }>({
-    ho_ten: '', username: '', role: 'nguoi_de_nghi', phong_ban_id: '', password: '',
+  const [eU, setEU] = useState<{ ho_ten: string; username: string; phong_ban_id: string; password: string }>({
+    ho_ten: '', username: '', phong_ban_id: '', password: '',
   })
+
+  // Tra tên vai trò của module (cho hiển thị cột "Vai trò" suy từ quyền thật).
+  const vtTen = useMemo(() => {
+    const m = new Map<string, string>()
+    for (const mod of moduleVaiTro) for (const v of mod.vaiTro) m.set(mod.key + '/' + v.key, v.ten)
+    return m
+  }, [moduleVaiTro])
 
   // ---- Lọc & sắp xếp danh sách người dùng ----
   const [q, setQ] = useState('')
@@ -101,7 +112,7 @@ export default function QuanLyToChuc({
   const dsUser = useMemo(() => {
     const qn = boDauTxt(q.trim())
     const loc = users.filter((u) => {
-      if (fRole) { const r = u.sieu_admin ? 'admin' : u.role; if (r !== fRole) return false }
+      if (fRole && String(hangTheoQuyen(u.sieu_admin, quyen[u.id])) !== fRole) return false
       if (fPb === '__none') { if (u.phong_ban_id) return false } else if (fPb) { if (u.phong_ban_id !== fPb) return false }
       if (qn) {
         const pb = u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '' : ''
@@ -110,11 +121,11 @@ export default function QuanLyToChuc({
       return true
     })
     return loc.sort((a, b) =>
-      hangVaiTro(a) - hangVaiTro(b) ||
+      hangTheoQuyen(a.sieu_admin, quyen[a.id]) - hangTheoQuyen(b.sieu_admin, quyen[b.id]) ||
       tenRieng(a.ho_ten).localeCompare(tenRieng(b.ho_ten), 'vi') ||
       a.ho_ten.localeCompare(b.ho_ten, 'vi'),
     )
-  }, [users, q, fRole, fPb, pbMap])
+  }, [users, q, fRole, fPb, pbMap, quyen])
 
   async function themUser() {
     if (!nu.ho_ten.trim() || !nu.username.trim() || !nu.password) return fail('Nhập họ tên, tài khoản, mật khẩu')
@@ -124,11 +135,11 @@ export default function QuanLyToChuc({
   }
   function batDauSuaU(u: NguoiDungRow) {
     setEditUId(u.id)
-    setEU({ ho_ten: u.ho_ten, username: u.username, role: u.role, phong_ban_id: u.phong_ban_id || '', password: '' })
+    setEU({ ho_ten: u.ho_ten, username: u.username, phong_ban_id: u.phong_ban_id || '', password: '' })
   }
   async function luuU(id: string) {
     const { ok, data } = await api('PATCH', '/api/admin/nguoi-dung', {
-      id, ho_ten: eU.ho_ten, username: eU.username, role: eU.role, phong_ban_id: eU.phong_ban_id, password: eU.password || undefined,
+      id, ho_ten: eU.ho_ten, username: eU.username, phong_ban_id: eU.phong_ban_id, password: eU.password || undefined,
     })
     if (!ok) return fail(data.error || 'Lỗi')
     setEditUId(null); done('Đã cập nhật người dùng')
@@ -232,16 +243,14 @@ export default function QuanLyToChuc({
             <input className={inp} placeholder="Họ tên / Tên phòng" value={nu.ho_ten} onChange={(e) => setNu({ ...nu, ho_ten: e.target.value })} />
             <input className={inp} placeholder="Tài khoản đăng nhập" value={nu.username} onChange={(e) => setNu({ ...nu, username: e.target.value })} />
             <input className={inp} type="text" placeholder="Mật khẩu" value={nu.password} onChange={(e) => setNu({ ...nu, password: e.target.value })} />
-            <select className={inp} value={nu.role} onChange={(e) => setNu({ ...nu, role: e.target.value as Role })}>
-              <option value="nguoi_de_nghi">Người đề nghị</option>
-              <option value="hcns">HCNS</option>
-              <option value="admin">Quản trị</option>
-            </select>
             <select className={inp} value={nu.phong_ban_id} onChange={(e) => setNu({ ...nu, phong_ban_id: e.target.value })}>
               <option value="">— Không thuộc phòng —</option>
               {phongBan.map((p) => <option key={p.id} value={p.id}>{p.ten}</option>)}
             </select>
-            <div><button onClick={() => chay('themUser', themUser)} disabled={!!busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium w-full sm:w-auto disabled:opacity-60">{busy === 'themUser' ? 'Đang tạo…' : 'Tạo người dùng'}</button></div>
+            <div className="sm:col-span-2 flex items-center gap-3">
+              <button onClick={() => chay('themUser', themUser)} disabled={!!busy} className="bg-accent hover:bg-accent-600 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60">{busy === 'themUser' ? 'Đang tạo…' : 'Tạo người dùng'}</button>
+              <span className="text-xs text-muted">Mặc định: VPP · Người đề nghị. Cấp thêm quyền ở nút “Quyền”.</span>
+            </div>
           </div>
         )}
 
@@ -249,9 +258,9 @@ export default function QuanLyToChuc({
           <input className={inp + ' flex-1 min-w-[180px]'} placeholder="Tìm tên, tài khoản, email, phòng ban…" value={q} onChange={(e) => setQ(e.target.value)} />
           <select className={inp} value={fRole} onChange={(e) => setFRole(e.target.value)}>
             <option value="">Tất cả vai trò</option>
-            <option value="admin">Quản trị</option>
-            <option value="hcns">HCNS</option>
-            <option value="nguoi_de_nghi">Người đề nghị</option>
+            <option value="0">Quản trị</option>
+            <option value="1">Người duyệt / Quản lý</option>
+            <option value="2">Người đề nghị</option>
           </select>
           <select className={inp} value={fPb} onChange={(e) => setFPb(e.target.value)}>
             <option value="">Tất cả phòng ban</option>
@@ -277,11 +286,7 @@ export default function QuanLyToChuc({
                   <tr key={u.id} className="border-t border-border bg-accent-50/40">
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.ho_ten} onChange={(e) => setEU({ ...eU, ho_ten: e.target.value })} /></td>
                     <td className="py-1.5 pr-2"><input className={inp + ' w-full'} value={eU.username} onChange={(e) => setEU({ ...eU, username: e.target.value })} /></td>
-                    <td className="py-1.5 pr-2">
-                      <select className={inp} value={eU.role} disabled={u.bao_ve} onChange={(e) => setEU({ ...eU, role: e.target.value as Role })}>
-                        <option value="nguoi_de_nghi">Người đề nghị</option><option value="hcns">HCNS</option><option value="admin">Quản trị</option>
-                      </select>
-                    </td>
+                    <td className="py-1.5 pr-2 text-xs text-muted">Quyền: sửa ở nút “Quyền”</td>
                     <td className="py-1.5 pr-2">
                       <select className={inp} value={eU.phong_ban_id} onChange={(e) => setEU({ ...eU, phong_ban_id: e.target.value })}>
                         <option value="">— Không —</option>
@@ -309,7 +314,24 @@ export default function QuanLyToChuc({
                       <div>{u.username}</div>
                       {u.email && <div className="text-[11px] text-muted">{u.email}</div>}
                     </td>
-                    <td className="py-1.5">{u.sieu_admin ? 'Quản trị' : ROLE_LABEL[u.role]}</td>
+                    <td className="py-1.5">
+                      {u.sieu_admin ? (
+                        <span className="text-[11px] px-1.5 py-0.5 rounded bg-accent text-white">Super-admin</span>
+                      ) : (() => {
+                        const q = quyen[u.id] || {}
+                        const keys = ['quantri', 'vpp', 'ncc'].filter((k) => q[k])
+                        if (keys.length === 0) return <span className="text-muted">—</span>
+                        return (
+                          <span className="flex flex-wrap gap-1">
+                            {keys.map((k) => (
+                              <span key={k} className="text-[11px] px-1.5 py-0.5 rounded bg-accent-50 text-accent-600 border border-border whitespace-nowrap">
+                                {k === 'quantri' ? 'Quản trị' : `${SHORT_MODULE[k]} · ${vtTen.get(k + '/' + q[k]) || q[k]}`}
+                              </span>
+                            ))}
+                          </span>
+                        )
+                      })()}
+                    </td>
                     <td className="py-1.5">{u.phong_ban_id ? pbMap.get(u.phong_ban_id) || '—' : '—'}</td>
                     <td className="py-1.5">{u.is_active ? <span className="text-ok">Hoạt động</span> : <span className="text-muted">Khoá</span>}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
