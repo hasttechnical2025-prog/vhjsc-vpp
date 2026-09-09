@@ -98,12 +98,23 @@ export default function QuanLyToChuc({
     ho_ten: '', username: '', phong_ban_id: '', password: '',
   })
 
-  // Tra tên vai trò của module (cho hiển thị cột "Vai trò" suy từ quyền thật).
+  // Tra tên vai trò của module (cho hiển thị cột "Quyền" suy từ quyền thật).
   const vtTen = useMemo(() => {
     const m = new Map<string, string>()
     for (const mod of moduleVaiTro) for (const v of mod.vaiTro) m.set(mod.key + '/' + v.key, v.ten)
     return m
   }, [moduleVaiTro])
+  // Nhãn quyền của 1 user theo THỨ TỰ module trong registry (tự có module mới sau này).
+  function nhanQuyen(u: NguoiDungRow): string[] {
+    const q = quyen[u.id] || {}
+    const out: string[] = []
+    for (const mod of moduleVaiTro) {
+      const vt = q[mod.key]
+      if (!vt) continue
+      out.push(mod.key === 'quantri' ? 'Quản trị' : `${SHORT_MODULE[mod.key] || mod.ten} · ${vtTen.get(mod.key + '/' + vt) || vt}`)
+    }
+    return out
+  }
 
   // ---- Lọc & sắp xếp danh sách người dùng ----
   const [q, setQ] = useState('')
@@ -257,7 +268,7 @@ export default function QuanLyToChuc({
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <input className={inp + ' flex-1 min-w-[180px]'} placeholder="Tìm tên, tài khoản, email, phòng ban…" value={q} onChange={(e) => setQ(e.target.value)} />
           <select className={inp} value={fRole} onChange={(e) => setFRole(e.target.value)}>
-            <option value="">Tất cả vai trò</option>
+            <option value="">Tất cả quyền</option>
             <option value="0">Quản trị</option>
             <option value="1">Người duyệt / Quản lý</option>
             <option value="2">Người đề nghị</option>
@@ -276,7 +287,7 @@ export default function QuanLyToChuc({
           <table className="w-full text-sm">
             <thead className="text-muted text-left">
               <tr>
-                <th className="py-1">Họ tên</th><th className="py-1">Tài khoản</th><th className="py-1">Vai trò</th>
+                <th className="py-1">Họ tên</th><th className="py-1">Tài khoản</th><th className="py-1">Quyền</th>
                 <th className="py-1">Phòng ban</th><th className="py-1">Trạng thái</th><th className="py-1 text-right">Thao tác</th>
               </tr>
             </thead>
@@ -318,16 +329,18 @@ export default function QuanLyToChuc({
                       {u.sieu_admin ? (
                         <span className="text-[11px] px-1.5 py-0.5 rounded bg-accent text-white">Super-admin</span>
                       ) : (() => {
-                        const q = quyen[u.id] || {}
-                        const keys = ['quantri', 'vpp', 'ncc'].filter((k) => q[k])
-                        if (keys.length === 0) return <span className="text-muted">—</span>
+                        const ls = nhanQuyen(u)
+                        if (ls.length === 0) return <span className="text-muted">—</span>
+                        const hien = ls.slice(0, 2)
+                        const con = ls.length - hien.length
                         return (
-                          <span className="flex flex-wrap gap-1">
-                            {keys.map((k) => (
-                              <span key={k} className="text-[11px] px-1.5 py-0.5 rounded bg-accent-50 text-accent-600 border border-border whitespace-nowrap">
-                                {k === 'quantri' ? 'Quản trị' : `${SHORT_MODULE[k]} · ${vtTen.get(k + '/' + q[k]) || q[k]}`}
-                              </span>
+                          <span className="flex flex-wrap items-center gap-1" title={ls.join('  ·  ')}>
+                            {hien.map((t, i) => (
+                              <span key={i} className="text-[11px] px-1.5 py-0.5 rounded bg-accent-50 text-accent-600 border border-border whitespace-nowrap">{t}</span>
                             ))}
+                            {con > 0 && (
+                              <span className="text-[11px] px-1.5 py-0.5 rounded bg-muted/15 text-muted whitespace-nowrap cursor-default">+{con}</span>
+                            )}
                           </span>
                         )
                       })()}
